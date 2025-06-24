@@ -1,4 +1,28 @@
 body {
   font-family: sans-serif;
+  background-color: #101E3E;
+  display: flex;
+  justify-content: center;
+}
+
+.full {
+    background-color: #427AA1;
+    border-radius: 10px;
+    height: 1000px;
+    width: 97%;
+    padding: 12px;
+    top: 0;
+    left: 0;
+    margin-top: 10px;
+}
+
+.title {
+    background-color: #FEFDF7;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: .008px;
+    
 }
 
