@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Head $tart</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <div class="full">
-        <div class="title">
-          <h1>
-            <span style="color: #101E3E;">Head</span>
-            <span style="color: #5F9632;">$tart</span>
-        </h1>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Head $tart</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="welcome-screen" class="welcome-container">
+    <div class="welcome-content">
+      <h1>
+        Welcome to <span class="head">Head</span> 
+        <span class="dollar">$tart</span>!
+      </h1>
+      <p>Learn from making decisions and create your financial story!</p>
+      <div class="player-info">
+        <input type="text" id="player-name" placeholder="Enter your name" />
+        <button id="start-game" class="play-button">Play</button>
+      </div>
     </div>
-    <script src="./script.js" type="module"></script>
-  </body>
+  </div>
+
+  <div id="game-container" class="game-container hidden">
+    <header>
+      <h1><span class="head">Head</span> <span class="dollar">$tart</span></h1>
+      <div class="stats">
+        <div class="stat">Age: <span id="current-age">18</span></div>
+        <div class="stat">Income: $<span id="current-income">0</span></div>
+        <div class="stat">Net Worth: $<span id="current-net-worth">1000</span></div>
+      </div>
+    </header>
+    <div class="progress-container">
+        <div class="progress-bar" id="net-worth-bar"></div>
+      </div>
+    <main class="game-content" style = "margin-top: 17px;">
+      <div id="options-panel" class="options-panel"></div>
+      <div id="message-panel" class="message-panel">
+        <h2>Your Financial Journey</h2>
+        <div id="message-log" class="message-log"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js" type="module"></script>
+</body>
 </html>
