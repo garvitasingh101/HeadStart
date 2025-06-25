@@ -1,12 +1,13 @@
 // Main variables for the game
-let playerName = "";
-let netWorth = 1000;
-let income = 0;
-let age = 18;
-let career = "";
-let currentStage = "18-27";
+let playerName = ""; 
+let netWorth = 1000; 
+let income = 0; 
+let age = 18; 
+let career = ""; 
+let currentStage = "18-27"; 
 
 // Personality traits (being tracked)
+// These are incremented based on player choices and used for end-game summary
 const personalityTraits = {
     risk_taker: 0,
     cautious: 0,
@@ -16,7 +17,7 @@ const personalityTraits = {
     experience_seeker: 0
 };
 
-// DOM elements
+// DOM elements (references to HTML elements for UI updates)
 const welcomeScreen = document.getElementById('welcome-screen');
 const gameContainer = document.getElementById('game-container');
 const playerNameInput = document.getElementById('player-name');
@@ -57,7 +58,7 @@ function startGame() {
     updateUI();
 }
 
-// Update all UI elements with current game state
+// Update all UI elements with current game state (age, income, net worth, progress bar)
 function updateUI() {
     currentAgeDisplay.textContent = age;
     currentIncomeDisplay.textContent = income;
@@ -65,6 +66,7 @@ function updateUI() {
 
     let progressPercentage = 0;
 
+    // Calculate progress bar percentage based on age
     if (age >= 63) {
         progressPercentage = 100;
     } else if (age >= 54) {
@@ -82,7 +84,7 @@ function updateUI() {
     netWorthBar.style.width = `${progressPercentage}%`;
 }
 
-// Add message to message log
+// Add message to message log (with optional color)
 function addMessage(message, color) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
@@ -94,12 +96,12 @@ function addMessage(message, color) {
     messageLog.scrollTop = messageLog.scrollHeight;
 }
 
-// Clear options panel
+// Clear options panel (removes all buttons/options)
 function clearOptions() {
     optionsPanel.innerHTML = '';
 }
 
-// Add options to options panel
+// Add options to options panel (title + array of option objects)
 function addOptions(title, options) {
     clearOptions();
     
@@ -116,7 +118,7 @@ function addOptions(title, options) {
     });
 }
 
-// Initial career choice
+// Initial career choice at age 18
 function initialChoice() {
     addMessage("\nYou're 18, fresh out of high school, and the world is wide open before you. What's your next step?", "#c91a63");
 
@@ -146,6 +148,7 @@ function initialChoice() {
     ]);
 }
 
+// Assign a random job and income for "Get a Job" path
 function getAJob() {
     const careers = {
         "Retail Worker": 20000, 
@@ -174,6 +177,7 @@ function getAJob() {
     age18_27();
 }
 
+// College path: choose in-state or out-of-state, apply debt, then get a better job
 function goToCollege() {
     addMessage("\nYou enroll in college, ready to invest in your future. But tuition isn't cheap...", "#c91a63");
     
@@ -201,6 +205,7 @@ function goToCollege() {
     ]);
 }
 
+// Assign a high-income job after college
 function collegeJob() {
     const betterJobs = {
         "Doctor": 350000, 
@@ -231,14 +236,9 @@ function collegeJob() {
     age18_27();
 }
 
+// Start a business: pay startup cost, get random high income
 function startABusiness() {
     income = Math.floor(Math.random() * 350000) + 50000;
-    netWorth -= 90000;
-    netWorth += income;
-    career = "Entrepreneur";
-    
-    addMessage("\nYour business starts generating $" + income + " per year after you spent $90000 on it. The journey ahead will test your resilience.", "#c91a63");
-    addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
     updateUI();
     
     // Proceed to next stage
@@ -276,7 +276,7 @@ function age18_27() {
                 netWorth -= educationCost;
                 const salaryIncrease = Math.floor(Math.random() * 10000) + 10000;
                 income += salaryIncrease;
-                addMessage(`\nInvesting in education cost $${educationCost}, but your salary increased by $${salaryIncrease}`, "c91a63");
+                addMessage(`\nInvesting in education cost $${educationCost}, but your salary increased by $${salaryIncrease}`, "#c91a63");
                 addMessage("It's great that you realize that the learning doesn't stop after 18 years old. There's always place for promotions and growth!");
                 updateUI();
                 financialDecisions();
@@ -419,7 +419,7 @@ function ageTransition() {
 
 // Age 28-37 decisions
 function age28_37() {
-    addOptions("How wil you continue your story?", [
+    addOptions("How will you continue your story?", [
         {
             text: "🏘 Buy a house (Requires a down payment, but could appreciate)",
             action: () => {
@@ -654,7 +654,7 @@ function age58_67() {
             text: "💲 Plan for retirement (Max out retirement savings, invest in 401k)",
             action: () => {
                 personalityTraits.cautious++;
-                presentRetirementOptions()
+                presentRetirementOptions();
             }
         },
         {
@@ -783,7 +783,7 @@ function endGame() {
         }
     ]);
 }
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const helpBtn = document.getElementById("help-btn");
   const helpModal = document.getElementById("help-modal");
   const closeHelp = document.getElementById("close-help");
