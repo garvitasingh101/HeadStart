@@ -122,20 +122,27 @@ function addOptions(title, options, inputType = "letter") {
     submit.textContent = 'Submit';
 
     submit.addEventListener('click', () => {
-        const val = input.value.trim().toLowerCase();
-        let index = -1;
+  const val = input.value.trim().toLowerCase();
 
-        if (inputType === "letter" && /^[a-z]$/.test(val)) {
-            index = val.charCodeAt(0) - 97;
-        } else if (inputType === "number" && /^[0-9]+$/.test(val)) {
-            index = parseInt(val) - 1;
-        }
+  // Handle "stop" command
+    if (val === "stop") {
+        endGame("Game ended by user.");
+        return;
+    }
 
-        if (index >= 0 && index < options.length) {
-            options[index].action();
-        } else {
-            addMessage("⛔ Invalid choice. Please enter a valid " + (inputType === "number" ? "number" : "letter") + ".", "red");
-        }
+    let index = -1;
+
+    if (inputType === "letter" && /^[a-z]$/.test(val)) {
+        index = val.charCodeAt(0) - 97;
+    } else if (inputType === "number" && /^[0-9]+$/.test(val)) {
+        index = parseInt(val) - 1;
+    }
+
+    if (index >= 0 && index < options.length) {
+        options[index].action();
+    } else {
+        addMessage("⛔ Invalid choice. Please enter a valid " + (inputType === "number" ? "number" : "letter") + ".", "red");
+    }
     });
 
     input.addEventListener('keydown', (event) => {
@@ -146,6 +153,7 @@ function addOptions(title, options, inputType = "letter") {
 
     optionsPanel.appendChild(input);
     optionsPanel.appendChild(submit);
+    input.focus();
 }
 
 // First path decision
