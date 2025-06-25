@@ -85,7 +85,7 @@ function clearOptions() {
     optionsPanel.innerHTML = '';
 }
 
-// ✅ Updated addOptions() with letter/number support and clear instruction
+// Updated addOptions() with letter/number support and clear instruction
 function addOptions(title, options, inputType = "letter") {
     clearOptions();
 
