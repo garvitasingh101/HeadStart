@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        let answer = "I'm not sure about that. Try asking about net worth, college, investing, debt, or retirement!";
-        
+        let answer = "Go with your gut! Try asking another question";
+
         // Checks for the above keywords in the question
         for (const [keyword, response] of Object.entries(qaPairs)) {
             if (question.includes(keyword)) {
