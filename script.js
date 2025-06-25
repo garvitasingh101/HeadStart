@@ -62,18 +62,23 @@ function updateUI() {
     currentAgeDisplay.textContent = age;
     currentIncomeDisplay.textContent = income;
     currentNetWorthDisplay.textContent = netWorth;
-    
-    // Update progress bar (scaled to show progress through life stages)
+
     let progressPercentage = 0;
-    if (age >= 54) {
+
+    if (age >= 63) {
         progressPercentage = 100;
+    } else if (age >= 54) {
+        progressPercentage = 88 + ((age - 54) / (63 - 54)) * (100 - 88);
     } else if (age >= 45) {
-        progressPercentage = 66;
+        progressPercentage = 66 + ((age - 45) / (54 - 45)) * (88 - 66);
     } else if (age >= 36) {
-        progressPercentage = 33;
+        progressPercentage = 33 + ((age - 36) / (45 - 36)) * (66 - 33);
+    } else if (age >= 18) {
+        progressPercentage = 0 + ((age - 18) / (36 - 18)) * 33;
     } else {
         progressPercentage = 0;
     }
+
     netWorthBar.style.width = `${progressPercentage}%`;
 }
 
@@ -778,6 +783,32 @@ function endGame() {
         }
     ]);
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const helpBtn = document.getElementById("help-btn");
+  const helpModal = document.getElementById("help-modal");
+  const closeHelp = document.getElementById("close-help");
+  const helpDetails = document.getElementById("help-details");
+
+  helpBtn.addEventListener("click", () => {
+    helpModal.classList.add("show");
+  });
+
+  closeHelp.addEventListener("click", () => {
+    helpModal.classList.remove("show");
+    helpDetails.innerHTML = "";
+  });
+
+  window.toggleHelpSection = function (topic) {
+    const helpContent = {
+      "how-to-play": " Make choices throughout life to grow your wealth and character.",
+      "traits": " Traits like frugal, risk-taker, etc. are assigned to you based on how you play the game.",
+      "net-worth": " Your net worth grows with income, investments, and savings.",
+      "life-stages": " Life events happen at different ages: 18–27, 28–37, etc.",
+      "tips": " Save early, spend wisely, and balance risk and reward."
+    };
+    helpDetails.innerHTML = `<p>${helpContent[topic]}</p>`;
+  };
+});
 
 // Initialize the game when the script loads
 initGame();

@@ -40,10 +40,27 @@
         <div id="message-log" class="message-log"></div>
       </div>
     </main>
+  <button id="help-btn" class="help-button">?</button>
+  <div id="help-modal" class="help-modal hidden">
+    <div class="help-modal-content">
+      <div class="help-header">
+        <h2>Game Help</h2>
+        <span id="close-help" class="close-btn">&times;</span>
+      </div>
+      <ul class="help-list">
+        <li class="help-item" onclick="toggleHelpSection('how-to-play')">How to Play <span>&gt;</span></li>
+        <li class="help-item" onclick="toggleHelpSection('traits')">Character Traits <span>&gt;</span></li>
+        <li class="help-item" onclick="toggleHelpSection('net-worth')">Net Worth <span>&gt;</span></li>
+        <li class="help-item" onclick="toggleHelpSection('life-stages')">Life Stages <span>&gt;</span></li>
+        <li class="help-item" onclick="toggleHelpSection('tips')">Strategy Tips <span>&gt;</span></li>
+      </ul>
+      <div class="help-details" id="help-details">
+      </div>
+    </div>
+  </div>
+
   </div>
 
   <script src="script.js" type="module"></script>
 </body>
-    <script src="./index.js" type="module"></script>
-  </body>
 </html>
