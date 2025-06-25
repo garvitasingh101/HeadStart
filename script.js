@@ -27,6 +27,14 @@ const currentNetWorthDisplay = document.getElementById('current-net-worth');
 const netWorthBar = document.getElementById('net-worth-bar');
 const optionsPanel = document.getElementById('options-panel');
 const messageLog = document.getElementById('message-log');
+const startGameBtn = document.getElementById("start-game");
+
+playerNameInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Prevent form submission if it's inside a form
+    startGameBtn.click();   // Trigger the click event on the play button
+  }
+});
 
 // Initialize game event listeners
 function initGame() {
@@ -128,6 +136,12 @@ function addOptions(title, options, inputType = "letter") {
         } else {
             addMessage("⛔ Invalid choice. Please enter a valid " + (inputType === "number" ? "number" : "letter") + ".", "red");
         }
+    });
+
+    input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        submit.click(); // simulate a click when Enter is pressed
+    }
     });
 
     optionsPanel.appendChild(input);
