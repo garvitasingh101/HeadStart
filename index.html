@@ -59,7 +59,17 @@
   </div>
     <div id= "question-container" class = "question-container hidden">
       <div class = "question-description">
-        <h2>Q & A</h2>
+        <h1>Interactive Q & A - Ask Away!</h1>
+        <h3 style = "font-style: italic">Ask our virtual financial advisor any question about definitions, strategies, 
+          or life decisions to get personalized guidance for your unique situation!</h3>
+            <div class="input-group">
+                <input type="text" id="user-question" placeholder="Type your question here...">
+                <button id="ask-button">Ask</button>
+            </div>
+            
+            <div id="answer-display" class="answer-box">
+                <p>Your answer will appear here...</p>
+            </div>
       </div>
     </div>
   
@@ -71,7 +81,7 @@
     <div id="help-modal" class="help-modal hidden">
       <div class="help-modal-content">
         <div class="help-header">
-          <h2>Game Help</h2>
+          <h2>Help Menu</h2>
           <span id="close-help" class="close-btn">&times;</span>
         </div>
 
@@ -131,5 +141,6 @@
   </div>
 
   <script src="./script.js"></script>
+  <script src="./q&a.js"></script>
 </body>
 </html>

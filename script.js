@@ -106,7 +106,7 @@ function clearOptions() {
 function addOptions(title, options, inputType = "letter") {
     clearOptions();
 
-    const titleElement = document.createElement('h3');
+    const titleElement = document.createElement('h2');
     titleElement.textContent = title;
     optionsPanel.appendChild(titleElement);
 
