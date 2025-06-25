@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  //Welcome Screen
+  <!-- Welcome Screen -->
   <div id="welcome-screen" class="welcome-container">
     <div class="welcome-content">
       <h1>
@@ -16,8 +16,6 @@
         <span class="dollar">$tart</span>!
       </h1>
       <p>Learn from making decisions and create your financial story!</p>
-
-      // Game purpose description
       <div class="game-description" style="margin: 15px 0; font-size: 1.1rem; color: #444;">
         <p>
           Head $tart was created to educate high school students about financial decisions 
@@ -25,20 +23,19 @@
           how their decisions impact their income, savings, and overall financial health. 
         </p>
       </div>
-
-      //Player input and start button
       <div class="player-info">
-        <input type="text" id="player-name" placeholder="Enter your name" />
+        <input type="text" id="player-name" placeholder="Enter your name" required />
         <button id="start-game" class="play-button">Play</button>
       </div>
     </div>
   </div>
 
+  <!-- Game Container -->
   <div id="game-container" class="game-container hidden">
     <header>
       <h1><span class="head">Head</span> <span class="dollar">$tart</span></h1>
 
-      // Display of player stats: age, income, net worth
+      <!-- Player Stats -->
       <div class="stats">
         <div class="stat">Age: <span id="current-age">18</span></div>
         <div class="stat">Income: $<span id="current-income">0</span></div>
@@ -58,27 +55,69 @@
       </div>
     </main>
 
-    //Help Button: opens the help modal with game instructions
+    <!-- Help Button -->
     <button id="help-btn" class="help-button">?</button>
 
-    // Help Modal: contains game instructions and tips
+    <!-- Help Modal -->
     <div id="help-modal" class="help-modal hidden">
       <div class="help-modal-content">
         <div class="help-header">
           <h2>Game Help</h2>
           <span id="close-help" class="close-btn">&times;</span>
         </div>
+
         <ul class="help-list">
-          <li class="help-item" onclick="toggleHelpSection('how-to-play')">How to Play <span>&gt;</span></li>
-          <li class="help-item" onclick="toggleHelpSection('traits')">Character Traits <span>&gt;</span></li>
-          <li class="help-item" onclick="toggleHelpSection('net-worth')">Net Worth <span>&gt;</span></li>
-          <li class="help-item" onclick="toggleHelpSection('life-stages')">Life Stages <span>&gt;</span></li>
-          <li class="help-item" onclick="toggleHelpSection('tips')">Strategy Tips <span>&gt;</span></li>
+          <li class="help-item" data-id="problem">
+            Why This Matters <span id="arrow-problem">&gt;</span>
+          </li>
+          <div id="problem" class="help-dropdown hidden">
+          <p>
+          Many people struggle with budgeting, saving, and planning for the future, which often leads to debt, missed opportunities, or financial stress.
+          </p>
+          <p>
+            Head$tart simulates these financial decisions so you can understand how choices you make every day affect your financial health over time. By playing, you’ll gain insight into:
+          </p>
+          <ol>
+            <li>How to balance income, expenses, and savings.</li>
+            <li>The impact of emergencies or opportunities on your financial stability.</li>
+            <li>The importance of planning ahead and making informed decisions.</li>
+          </ol>
+        </div>
+
+
+          <li class="help-item" data-id="how-to-play">
+            How to Play <span id="arrow-how-to-play">&gt;</span>
+          </li>
+          <div id="how-to-play" class="help-dropdown hidden">
+            Manage your money by making smart choices on spending, saving, and investing while navigating life events.  
+            Watch your budget and progress bar to track your financial health.
+          </div>
+
+          <li class="help-item" data-id="budget">
+            Budget & Progress <span id="arrow-budget">&gt;</span>
+          </li>
+          <div id="budget" class="help-dropdown hidden">
+            Your budget shows your current money. The progress bar tracks your journey and financial stability.
+          </div>
+
+          <li class="help-item" data-id="life-events">
+            Life Events <span id="arrow-life-events">&gt;</span>
+          </li>
+          <div id="life-events" class="help-dropdown hidden">
+            Expect bills, emergencies, and opportunities. Your choices impact your net worth and game outcome.
+          </div>
+
+          <li class="help-item" data-id="tips">
+            Strategy Tips <span id="arrow-tips">&gt;</span>
+          </li>
+          <div id="tips" class="help-dropdown hidden">
+            Save early, avoid debt, and think long-term to build wealth and win the game.
+          </div>
         </ul>
-        <div class="help-details" id="help-details"></div>
       </div>
     </div>
   </div>
-  <script src="script.js" type="module"></script>
+
+  <script src="./script.js"></script>
 </body>
 </html>

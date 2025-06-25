@@ -181,21 +181,29 @@ h1 {
   background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);
   color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 13px 0 13px 18px;
-  font-size: 17px;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
-  text-align: left;
-  margin-top: 0;
   width: 100%;
-  font-weight: 500;
-  box-shadow: 0 1px 4px rgba(95, 150, 50, 0.08);
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.12);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .option:hover {
   background: linear-gradient(90deg, #4a7a2a 80%, #325a7a 100%);
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(66, 122, 161, 0.18);
+}
+
+.option:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(66, 122, 161, 0.08);
 }
 
 /* === Message Log === */
@@ -243,6 +251,10 @@ h1 {
   transition: width 0.5s ease;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* === Floating Help Button === */
 .help-button {
   position: fixed;
@@ -266,40 +278,27 @@ h1 {
   transform: scale(1.08);
 }
 
-/* === Slide-in Help Modal === */
 .help-modal {
   position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 360px;
-  background: linear-gradient(135deg, #101E3E 80%, #427AA1 100%);
-  color: #fff;
-  box-shadow: -2px 0 16px rgba(16, 30, 62, 0.22);
-  transform: translateX(100%); /* Hidden by default */
-  transition: transform 0.3s cubic-bezier(.4,1.3,.5,1);
-  z-index: 999;
-  overflow-y: auto;
-  border-top-left-radius: 14px;
-  border-bottom-left-radius: 14px;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  background-color: #0e1a2f;
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 2000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.help-modal.show {
-  transform: translateX(0%); /* Slide in */
-}
-
-.help-modal-content {
-  padding: 28px 22px;
-}
-
-/* === Help Modal Header === */
 .help-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: white;
 }
 
-/* === Close Button for Help Modal === */
 .close-btn {
   font-size: 26px;
   cursor: pointer;
@@ -313,7 +312,6 @@ h1 {
   color: #5F9632;
 }
 
-/* === Help List Styles === */
 .help-list {
   list-style: none;
   padding: 0;
@@ -321,7 +319,7 @@ h1 {
 }
 
 .help-item {
-  background: #1a233a;
+  background: #36539f;
   padding: 16px 18px;
   margin: 10px 0;
   border-radius: 9px;
@@ -337,24 +335,14 @@ h1 {
   background: #22305a;
 }
 
-/* === Help Details Section === */
-.help-details {
-  padding-top: 16px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #e6eaf3;
-}
-
-/* === Inline Help Box === */
-.inline-help {
-  background: #22305a;
-  color: #e6eaf3;
-  padding: 14px 18px;
-  margin: 8px 0 14px 0;
-  border-radius: 7px;
-  font-size: 15px;
-  line-height: 1.5;
-  animation: fadeIn 0.2s ease-in;
+.help-dropdown {
+  background-color: #1c2a50;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  color: #ccc;
+  border-left: 4px solid #4caf50;
+  margin: 0 0 10px 0;
+  /* Removed display:none, now controlled by .hidden */
 }
 
 /* === Responsive Styles === */
@@ -389,3 +377,50 @@ h1 {
     padding: 10px 2px;
   }
 }
+
+.hidden {
+  display: none;
+}
+.show {
+  display: block;
+}
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.investment-input {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1.5px solid #427AA1;
+  font-size: 17px;
+  width: 100%;
+  max-width: 320px;
+  background: #f7fafc;
+  color: #223;
+  transition: border 0.2s;
+}
+
+.investment-input:focus {
+  border-color: #5F9632;
+  outline: none;
+}
+
+/* === Investment Button === */
+.button {
+  padding: 6px 16px;
+  font-size: 15px;
+  border-radius: 5px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.button:hover {
+  background: linear-gradient(90deg, #4a7a2a 80%, #325a7a 100%);
+  transform: scale(1.03);
+}
+
