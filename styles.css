@@ -9,11 +9,12 @@ body {
   display: flex; /* Center content vertically and horizontally */
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 /* === Main Containers === */
 .welcome-container,
-.game-container {
+.game-container, .question-container {
   border-radius: 18px;
   box-shadow: 0 6px 24px rgba(16, 30, 62, 0.18); /* Soft shadow */
   transition: box-shadow 0.2s;
@@ -29,13 +30,25 @@ body {
   max-width: 1110px; /* Max width for larger screens */
 }
 
-.game-container {
+.game-container, .question-container {
   background-color: #427AA1;
   width: 90%;
   color: #223;
   margin-top: 24px;
   padding: 28px 24px;
 }
+
+.question-description {
+  background-color: #FEFDF7;
+  border-radius: 12px;
+  padding: 5px;
+  margin-bottom: 22px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06);
+  border: 3px solid #c91a63;
+}
+
+
 
 /* === Welcome Content === */
 .welcome-content h1 {

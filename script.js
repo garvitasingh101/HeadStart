@@ -19,6 +19,7 @@ const personalityTraits = {
 // DOM elements
 const welcomeScreen = document.getElementById('welcome-screen');
 const gameContainer = document.getElementById('game-container');
+const questionContainer = document.getElementById('question-container');
 const playerNameInput = document.getElementById('player-name');
 const startGameButton = document.getElementById('start-game');
 const currentAgeDisplay = document.getElementById('current-age');
@@ -56,6 +57,7 @@ function startGame() {
     }
     welcomeScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
+    questionContainer.classList.remove('hidden');
     // Add initial message
     addMessage(`👋 Hello ${playerName}, welcome to Head $tart! You are 18 years old and have a starting net worth of $${netWorth}.`, '#c91a63');
     addMessage("To view instructions and our purpose, click on the \"?\" button! To stop at any time, type \"STOP\". Good Luck!", '#c91a63');
