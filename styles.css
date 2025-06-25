@@ -14,20 +14,27 @@ body {
 /* === Main Containers === */
 .welcome-container,
 .game-container {
-  background-color: #FEFDF7; /* Light background for contrast */
   border-radius: 18px;
   box-shadow: 0 6px 24px rgba(16, 30, 62, 0.18); /* Soft shadow */
-  color: #2c466a;
-  margin-top: 60px;
-  padding: 36px 32px;
-  width: 75%;
-  max-width: 1100px;
   transition: box-shadow 0.2s;
 }
 
 .welcome-container {
+  background-color: #FEFDF7; /* Light background for contrast */
   text-align: center;
   min-height: 260px;
+  padding: 40px 20px;
+  margin-top: 60px;
+  color: #427AA1;
+  max-width: 1110px; /* Max width for larger screens */
+}
+
+.game-container {
+  background-color: #427AA1;
+  width: 90%;
+  color: #223;
+  margin-top: 24px;
+  padding: 28px 24px;
 }
 
 /* === Welcome Content === */
@@ -44,6 +51,8 @@ body {
   margin-bottom: 28px;
   color: #3a4d63;
 }
+
+
 
 /* === Player Info Section === */
 .player-info {
@@ -73,7 +82,7 @@ body {
 
 /* === Play Button === */
 .play-button {
-  background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);
+  background-color: #5F9632;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -82,11 +91,10 @@ body {
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(95, 150, 50, 0.08);
-  transition: background 0.2s, transform 0.15s;
 }
 
 .play-button:hover {
-  background: linear-gradient(90deg, #4a7a2a 80%, #325a7a 100%);
+  background-color: #4a7a2a; /* Darker shade on hover */
   transform: translateY(-2px) scale(1.03);
 }
 
@@ -99,13 +107,7 @@ body {
   display: block !important;
 }
 
-/* === Game Container === */
-.game-container {
-  background-color: #f7fafc;
-  color: #223;
-  margin-top: 24px;
-  padding: 28px 24px;
-}
+
 
 /* === Header Styles === */
 header {
@@ -178,32 +180,42 @@ h1 {
 
 /* === Option Button === */
 .option {
-  background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);
-  color: #fff;
+  background-color: #5F9632;
+  color: white;
   border: none;
-  border-radius: 10px;
-  padding: 16px 20px;
-  font-size: 18px;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 15px;
   font-weight: 600;
-  cursor: pointer;
-  width: 100%;
+  width: 500px;
   text-align: left;
   box-shadow: 0 4px 12px rgba(66, 122, 161, 0.12);
   transition: all 0.25s ease;
   display: flex;
   align-items: center;
   gap: 14px;
+  transition: all 0.25s ease;
 }
 
-.option:hover {
-  background: linear-gradient(90deg, #4a7a2a 80%, #325a7a 100%);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(66, 122, 161, 0.18);
+.submit-option {
+  background-color: #5F9632;
+  color: white;
+  border: solid black 1px;
+  border-radius: 5px;
+  padding: 7px;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.12);
+  cursor: pointer;
 }
 
 .option:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(66, 122, 161, 0.08);
+  /* transform: scale(0.98); */
+  /* box-shadow: 0 2px 6px rgba(66, 122, 161, 0.08); */
+  background-color: #4a7a2a;
+  transform: translateY(-2px);
 }
 
 /* === Message Log === */
@@ -423,4 +435,24 @@ ul {
   background: linear-gradient(90deg, #4a7a2a 80%, #325a7a 100%);
   transform: scale(1.03);
 }
+
+.option-key {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.option-text {
+    flex: 1;
+}
+
+input[type="text"] {
+    padding: 12px;
+    border: 2px solid #5F9632;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+
 

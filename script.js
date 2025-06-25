@@ -44,6 +44,7 @@ function initGame() {
     });
 }
 
+// Start the game
 function startGame() {
     age = 18;
     netWorth = 1000;
@@ -55,7 +56,9 @@ function startGame() {
     }
     welcomeScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
+    // Add initial message
     addMessage(`👋 Hello ${playerName}! You are 18 years old and have a starting net worth of $${netWorth}.`, '#c91a63');
+    // Start with initial choices
     updateUI();
     offerFirstPath();
 }
@@ -65,6 +68,7 @@ function updateUI() {
     currentIncomeDisplay.textContent = income;
     currentNetWorthDisplay.textContent = netWorth;
 
+    // Update progress bar (scaled to show progress through life stages)
     let progressPercentage = 0;
     if (age >= 63) {
         progressPercentage = 100;
@@ -80,6 +84,7 @@ function updateUI() {
     netWorthBar.style.width = `${progressPercentage}%`;
 }
 
+// Add message to message log
 function addMessage(message, color) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
@@ -89,11 +94,12 @@ function addMessage(message, color) {
     messageLog.scrollTop = messageLog.scrollHeight;
 }
 
+// Clear options panel
 function clearOptions() {
     optionsPanel.innerHTML = '';
 }
 
-// Updated addOptions() with letter/number support and clear instruction
+// addOptions() with letter/number support and clear instruction
 function addOptions(title, options, inputType = "letter") {
     clearOptions();
 
@@ -101,14 +107,21 @@ function addOptions(title, options, inputType = "letter") {
     titleElement.textContent = title;
     optionsPanel.appendChild(titleElement);
 
-    const list = document.createElement('ul');
+    // Create options container panel styling
+    const optionsContainer = document.createElement('div');
+    optionsContainer.classList.add('options');
+
     options.forEach((option, index) => {
-        const key = inputType === 'number' ? `${index + 1}` : String.fromCharCode(97 + index); // 1, 2... or a, b...
-        const item = document.createElement('li');
-        item.textContent = `${key}) ${option.text}`;
-        list.appendChild(item);
+        const key = inputType === 'number' ? `${index + 1}` : String.fromCharCode(97 + index);
+        const optionDiv = document.createElement('div');
+        optionDiv.classList.add('option');
+        optionDiv.innerHTML = `
+            <span class="option-key">${key})</span>
+            <span class="option-text">${option.text}</span>
+        `;
+        optionsContainer.appendChild(optionDiv);
     });
-    optionsPanel.appendChild(list);
+    optionsPanel.appendChild(optionsContainer);
 
     const instruction = document.createElement('p');
     instruction.innerHTML = `<strong>Type the ${inputType === "number" ? "number" : "letter"} of your choice below:</strong>`;
@@ -120,35 +133,34 @@ function addOptions(title, options, inputType = "letter") {
 
     const submit = document.createElement('button');
     submit.textContent = 'Submit';
+    submit.classList.add('submit-option');
 
     submit.addEventListener('click', () => {
-  const val = input.value.trim().toLowerCase();
+        const val = input.value.trim().toLowerCase();
+        
+        if (val === "stop") {
+            endGame("Game ended by user.");
+            return;
+        }
 
-  // Handle "stop" command
-    if (val === "stop") {
-        endGame("Game ended by user.");
-        return;
-    }
+        let index = -1;
+        if (inputType === "letter" && /^[a-z]$/.test(val)) {
+            index = val.charCodeAt(0) - 97;
+        } else if (inputType === "number" && /^[0-9]+$/.test(val)) {
+            index = parseInt(val) - 1;
+        }
 
-    let index = -1;
-
-    if (inputType === "letter" && /^[a-z]$/.test(val)) {
-        index = val.charCodeAt(0) - 97;
-    } else if (inputType === "number" && /^[0-9]+$/.test(val)) {
-        index = parseInt(val) - 1;
-    }
-
-    if (index >= 0 && index < options.length) {
-        options[index].action();
-    } else {
-        addMessage("⛔ Invalid choice. Please enter a valid " + (inputType === "number" ? "number" : "letter") + ".", "red");
-    }
+        if (index >= 0 && index < options.length) {
+            options[index].action();
+        } else {
+            addMessage("⛔ Invalid choice. Please enter a valid " + (inputType === "number" ? "number" : "letter") + ".", "red");
+        }
     });
 
     input.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        submit.click(); // simulate a click when Enter is pressed
-    }
+        if (event.key === 'Enter') {
+            submit.click();
+        }
     });
 
     optionsPanel.appendChild(input);
