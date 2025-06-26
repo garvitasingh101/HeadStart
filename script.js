@@ -893,7 +893,7 @@ function reflectOnPersonality() {
         title = "Title Earned: The Reflective Learner";
         }
 
-        addMessage(`\n${title}`, "#FFD700"); // gold color
+        addMessage(`\n${title}`, "#d4ab24"); // gold color
 
 }
 
