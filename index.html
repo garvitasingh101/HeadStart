@@ -57,21 +57,23 @@
       </div>
     </main>
   </div>
-    <div id= "question-container" class = "question-container hidden">
-      <div class = "question-description">
-        <h1>Interactive Q & A - Ask Away!</h1>
-        <h3 style = "font-style: italic">For basic help, click on "?" on the bottom right. For more in-depth questions, ask our virtual financial advisor about definitions, strategies, 
-          or life decisions and get personalized guidance for your unique situation!</h3>
-            <div class="input-group">
-                <input type="text" id="user-question" placeholder="Type your question here...">
-                <button id="ask-button">Ask</button>
-            </div>
-            
-            <div id="answer-display" class="answer-box">
-                <p>Your answer will appear here...</p>
-            </div>
+  <div id="question-container" class="question-container hidden">
+    <div class="question-description">
+      <h1>Interactive Q & A - Ask Away!</h1>
+      <p class="q-sub">For basic help, click on "?" on the bottom right. For more in-depth questions, ask our virtual financial advisor about definitions, strategies, 
+          or life decisions and get personalized guidance for your unique situation!</p>
+      
+      <div class="input-group">
+        <input type="text" id="user-question" placeholder="e.g., What’s the best way to invest at 18?" />
+        <button id="ask-button">Ask</button>
+      </div>
+      
+      <div id="answer-display" class="answer-box">
+        <p><em>Your answer will appear here...</em></p>
       </div>
     </div>
+  </div>
+
 
     <!-- Help Button -->
     <button id="help-btn" class="help-button">?</button>
@@ -84,7 +86,7 @@
 
       <ul class="help-list">
         <li class="help-item" data-id="problem">
-          Why This Matters <span id="arrow-problem">&gt;</span>
+          Why This Matters
         </li>
         <div id="problem" class="help-dropdown hidden">
           <p>
@@ -101,7 +103,7 @@
         </div>
 
         <li class="help-item" data-id="how-to-play">
-          How to Play <span id="arrow-how-to-play">&gt;</span>
+          How to Play
         </li>
         <div id="how-to-play" class="help-dropdown hidden">
           <p>At the top of the screen, you'll see your age, income, and net worth. These update as you progress.</p>
@@ -111,21 +113,21 @@
         </div>
 
         <li class="help-item" data-id="budget">
-          Progress & Income <span id="arrow-budget">&gt;</span>
+          Progress & Income
         </li>
         <div id="budget" class="help-dropdown hidden">
           The progress bar shows your aging timeline. Your income and net worth update based on job paths and decisions.
         </div>
 
         <li class="help-item" data-id="life-events">
-          Life Events <span id="arrow-life-events">&gt;</span>
+          Life Events
         </li>
         <div id="life-events" class="help-dropdown hidden">
           Expect bills, emergencies, and opportunities. Your decisions shape your financial outcome.
         </div>
 
         <li class="help-item" data-id="tips">
-          Strategy Tips <span id="arrow-tips">&gt;</span>
+          Strategy Tips
         </li>
         <div id="tips" class="help-dropdown hidden">
           Save early, avoid debt, invest smart, and enjoy life — balance is key!

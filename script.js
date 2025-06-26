@@ -944,30 +944,27 @@ document.addEventListener("DOMContentLoaded", () => {
     helpSidebar.classList.add("hidden");
   });
 
-  // Toggle each help section dropdown
+  // Toggle each help section dropdown and arrow rotation
   const helpItems = document.querySelectorAll(".help-item");
-  helpItems.forEach((item) => {
+    helpItems.forEach((item) => {
     item.addEventListener("click", () => {
-      const id = item.getAttribute("data-id");
-      const dropdown = document.getElementById(id);
-      const arrow = document.getElementById(`arrow-${id}`);
+        const id = item.getAttribute("data-id");
+        const dropdown = document.getElementById(id);
 
-      const isOpen = !dropdown.classList.contains("hidden");
+        if (!dropdown) return; // safety check
 
-      if (isOpen) {
+        const isOpen = !dropdown.classList.contains("hidden");
+
+        if (isOpen) {
         dropdown.classList.add("hidden");
-        arrow.innerHTML = "&gt;";
-      } else {
+        item.classList.remove("expanded");  // toggle here on the item
+        } else {
         dropdown.classList.remove("hidden");
-        arrow.innerHTML = "&or;";
-      }
+        item.classList.add("expanded");     // toggle here on the item
+        }
     });
-  });
+    });
+
 
   initGame();
 });
-
-
-
-
-

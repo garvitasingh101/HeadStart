@@ -276,22 +276,26 @@ h1 {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: linear-gradient(135deg, #5F9632 80%, #427AA1 100%);
+  background: linear-gradient(135deg, #5F9632 75%, #427AA1 100%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 54px;
-  height: 54px;
-  font-size: 26px;
+  width: 56px;  /* slightly bigger for better tap target */
+  height: 56px;
+  font-size: 28px;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.12);
-  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.25);
+  transition: background 0.3s ease, transform 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .help-button:hover {
-  background: linear-gradient(135deg, #4a7a2a 80%, #325a7a 100%);
-  transform: scale(1.08);
+  background: linear-gradient(135deg, #4a7a2a 75%, #325a7a 100%);
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(50, 90, 122, 0.4);
 }
 
 /* Help Sidebar */
@@ -300,15 +304,17 @@ h1 {
   top: 0;
   right: 0;
   height: 100vh;
-  width: 300px;
-  max-width: 90%;
-  background-color: #0e1a2f;
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
-  padding: 20px;
+  width: 320px;           /* slightly wider */
+  max-width: 90vw;
+  background-color: #0f213e; /* richer navy */
+  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.35);
+  padding: 30px 25px;    /* more padding for spaciousness */
   z-index: 2000;
   overflow-y: auto;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e0e6f1;
 }
 
 .help-sidebar:not(.hidden) {
@@ -320,59 +326,101 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: #d9e3f0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 20px;
+  border-bottom: 1.5px solid #3f5a90;
+  padding-bottom: 10px;
 }
 
 /* Close Button */
 .close-btn {
-  font-size: 26px;
+  font-size: 28px;
   cursor: pointer;
-  color: #fff;
-  background: none;
+  color: #a0b8dc;
+  background: transparent;
   border: none;
-  transition: color 0.2s;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .close-btn:hover {
   color: #5F9632;
+  background-color: rgba(95, 150, 50, 0.15);
 }
 
 /* Help List Styles */
 .help-list {
   list-style: none;
   padding: 0;
-  margin: 24px 0;
+  margin: 24px 0 0 0;
 }
 
 .help-item {
-  background: #36539f;
-  padding: 16px 18px;
-  margin: 10px 0;
-  border-radius: 9px;
-  font-weight: 500;
+  background: linear-gradient(90deg, #36539f 0%, #2a4178 100%);
+  padding: 14px 20px;
+  margin: 12px 0;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: background 0.2s;
-  color: #fff;
+  transition: background 0.25s ease, box-shadow 0.2s ease;
+  color: #f0f4ff;
+  box-shadow: 0 1px 5px rgba(33, 67, 140, 0.3);
 }
 
 .help-item:hover {
-  background: #22305a;
+  background: linear-gradient(90deg, #22305a 0%, #1b2749 100%);
+  box-shadow: 0 4px 12px rgba(33, 67, 140, 0.6);
 }
 
-/* Help Dropdown Content */
+.help-item::after {
+  content: '▶'; 
+  font-size: 14px;
+  color: #a0c37e;
+  margin-left: 12px;
+  transition: transform 0.25s ease;
+}
+
+.help-item.expanded::after {
+  transform: rotate(90deg); /* rotate arrow when expanded */
+}
+
 .help-dropdown {
-  background-color: #1c2a50;
-  padding: 10px 15px;
+  background-color: #1c2e58;
+  padding: 14px 18px;
   font-size: 0.95rem;
-  color: #ccc;
-  border-left: 4px solid #4caf50;
-  margin: 0 0 10px 0;
+  color: #b8c6db;
+  border-left: 5px solid #4caf50;
+  margin: 8px 0 16px 0;
+  border-radius: 0 8px 8px 0;
+  line-height: 1.45;
+  user-select: text;
 }
 
-/* Hidden Class (toggle content visibility) */
+/* Scrollbar styling for sidebar */
+.help-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.help-sidebar::-webkit-scrollbar-track {
+  background: #0a1530;
+}
+
+.help-sidebar::-webkit-scrollbar-thumb {
+  background: #4caf50;
+  border-radius: 4px;
+}
+
+.help-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #3a8c32;
+}
+
 .hidden {
   display: none;
 }
@@ -467,65 +515,88 @@ input[type="text"] {
     width: 200px;
 }
 
-/* Interactive Q&A */
+/* Enhanced Q&A Section */
 .question-description {
-  background-color: #FEFDF7;
-  border-radius: 12px;
-  padding: 5px;
-  margin-bottom: 22px;
+  background: #fdfcf7;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 3px solid #18781b;
+  max-width: 1000px;
+  margin: auto;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06);
-  border: 3px solid #c91a63;
 }
 
 .question-description h1 {
-    color: #c91a63;
-    font-size: 30px;
-    margin-top: 25px;
+  color: #18781b;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.question-description .q-sub {
+  font-style: italic;
+  color: #3d3d3d;
+  font-size: 17px;
+  margin-bottom: 25px;
 }
 
 .input-group {
-    display: flex;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: stretch;
+  border: 2px solid #18781b;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  margin-bottom: 25px;
 }
 
 #user-question {
-    flex: 1;
-    padding: 12px;
-    border-radius: 5px 0 0 5px;
-    font-size: 16px;
-    border: 2px solid #c91a63;
-    margin-right: 10px;
+  flex-grow: 1;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  outline: none;
 }
 
 #ask-button {
-    padding: 12px 20px;
-    background-color: #c91a63;
-    color: white;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+  background-color: #18781b;
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #ask-button:hover {
-    background-color: #a10948; /* Darker shade on hover */
-  transform: translateY(-2px) scale(1.03);
+  background-color: #18781b;
+  transform: scale(1.03);
 }
 
 .answer-box {
-    min-height: 80px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    border-left: 4px solid #101E3E;
-    border-right: 4px solid #101E3E;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: left;
+  border-left: 5px solid #101E3E;
+  border-right: 5px solid #101E3E;
+  font-size: 16px;
+  color: #333;
+  min-height: 100px;
 }
 
 .answer-box p {
-    margin: 0;
+  margin: 0 0 12px;
 }
 
+.answer-box {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 
