@@ -54,7 +54,12 @@
     <main class="game-content" style="margin-top: 17px;">
       <div id="options-panel" class="options-panel"></div>
       <div id="message-panel" class="message-panel">
-        <h2>Your Financial Journey</h2>
+        <div class="journey-header">
+            <h2>Your Financial Journey</h2>
+            <div class="chart-container">
+                <canvas id="net-worth-chart"></canvas>
+            </div>
+        </div>
         <div id="message-log" class="message-log"></div>
       </div>
     </main>
@@ -141,5 +146,6 @@
 
   <script src="./script.js"></script>
   <script src="./q&a.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

@@ -5,6 +5,9 @@ let income = 0;
 let age = 18; 
 let career = ""; 
 let currentStage = "18-27"; 
+let netWorthHistory = [1000]; // Starting chart with initial net worth
+let ageHistory =  [18]; // Starting chart with initial age
+let netWorthChart;
 
 // Personality traits (being tracked)
 const personalityTraits = {
@@ -55,9 +58,18 @@ function startGame() {
         alert("Please enter your name to start the game!");
         return;
     }
+
+    // Resets the history when starting new game
+    netWorthHistory = [1000];
+    ageHistory = [18];
+    
     welcomeScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
     questionContainer.classList.remove('hidden');
+    
+    // Makes a new chart
+    initializeChart();
+
     // Add initial message
     addMessage(`👋 Hello ${playerName}, welcome to Head $tart! You are 18 years old and have a starting net worth of $${netWorth}.`, '#c91a63');
     addMessage("To view instructions and our purpose, click on the \"?\" button! To stop at any time, type \"STOP\". Good Luck!", '#c91a63');
@@ -70,6 +82,17 @@ function updateUI() {
     currentAgeDisplay.textContent = age;
     currentIncomeDisplay.textContent = income;
     currentNetWorthDisplay.textContent = netWorth;
+
+    // Update net worth history
+    netWorthHistory.push(netWorth);
+    ageHistory.push(age);
+
+    // Update chart
+    if (netWorthChart) {
+        netWorthChart.data.labels = ageHistory;
+        netWorthChart.data.datasets[0].data = netWorthHistory;
+        netWorthChart.update();
+    }
 
     // Update progress bar (scaled to show progress through life stages)
     let progressPercentage = 0;
@@ -793,6 +816,63 @@ function age58_67() {
     ], "letter");
 }
 
+function initializeChart() {
+    const ctx = document.getElementById('net-worth-chart');
+    
+    netWorthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ageHistory,
+            datasets: [{
+                label: 'Net Worth',
+                data: netWorthHistory,
+                borderColor: '#5F9632',
+                backgroundColor: 'rgba(95, 150, 50, 0.1)',
+                borderWidth: 2,
+                tension: 0.1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `Net Worth: $${context.raw.toLocaleString()}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        maxRotation: 0,
+                        minRotation: 0,
+                        autoSkip: true,
+                        maxTicksLimit: 6
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        callback: function(value) {
+                            if (value >= 1000000) {
+                                return '$' + (value/1000000).toFixed(1) + 'M';
+                            }
+                            if (value >= 1000) {
+                                return '$' + (value/1000).toFixed(0) + 'K';
+                            }
+                            return '$' + value;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
 
 // Random events that can happen during the game
 function randomEvents() {
@@ -915,6 +995,14 @@ function gameOver() {
                 Object.keys(personalityTraits).forEach(trait => {
                     personalityTraits[trait] = 0;
                 });
+                
+                // Reset chart data
+                netWorthHistory = [1000];
+                ageHistory = [18];
+
+                // Remove old chart
+                const oldChart = document.getElementById('net-worth-chart');
+                if (oldChart) oldChart.remove();
 
                 // Clear messages
                 messageLog.innerHTML = '';
