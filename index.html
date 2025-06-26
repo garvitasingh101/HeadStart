@@ -72,26 +72,23 @@
             </div>
       </div>
     </div>
-  
 
     <!-- Help Button -->
     <button id="help-btn" class="help-button">?</button>
+    <!-- Help Sidebar -->
+    <div id="help-sidebar" class="help-sidebar hidden">
+      <div class="help-header">
+        <h2>Help Menu</h2>
+        <span id="close-help" class="close-btn">&times;</span>
+      </div>
 
-    <!-- Help Modal -->
-    <div id="help-modal" class="help-modal hidden">
-      <div class="help-modal-content">
-        <div class="help-header">
-          <h2>Help Menu</h2>
-          <span id="close-help" class="close-btn">&times;</span>
-        </div>
-
-        <ul class="help-list">
-          <li class="help-item" data-id="problem">
-            Why This Matters <span id="arrow-problem">&gt;</span>
-          </li>
-          <div id="problem" class="help-dropdown hidden">
+      <ul class="help-list">
+        <li class="help-item" data-id="problem">
+          Why This Matters <span id="arrow-problem">&gt;</span>
+        </li>
+        <div id="problem" class="help-dropdown hidden">
           <p>
-          Many people struggle with budgeting, saving, and planning for the future, which often leads to debt, missed opportunities, or financial stress.
+            Many people struggle with budgeting, saving, and planning for the future, which often leads to debt, missed opportunities, or financial stress.
           </p>
           <p>
             Head$tart simulates these financial decisions so you can understand how choices you make every day affect your financial health over time. By playing, you’ll gain insight into:
@@ -103,41 +100,39 @@
           </ol>
         </div>
 
+        <li class="help-item" data-id="how-to-play">
+          How to Play <span id="arrow-how-to-play">&gt;</span>
+        </li>
+        <div id="how-to-play" class="help-dropdown hidden">
+          <p>At the top of the screen, you'll see your age, income, and net worth. These update as you progress.</p>
+          <p>When making choices, type the letter (like "a") or number (like "1") shown next to an option, then press Enter or click Submit.</p>
+          <p>The right panel displays how your choice affected your character and finances.</p>
+          <p>Your goal is to build strong financial habits and a high net worth before retirement!</p>
+        </div>
 
-          <li class="help-item" data-id="how-to-play">
-            How to Play <span id="arrow-how-to-play">&gt;</span>
-          </li>
-          <div id="how-to-play" class="help-dropdown hidden">
-            <p>At the top of the screen, you'll always see your current age, income, and net worth. These numbers change in real-time as you make decisions. Your age will automatically increase as you progress through the game, while your income and net worth react to the choices you make. </p>
-            <p>When faced with a decision, you'll see options presented in green panels on the left side of the screen. To choose an option, type the corresponding letter (like "a" or "b") or number (like "1" or "2") and either press Enter on your keyboard or click the Submit button.</p>
-            <p>After each decision, the right panel will show you the consequences of your choice. This is where you'll get personalized feedback about your decisions and a narrative formed for your story.</p>
-            <p>The game continues until you reach retirement age. Your goal is to become financially aware and work towards building a high net worth while also time for experiences.</p>
-          </div>
+        <li class="help-item" data-id="budget">
+          Progress & Income <span id="arrow-budget">&gt;</span>
+        </li>
+        <div id="budget" class="help-dropdown hidden">
+          The progress bar shows your aging timeline. Your income and net worth update based on job paths and decisions.
+        </div>
 
-          <li class="help-item" data-id="budget">
-            Progress & Income <span id="arrow-budget">&gt;</span>
-          </li>
-          <div id="budget" class="help-dropdown hidden">
-            The progress bar tracks your age as you advance toward retirement, and your income is based on your current job or education path. Everyone starts with $1,000 net worth, but make sure to keep a watch on it to see how it changes!
-          </div>
+        <li class="help-item" data-id="life-events">
+          Life Events <span id="arrow-life-events">&gt;</span>
+        </li>
+        <div id="life-events" class="help-dropdown hidden">
+          Expect bills, emergencies, and opportunities. Your decisions shape your financial outcome.
+        </div>
 
-          <li class="help-item" data-id="life-events">
-            Life Events <span id="arrow-life-events">&gt;</span>
-          </li>
-          <div id="life-events" class="help-dropdown hidden">
-            Expect bills, emergencies, and opportunities. Your choices impact your net worth and game outcome.
-          </div>
-
-          <li class="help-item" data-id="tips">
-            Strategy Tips <span id="arrow-tips">&gt;</span>
-          </li>
-          <div id="tips" class="help-dropdown hidden">
-            Save early, avoid debt, and invest wisely to grow your net worth over time - but don’t forget to enjoy life along the way. Balance is key!
-          </div>
-
-        </ul>
-      </div>
+        <li class="help-item" data-id="tips">
+          Strategy Tips <span id="arrow-tips">&gt;</span>
+        </li>
+        <div id="tips" class="help-dropdown hidden">
+          Save early, avoid debt, invest smart, and enjoy life — balance is key!
+        </div>
+      </ul>
     </div>
+
   </div>
 
   <script src="./script.js"></script>

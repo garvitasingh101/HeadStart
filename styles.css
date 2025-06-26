@@ -271,6 +271,7 @@ h1 {
 
 
 /* === Floating Help Button === */
+/* Help Button */
 .help-button {
   position: fixed;
   bottom: 24px;
@@ -293,20 +294,28 @@ h1 {
   transform: scale(1.08);
 }
 
-.help-modal {
+/* Help Sidebar */
+.help-sidebar {
   position: fixed;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 500px;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 300px;
+  max-width: 90%;
   background-color: #0e1a2f;
-  border-radius: 12px;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
   padding: 20px;
   z-index: 2000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
 }
 
+.help-sidebar:not(.hidden) {
+  transform: translateX(0%);
+}
+
+/* Header */
 .help-header {
   display: flex;
   justify-content: space-between;
@@ -314,6 +323,7 @@ h1 {
   color: white;
 }
 
+/* Close Button */
 .close-btn {
   font-size: 26px;
   cursor: pointer;
@@ -327,6 +337,7 @@ h1 {
   color: #5F9632;
 }
 
+/* Help List Styles */
 .help-list {
   list-style: none;
   padding: 0;
@@ -344,12 +355,14 @@ h1 {
   justify-content: space-between;
   align-items: center;
   transition: background 0.2s;
+  color: #fff;
 }
 
 .help-item:hover {
   background: #22305a;
 }
 
+/* Help Dropdown Content */
 .help-dropdown {
   background-color: #1c2a50;
   padding: 10px 15px;
@@ -357,9 +370,12 @@ h1 {
   color: #ccc;
   border-left: 4px solid #4caf50;
   margin: 0 0 10px 0;
-  /* Removed display:none, now controlled by .hidden */
 }
 
+/* Hidden Class (toggle content visibility) */
+.hidden {
+  display: none;
+}
 /* === Responsive Styles === */
 @media (max-width: 900px) {
   .welcome-container,

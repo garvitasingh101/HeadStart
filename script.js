@@ -1034,6 +1034,40 @@ function reflectOnPersonality() {
         addMessage("You love to value life experiences! You sought joy in travel, socializing, and meaningful moments over strict financial discipline.");
         addMessage("While your memories are invaluable and great for your mental health, a bit more financial planning—like setting aside funds for the future or investing could have ensured long-term security while still allowing for adventure.", '#5F9632');
     }
+
+    // Assign Personality Title To Add An Element Of Fun
+        let title = "";
+
+        if (
+        personalityTraits.risk_taker > 5 &&
+        personalityTraits.luxury_spender > 5
+        ) {
+        title = "Title Earned: The YOLO Spender";
+        } else if (
+        personalityTraits.cautious > 5 &&
+        personalityTraits.frugal > 5
+        ) {
+        title = "Title Earned: The Safe Strategist";
+        } else if (
+        personalityTraits.experience_seeker > 5 &&
+        personalityTraits.risk_taker > 4
+        ) {
+        title = "Title Earned: The Adventurous Explorer";
+        } else if (
+        personalityTraits.career_focused > 6
+        ) {
+        title = "Title Earned: The Career Climber";
+        } else if (
+        personalityTraits.frugal > 3 &&
+        personalityTraits.experience_seeker > 3
+        ) {
+        title = "Title Earned: The Balanced Planner";
+        } else {
+        title = "Title Earned: The Reflective Learner";
+        }
+
+        addMessage(`\n${title}`, "#FFD700"); // gold color
+
 }
 
 function gameOver() {
@@ -1067,20 +1101,20 @@ function gameOver() {
     ], "letter");
 }
 
-// Help Modal Functionality
+// Help sidebar functionality
 document.addEventListener("DOMContentLoaded", () => {
   const helpBtn = document.getElementById("help-btn");
-  const helpModal = document.getElementById("help-modal");
+  const helpSidebar = document.getElementById("help-sidebar");
   const closeHelp = document.getElementById("close-help");
 
-  // Open Help Modal when help button clicked
+  // Open Help Sidebar when help button clicked
   helpBtn.addEventListener("click", () => {
-    helpModal.classList.remove("hidden");
+    helpSidebar.classList.remove("hidden");
   });
 
-  // Close Help Modal when close button clicked
+  // Close Help Sidebar when close button clicked
   closeHelp.addEventListener("click", () => {
-    helpModal.classList.add("hidden");
+    helpSidebar.classList.add("hidden");
   });
 
   // Toggle each help section dropdown
@@ -1095,16 +1129,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isOpen) {
         dropdown.classList.add("hidden");
-        arrow.innerHTML = "&gt;"; // closed arrow
+        arrow.innerHTML = "&gt;";
       } else {
         dropdown.classList.remove("hidden");
-        arrow.innerHTML = "&or;"; // open arrow
+        arrow.innerHTML = "&or;";
       }
     });
   });
 
   initGame();
 });
+
 
 
 
