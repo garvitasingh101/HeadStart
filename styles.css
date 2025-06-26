@@ -1,91 +1,96 @@
-/* === Base Reset === */
+/* === Base Body Styles === */
 body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #101E3E; /* Deep blue background */
+  color: #223;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #101E3E;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-}
-
-/* === Welcome Wrapper === */
-.welcome-wrapper {
-  width: 100%;
-  padding: 40px 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
-/* === Main Card === */
-.welcome-card {
+/* === Main Containers === */
+.welcome-container,
+.game-container,
+.question-container {
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(16, 30, 62, 0.18);
+  transition: box-shadow 0.2s;
+}
+
+.welcome-container {
   background-color: #FEFDF7;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(16, 30, 62, 0.25);
-  max-width: 900px;
-  width: 100%;
-  padding: 50px 40px;
   text-align: center;
-  animation: fadeIn 0.8s ease-out;
-}
-
-/* === Header === */
-.welcome-header h1 {
-  font-size: 52px;
-  font-weight: 700;
-  margin-bottom: 12px;
+  min-height: 260px;
+  padding: 50px 30px;
+  margin-top: 60px;
   color: #427AA1;
-}
-
-.head {
-  color: #101E3E;
-}
-
-.dollar {
-  color: #5F9632;
-}
-
-.exclaim {
-  color: #427AA1;
-}
-
-.subtitle {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #2d3e50;
-  margin-bottom: 28px;
-}
-
-/* === Body === */
-.welcome-body p {
-  font-size: 1.15rem;
-  color: #3a4d63;
-  line-height: 1.7;
-  max-width: 720px;
-  margin: 0 auto 40px;
-}
-
-/* === Footer === */
-.welcome-footer {
+  max-width: 1100px;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  animation: fadeIn 1s ease-out;
 }
 
-/* === Input === */
+.game-container,
+.question-container {
+  background-color: #427AA1;
+  width: 90%;
+  color: #223;
+  margin-top: 24px;
+  padding: 28px 24px;
+}
+
+/* === Welcome Content === */
+.welcome-content h1 {
+  font-size: 54px;
+  margin-bottom: 12px;
+  color: #427AA1;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: #2d3e50;
+}
+
+.game-description p {
+  max-width: 780px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #3a4d63;
+  padding: 0 10px;
+}
+
+/* === Player Info Section === */
+.player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+/* === Player Name Input === */
 #player-name {
-  padding: 14px 20px;
-  font-size: 18px;
-  width: 100%;
-  max-width: 320px;
-  border-radius: 8px;
+  padding: 13px 18px;
+  border-radius: 6px;
   border: 1.5px solid #427AA1;
-  background-color: #f7fafc;
-  box-shadow: 0 2px 6px rgba(66, 122, 161, 0.12);
+  font-size: 19px;
+  max-width: 320px;
+  width: 100%;
+  background: #f7fafc;
+  color: #223;
   transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(66, 122, 161, 0.12);
 }
 
 #player-name:focus {
@@ -98,26 +103,77 @@ body {
 .play-button {
   background-color: #5F9632;
   color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 12px 36px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
+  padding: 13px 36px;
+  font-size: 19px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  box-shadow: 0 2px 8px rgba(95, 150, 50, 0.12);
+  box-shadow: 0 2px 8px rgba(95, 150, 50, 0.08);
+  transition: all 0.2s ease-in-out;
 }
 
 .play-button:hover {
   background-color: #4a7a2a;
-  transform: translateY(-2px) scale(1.04);
+  transform: translateY(-2px) scale(1.05);
 }
 
-/* === Animation === */
+/* === Utility Classes === */
+.hidden {
+  display: none !important;
+}
+
+.show {
+  display: block !important;
+}
+
+/* === Header Styles === */
+header {
+  background-color: #FEFDF7;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 22px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06);
+}
+
+h1 {
+  margin: 0;
+  font-size: 56px;
+  color: #427AA1;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.head {
+  color: #101E3E;
+}
+
+.dollar {
+  color: #5F9632;
+}
+
+/* === Stats Bar === */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 18px;
+  font-weight: 600;
+  font-size: 19px;
+  color: #325a7a;
+}
+
+/* === Main Game Content Layout === */
+.game-content {
+  display: flex;
+  gap: 28px;
+}
+
+/* === Animations === */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -127,11 +183,7 @@ body {
 
 /* === Responsive === */
 @media (max-width: 768px) {
-  .welcome-card {
-    padding: 40px 24px;
-  }
-
-  .welcome-header h1 {
+  .welcome-content h1 {
     font-size: 40px;
   }
 
@@ -139,15 +191,17 @@ body {
     font-size: 1.2rem;
   }
 
-  .welcome-body p {
+  .game-description p {
     font-size: 1rem;
   }
 
+  #player-name,
   .play-button {
     font-size: 17px;
-    padding: 12px 28px;
+    padding: 11px 20px;
   }
 }
+
 
 /* === Panels === */
 .options-panel,
