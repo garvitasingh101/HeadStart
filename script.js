@@ -210,22 +210,12 @@ function getAJob() {
     career = names[Math.floor(Math.random() * names.length)];
     income = jobs[career];
     netWorth += income;
+
     addMessage(`\nYou land a job as a ${career} and earn $${income}/yr.`, "#c91a63");
-    setTimeout(() => {
-    // Message after .6s
     addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
-    
-    setTimeout(() => {
-        // Update UI after another .6s
-        updateUI();
-        
-        setTimeout(() => {
-            // Offer first path after another .6s
-            age18_27();
-        }, 900);
-    }, 900);
-}, 900);
-    
+
+    updateUI();
+    age18_27();
 }
 
 function goToCollege() {
@@ -328,26 +318,17 @@ function collegeJob() {
     netWorth += income;
 
     addMessage(`\nAfter years of hard work, you graduate and land a job as a ${career}, earning $${income} per year!`, "#c91a63");
-    setTimeout(() => {
     addMessage("A job after college will usually be more lucrative than without college!");
-    
-    setTimeout(() => {
-        addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
-        
-        setTimeout(() => {
-            updateUI();
+    addMessage("Make sure to keep a watch on your net worth above!", "#5F9632");
 
-            setTimeout(() => {
-                age18_27();
-            }, 900);
-        }, 900);
-    }, 900);
-}, 900);
-
+    updateUI();
+    age18_27();
 }
+
 // Age 18–27 decisions
 function age18_27() {
     addMessage("\nWelcome to adulthood! Your future starts here. What will you prioritize?", "#c91a63");
+
     addOptions("What will you prioritize?", [
         {
             text: "💰 Invest in stocks (High risk, high reward)",
@@ -355,30 +336,20 @@ function age18_27() {
                 personalityTraits.risk_taker++;
                 const stockInvestment = Math.floor(Math.random() * 9000) + 1000;
                 netWorth += stockInvestment;
-                
-                addMessage(`\nSmart move! Your stock investments earned you $${stockInvestment}.`, "#c91a63");
-                setTimeout(() => {
-                addMessage("Investing in stocks early helps your money grow over time through compounding, but you are neglecting important personal spendings such as transportation");
-                
-                setTimeout(() => {
-                    addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
-                    
-                    setTimeout(() => {
-                        updateUI();
 
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
-            }, 900);
-        }
-    },
-    {
-        text: "🚙 Decide on your primary mode of transportation",
-        action: () => {
-            addMessage("\nGood on you for getting started on what's a necessity!");
-            presentTransportOptions();
+                addMessage(`\nSmart move! Your stock investments earned you $${stockInvestment}.`, "#c91a63");
+                addMessage("Investing in stocks early helps your money grow over time through compounding, but you are neglecting important personal spendings such as transportation.");
+                addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
+
+                updateUI();
+                financialDecisions();
+            }
+        },
+        {
+            text: "🚙 Decide on your primary mode of transportation",
+            action: () => {
+                addMessage("\nGood on you for getting started on what's a necessity!");
+                presentTransportOptions();
             }
         },
         {
@@ -389,49 +360,31 @@ function age18_27() {
                 netWorth -= educationCost;
                 const salaryIncrease = Math.floor(Math.random() * 10000) + 10000;
                 income += salaryIncrease;
-                addMessage(`\nInvesting in education cost $${educationCost}, but your salary increased by $${salaryIncrease}`, "#c91a63");
-                setTimeout(() => {
-                addMessage("It's great that you realize that the learning doesn't stop after 18 years old. There's always place for promotions and growth!");
-                
-                setTimeout(() => {
-                    addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
-                    
-                    setTimeout(() => {
-                        updateUI();
 
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
-            }, 900);
-        }
-    },
-    {
-        text: "💸 Invest in cryptocurrency (High risk, high reward)",
-        action: () => {
-            personalityTraits.risk_taker++;
+                addMessage(`\nInvesting in education cost $${educationCost}, but your salary increased by $${salaryIncrease}.`, "#c91a63");
+                addMessage("It's great that you realize that the learning doesn't stop after 18 years old. There's always room for promotions and growth!");
+                addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
+
+                updateUI();
+                financialDecisions();
+            }
+        },
+        {
+            text: "💸 Invest in cryptocurrency (High risk, high reward)",
+            action: () => {
+                personalityTraits.risk_taker++;
                 const cryptoInvestment = Math.floor(Math.random() * 20000) - 10000;
                 netWorth += cryptoInvestment;
-                addMessage(`\nYour crypto investment yielded $${cryptoInvestment}.`, "#c91a63");
-                setTimeout(() => {
-                addMessage("This is a great and modern investment, and it will provide you wonders for the future! Make sure to take charge of life's necessities like transportation, however.");
-                
-                setTimeout(() => {
-                    addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
-                    
-                    setTimeout(() => {
-                        updateUI();
 
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
-            }, 900);
+                addMessage(`\nYour crypto investment yielded $${cryptoInvestment}.`, "#c91a63");
+                addMessage("This is a great and modern investment, and it will provide you wonders for the future! Make sure to take charge of life's necessities like transportation, however.");
+                addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
+
+                updateUI();
+                financialDecisions();
+            }
         }
-    }
-], "letter");
+    ], "letter");
 }
 
 function presentTransportOptions() {
@@ -465,13 +418,10 @@ function handleTransportChoice(choice) {
 
     netWorth -= transportCosts[choice];
     addMessage(`\nYou spent $${transportCosts[choice]} on transportation. This will definitely pay off in the long run though!`, "#c91a63");
-    setTimeout(() => {
-        updateUI();
-        setTimeout(() => {
-            financialDecisions();
-        }, 900);
-    }, 900);
+    updateUI();
+    financialDecisions();
 }
+
 
 // Financial decisions that can be made at any stage
 function financialDecisions() {
@@ -485,14 +435,10 @@ function financialDecisions() {
                 netWorth += savings;
                 personalityTraits.cautious++;
                 personalityTraits.frugal++;
-                addMessage(`\nYou saved 50% of your income ($${savings}).`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    setTimeout(() => {
-                        ageTransition();
-                    }, 900);
-                }, 900);
 
+                addMessage(`\nYou saved 50% of your income ($${savings}).`, "#c91a63");
+                updateUI();
+                ageTransition();
             }
         },
         {
@@ -501,13 +447,10 @@ function financialDecisions() {
                 const investResult = [100, 5000, 10000, 50000, 25000, 20000][Math.floor(Math.random() * 6)];
                 netWorth += investResult;
                 personalityTraits.risk_taker++;
+
                 addMessage(`\nYour stock investment returned $${investResult}.`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    setTimeout(() => {
-                        ageTransition();
-                    }, 900);
-                }, 900);
+                updateUI();
+                ageTransition();
             }
         },
         {
@@ -516,13 +459,10 @@ function financialDecisions() {
                 const luxuryResult = -[10000, 5000, 1000, 2000][Math.floor(Math.random() * 4)];
                 netWorth += luxuryResult;
                 personalityTraits.luxury_spender++;
+
                 addMessage(`\nYou spent $${Math.abs(luxuryResult)} on luxury.`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    setTimeout(() => {
-                        ageTransition();
-                    }, 900);
-                }, 900);
+                updateUI();
+                ageTransition();
             }
         },
         {
@@ -532,17 +472,15 @@ function financialDecisions() {
                 netWorth += retireSavings;
                 personalityTraits.cautious++;
                 personalityTraits.frugal++;
+
                 addMessage(`\nYou saved for retirement, adding $${retireSavings}.`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    setTimeout(() => {
-                        ageTransition();
-                    }, 900);
-                }, 900);
+                updateUI();
+                ageTransition();
             }
         }
     ], "number");
 }
+
 // Handle age transitions
 function ageTransition() {
     age += 9;
@@ -586,18 +524,9 @@ function age28_37() {
                 const houseCost = Math.floor(Math.random() * 500000) + 100000;
                 netWorth -= houseCost;
                 addMessage(`\nYou bought a house for $${houseCost}. Home sweet home!`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("Buying a house provides stability, builds equity, and can be a valuable long-term investment!");
-                    
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
-            
+                addMessage("Buying a house provides stability, builds equity, and can be a valuable long-term investment!");
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -607,17 +536,9 @@ function age28_37() {
                 const rentCost = Math.floor(Math.random() * 15000) + 5000;
                 netWorth -= rentCost;
                 addMessage(`\nYou rented a house for $${rentCost}. Home sweet home!`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("Renting a house offers flexibility, lower upfront costs, and fewer maintenance responsibilities.");
-
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
+                addMessage("Renting a house offers flexibility, lower upfront costs, and fewer maintenance responsibilities.");
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -636,13 +557,8 @@ function age28_37() {
                 netWorth += salaryIncrease;
                 income += salaryIncrease;
                 addMessage(`\nYou focused on advancing your career and received a salary increase of $${salaryIncrease}.`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         }
     ], "letter");
@@ -656,13 +572,8 @@ function presentFamilyOptions() {
                 const cost = Math.floor(Math.random() * 490000) + 10000;
                 netWorth -= cost;
                 addMessage(`\nYou had a wedding and spent $${cost}. I heard it was fun!`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -671,13 +582,8 @@ function presentFamilyOptions() {
                 const cost = Math.floor(Math.random() * 80000) + 10000;
                 netWorth -= cost;
                 addMessage(`\nYou had a child and spent $${cost}. Treasure these years!`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -686,19 +592,13 @@ function presentFamilyOptions() {
                 const cost = Math.floor(Math.random() * 4000) + 1000;
                 netWorth -= cost;
                 addMessage(`\nYou got a pet and spent $${cost}. What will you name it?`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         }
     ], "letter");
 }
 
-// Age 38–47 decisions
 function age38_47() {
     addOptions("What will you choose?", [
         {
@@ -715,13 +615,8 @@ function age38_47() {
                 const healthCost = Math.floor(Math.random() * 4000) + 1000;
                 netWorth -= healthCost;
                 addMessage(`\nYou invested in your health and spent $${healthCost}. You're better off both healthy and financially aware!`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -731,17 +626,9 @@ function age38_47() {
                 const mortgagePayment = Math.floor(Math.random() * 40000) + 10000;
                 netWorth -= mortgagePayment;
                 addMessage(`\nYou paid off your mortgage and spent $${mortgagePayment}.`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("Paying off your mortgage means less debt and more financial freedom.");
-
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
+                addMessage("Paying off your mortgage means less debt and more financial freedom.");
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -751,17 +638,9 @@ function age38_47() {
                 const vacationCost = Math.floor(Math.random() * 4000) + 1000;
                 netWorth -= vacationCost;
                 addMessage(`\nYou took a vacation and spent $${vacationCost}.`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("A vacation gives you a break from routine, helps reduce stress, and allows you to relax or explore new places.");
-
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
+                addMessage("A vacation gives you a break from routine, helps reduce stress, and allows you to relax or explore new places.");
+                updateUI();
+                financialDecisions();
             }
         }
     ], "letter");
@@ -807,13 +686,8 @@ function handleRetirementChoice(choice) {
     }
 
     addMessage(message, "#c91a63");
-    setTimeout(() => {
-        updateUI();
-        
-        setTimeout(() => {
-            financialDecisions();
-        }, 900);
-    }, 900);
+    updateUI();
+    financialDecisions();
 }
 
 // Age 48–57 decisions
@@ -827,17 +701,9 @@ function age48_57() {
                 const investment = Math.floor(Math.random() * 70000) + 10000;
                 netWorth += investment;
                 addMessage(`\nYou chose to start a new investment portfolio. Your investments grow and you accumulate $${investment}.`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("An investment portfolio helps spread risk and grow your money over time.");
-
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
+                addMessage("An investment portfolio helps spread risk and grow your money over time.");
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -848,13 +714,8 @@ function age48_57() {
                 const breakCost = Math.floor(Math.random() * 40000) + 10000;
                 netWorth -= breakCost;
                 addMessage(`\nYou chose to take a career break. Take the time off and enjoy!`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -864,17 +725,9 @@ function age48_57() {
                 const luxuryAssetCost = Math.floor(Math.random() * 40000) + 10000;
                 netWorth -= luxuryAssetCost;
                 addMessage(`\nYou bought a luxury asset and spent $${luxuryAssetCost}.`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("It's always important to consider your happiness first. Just work won't do any good!");
-
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
+                addMessage("It's always important to consider your happiness first. Just work won't do any good!");
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -884,17 +737,13 @@ function age48_57() {
                 const retireSavings = Math.floor(Math.random() * 40000) + 10000;
                 netWorth += retireSavings;
                 addMessage(`\nYou saved aggressively for retirement and added $${retireSavings}. Look at you go!`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         }
     ], "letter");
 }
+
 // Age 58–67 decisions
 function age58_67() {
     addOptions("How will you shape your future?", [
@@ -902,7 +751,7 @@ function age58_67() {
             text: "💲 Plan for retirement (Max out retirement savings, invest in 401k)",
             action: () => {
                 personalityTraits.cautious++;
-                presentRetirementOptions(); // Uses the same retirement menu as before
+                presentRetirementOptions(); // Still links to your existing retirement options
             }
         },
         {
@@ -913,18 +762,9 @@ function age58_67() {
                 income += 40000;
                 netWorth += income;
                 addMessage(`\nYou worked part-time and earned $${income}.`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("Working part-time keeps you engaged and provides extra income for your retirement savings.");
-
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
-
+                addMessage("Working part-time keeps you engaged and provides extra income for your retirement savings.");
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -934,18 +774,9 @@ function age58_67() {
                 const travelCost = Math.floor(Math.random() * 40000) + 10000;
                 netWorth -= travelCost;
                 addMessage(`\nYou traveled the world and spent $${travelCost}.`, "#c91a63");
-                setTimeout(() => {
-                    addMessage("It's always important to consider your happiness first. Just work won't do any good!");
-
-                    setTimeout(() => {
-                        updateUI();
-                        
-                        setTimeout(() => {
-                            financialDecisions();
-                        }, 900);
-                    }, 900);
-                }, 900);
-
+                addMessage("It's always important to consider your happiness first. Just work won't do any good!");
+                updateUI();
+                financialDecisions();
             }
         },
         {
@@ -955,17 +786,13 @@ function age58_67() {
                 const retireSavings = Math.floor(Math.random() * 50000) + 10000;
                 netWorth -= retireSavings;
                 addMessage(`\nYou moved to a retirement-friendly area and spent $${retireSavings}. Look at you go!`, "#c91a63");
-                setTimeout(() => {
-                    updateUI();
-                    
-                    setTimeout(() => {
-                        financialDecisions();
-                    }, 900);
-                }, 900);
+                updateUI();
+                financialDecisions();
             }
         }
     ], "letter");
 }
+
 
 // Random events that can happen during the game
 function randomEvents() {
