@@ -1,131 +1,42 @@
-/* === Base Body Styles === */
+/* === Base Reset === */
 body {
-  font-family: 'Segoe UI', Arial, sans-serif; /* Clean, modern font stack */
-  background-color: #101E3E; /* Deep blue background */
-  color: #223; /* Default text color */
   margin: 0;
   padding: 0;
-  min-height: 100vh;
-  display: flex; /* Center content vertically and horizontally */
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #101E3E;
+  display: flex;
   justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  align-items: center;
+  min-height: 100vh;
 }
 
-/* === Main Containers === */
-.welcome-container,
-.game-container, .question-container {
-  border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(16, 30, 62, 0.18); /* Soft shadow */
-  transition: box-shadow 0.2s;
-}
-
-.welcome-container {
-  background-color: #FEFDF7; /* Light background for contrast */
-  text-align: center;
-  min-height: 260px;
+/* === Welcome Wrapper === */
+.welcome-wrapper {
+  width: 100%;
   padding: 40px 20px;
-  margin-top: 60px;
-  color: #427AA1;
-  max-width: 1110px; /* Max width for larger screens */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.game-container, .question-container {
-  background-color: #427AA1;
-  width: 90%;
-  color: #223;
-  margin-top: 24px;
-  padding: 28px 24px;
+/* === Main Card === */
+.welcome-card {
+  background-color: #FEFDF7;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(16, 30, 62, 0.25);
+  max-width: 900px;
+  width: 100%;
+  padding: 50px 40px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
 }
 
-/* === Welcome Content === */
-.welcome-content h1 {
-  font-size: 54px;
+/* === Header === */
+.welcome-header h1 {
+  font-size: 52px;
+  font-weight: 700;
   margin-bottom: 12px;
   color: #427AA1;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.welcome-content p {
-  font-size: 22px;
-  margin-bottom: 28px;
-  color: #3a4d63;
-}
-
-
-
-/* === Player Info Section === */
-.player-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-}
-
-/* === Player Name Input === */
-#player-name {
-  padding: 13px 18px;
-  border-radius: 6px;
-  border: 1.5px solid #427AA1;
-  font-size: 19px;
-  max-width: 320px;
-  width: 100%;
-  background: #f7fafc;
-  color: #223;
-  transition: border 0.2s;
-}
-
-#player-name:focus {
-  border-color: #5F9632; /* Highlight on focus */
-  outline: none;
-}
-
-/* === Play Button === */
-.play-button {
-  background-color: #5F9632;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 13px 36px;
-  font-size: 19px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(95, 150, 50, 0.08);
-}
-
-.play-button:hover {
-  background-color: #4a7a2a; /* Darker shade on hover */
-  transform: translateY(-2px) scale(1.03);
-}
-
-/* === Utility Classes === */
-.hidden {
-  display: none !important;
-}
-
-.show {
-  display: block !important;
-}
-
-
-
-/* === Header Styles === */
-header {
-  background-color: #FEFDF7;
-  border-radius: 12px;
-  padding: 18px;
-  margin-bottom: 22px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06);
-}
-
-h1 {
-  margin: 0;
-  font-size: 56px;
-  color: #427AA1;
-  font-weight: 700;
-  letter-spacing: 1px;
 }
 
 .head {
@@ -136,20 +47,106 @@ h1 {
   color: #5F9632;
 }
 
-/* === Stats Bar === */
-.stats {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 18px;
-  font-weight: 600;
-  font-size: 19px;
-  color: #325a7a;
+.exclaim {
+  color: #427AA1;
 }
 
-/* === Main Game Content Layout === */
-.game-content {
+.subtitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2d3e50;
+  margin-bottom: 28px;
+}
+
+/* === Body === */
+.welcome-body p {
+  font-size: 1.15rem;
+  color: #3a4d63;
+  line-height: 1.7;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+
+/* === Footer === */
+.welcome-footer {
   display: flex;
-  gap: 28px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* === Input === */
+#player-name {
+  padding: 14px 20px;
+  font-size: 18px;
+  width: 100%;
+  max-width: 320px;
+  border-radius: 8px;
+  border: 1.5px solid #427AA1;
+  background-color: #f7fafc;
+  box-shadow: 0 2px 6px rgba(66, 122, 161, 0.12);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+#player-name:focus {
+  border-color: #5F9632;
+  outline: none;
+  box-shadow: 0 0 6px rgba(95, 150, 50, 0.3);
+}
+
+/* === Play Button === */
+.play-button {
+  background-color: #5F9632;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(95, 150, 50, 0.12);
+}
+
+.play-button:hover {
+  background-color: #4a7a2a;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* === Animation === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .welcome-card {
+    padding: 40px 24px;
+  }
+
+  .welcome-header h1 {
+    font-size: 40px;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .welcome-body p {
+    font-size: 1rem;
+  }
+
+  .play-button {
+    font-size: 17px;
+    padding: 12px 28px;
+  }
 }
 
 /* === Panels === */

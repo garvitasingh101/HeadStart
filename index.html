@@ -8,29 +8,33 @@
 </head>
 <body>
 
-  <!-- Welcome Screen -->
-  <div id="welcome-screen" class="welcome-container">
-    <div class="welcome-content">
+<!-- Redesigned Welcome Screen -->
+<div id="welcome-screen" class="welcome-wrapper">
+  <div class="welcome-card">
+    <div class="welcome-header">
       <h1>
-        Welcome to <span class="head">Head</span> 
-        <span class="dollar">$tart</span>!
+        Welcome to <span class="head">Head</span> <span class="dollar">$tart</span><span class="exclaim">!</span>
       </h1>
-      <p style = "font-weight: bold">Your Financial Life, Your Choices, Your Story!</p>
-      <div class="game-description" style="margin: 15px 0; font-size: 1.1rem; color: #444;">
-        <p style = "width: 90%; margin: 0 auto;">          
-          Make financial decisions you'll face in real life while seeing how far 
-          your choices can take you. From age 18 to retirement, every decision matters - through engaging scenarios and choices, you'll learn how your decisions impact 
-          your income, savings, and overall financial health. By the end, you’ll uncover your 
-          financial habits and get advice to level up your skills.
-          Can you build the future you want?
-        </p>
-      </div>
-      <div class="player-info">
-        <input type="text" id="player-name" placeholder="Enter your name" required />
-        <button id="start-game" class="play-button">Play</button>
-      </div>
+      <p class="subtitle">Your Financial Life, Your Choices, Your Story!</p>
+    </div>
+
+    <div class="welcome-body">
+      <p>
+        Make financial decisions you'll face in real life while seeing how far your choices can take you.
+        From age 18 to retirement, every decision matters – through engaging scenarios and choices,
+        you'll learn how your decisions impact your income, savings, and overall financial health.
+        <strong>By the end, you’ll uncover your financial habits and get advice to level up your skills.</strong>
+        Can you build the future you want?
+      </p>
+    </div>
+
+    <div class="welcome-footer">
+      <input type="text" id="player-name" placeholder="Enter your name" required />
+      <button id="start-game" class="play-button">Play</button>
     </div>
   </div>
+</div>
+
 
   <!-- Game Container -->
   <div id="game-container" class="game-container hidden">
