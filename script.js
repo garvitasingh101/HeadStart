@@ -817,9 +817,9 @@ function age58_67() {
 }
 
 function initializeChart() {
-    const ctx = document.getElementById('net-worth-chart');
+    const chart = document.getElementById('net-worth-chart');
     
-    netWorthChart = new Chart(ctx, {
+    netWorthChart = new Chart(chart, {
         type: 'line',
         data: {
             labels: ageHistory,
