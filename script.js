@@ -232,12 +232,10 @@ function updateUI() {
   currentAgeDisplay.textContent = age;
   currentIncomeDisplay.textContent = income;
   currentNetWorthDisplay.textContent = netWorth;
-
-  // Only add new history points if the values changed recently or at new age (avoid duplicates)
-  if (ageHistory[ageHistory.length - 1] !== age) {
-    ageHistory.push(age);
-    netWorthHistory.push(netWorth);
-  }
+  
+  ageHistory.push(age);
+  netWorthHistory.push(netWorth);
+  
 
   // Update Chart.js graph if loaded
   if (netWorthChart) {
