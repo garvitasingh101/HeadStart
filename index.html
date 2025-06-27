@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Basic page setup -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Head $tart</title>
+
+  <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Welcome Screen -->
+  <!-- ====================== WELCOME SCREEN ====================== -->
   <div id="welcome-screen" class="welcome-container">
     <div class="welcome-content">
       <h1>
@@ -16,6 +19,7 @@
       </h1>
       <p class="subtitle">Your Financial Life, Your Choices, Your Story!</p>
       
+      <!-- Game intro and mission statement -->
       <div class="game-description">
         <p>
           Make financial decisions you'll face in real life while seeing how far your choices can take you. 
@@ -26,6 +30,7 @@
         </p>
       </div>
 
+      <!-- Player name input and start button -->
       <div class="player-info">
         <input type="text" id="player-name" placeholder="Enter your name" required />
         <button id="start-game" class="play-button">Play</button>
@@ -34,12 +39,12 @@
   </div>
 
 
-  <!-- Game Container -->
+  <!-- ====================== MAIN GAME UI ====================== -->
   <div id="game-container" class="game-container hidden">
     <header>
       <h1><span class="head">Head</span> <span class="dollar">$tart</span></h1>
 
-      <!-- Player Stats -->
+      <!-- Real-time display of player stats -->
       <div class="stats">
         <div class="stat">Age: <span id="current-age">18</span></div>
         <div class="stat">Income: $<span id="current-income">0</span></div>
@@ -47,12 +52,16 @@
       </div>
     </header>
 
+    <!-- Life progress bar (based on age) -->
     <div class="progress-container">
       <div class="progress-bar" id="progress"></div>
     </div>
 
     <main class="game-content" style="margin-top: 17px;">
+      <!-- Decision options will be dynamically inserted here -->
       <div id="options-panel" class="options-panel"></div>
+
+      <!-- Message log and net worth chart area -->
       <div id="message-panel" class="message-panel">
         <div class="journey-header">
             <h2>Your Financial Journey</h2>
@@ -64,17 +73,21 @@
       </div>
     </main>
   </div>
+
+  <!-- ====================== INTERACTIVE Q&A ====================== -->
   <div id="question-container" class="question-container hidden">
     <div class="question-description">
       <h1>Interactive Q & A - Ask Away!</h1>
       <p class="q-sub">For basic help, click on "?" on the bottom right. For more in-depth questions, ask our virtual financial advisor about definitions, strategies, 
           or life decisions and get personalized guidance for your unique situation!</p>
       
+      <!-- Q&A input -->
       <div class="input-group">
         <input type="text" id="user-question" placeholder="e.g., What’s the best way to invest at 18?" />
         <button id="ask-button">Ask</button>
       </div>
       
+      <!-- Q&A response output -->
       <div id="answer-display" class="answer-box">
         <p><em>Your answer will appear here...</em></p>
       </div>
@@ -82,70 +95,63 @@
   </div>
 
 
-    <!-- Help Button -->
-    <button id="help-btn" class="help-button">?</button>
-    <!-- Help Sidebar -->
-    <div id="help-sidebar" class="help-sidebar hidden">
-      <div class="help-header">
-        <h2>Help Menu</h2>
-        <span id="close-help" class="close-btn">&times;</span>
-      </div>
+  <!-- ====================== HELP MENU ====================== -->
+  <button id="help-btn" class="help-button">?</button>
 
-      <ul class="help-list">
-        <li class="help-item" data-id="problem">
-          Why This Matters
-        </li>
-        <div id="problem" class="help-dropdown hidden">
-          <p>
-            Many people struggle with budgeting, saving, and planning for the future, which often leads to debt, missed opportunities, or financial stress.
-          </p>
-          <p>
-            Head$tart simulates these financial decisions so you can understand how choices you make every day affect your financial health over time. By playing, you’ll gain insight into:
-          </p>
-          <ol>
-            <li>How to balance income, expenses, and savings.</li>
-            <li>The impact of emergencies or opportunities on your financial stability.</li>
-            <li>The importance of planning ahead and making informed decisions.</li>
-          </ol>
-        </div>
-
-        <li class="help-item" data-id="how-to-play">
-          How to Play
-        </li>
-        <div id="how-to-play" class="help-dropdown hidden">
-          <p>At the top of the screen, you'll see your age, income, and net worth. These update as you progress.</p>
-          <p>When making choices, type the letter (like "a") or number (like "1") shown next to an option, then press Enter or click Submit.</p>
-          <p>The right panel displays how your choice affected your character and finances.</p>
-          <p>Your goal is to build strong financial habits and a high net worth before retirement!</p>
-        </div>
-
-        <li class="help-item" data-id="budget">
-          Progress & Income
-        </li>
-        <div id="budget" class="help-dropdown hidden">
-          The progress bar shows your aging timeline. Your income and net worth update based on job paths and decisions.
-        </div>
-
-        <li class="help-item" data-id="life-events">
-          Life Events
-        </li>
-        <div id="life-events" class="help-dropdown hidden">
-          Expect bills, emergencies, and opportunities. Your decisions shape your financial outcome.
-        </div>
-
-        <li class="help-item" data-id="tips">
-          Strategy Tips
-        </li>
-        <div id="tips" class="help-dropdown hidden">
-          Save early, avoid debt, invest smart, and enjoy life — balance is key!
-        </div>
-      </ul>
+  <div id="help-sidebar" class="help-sidebar hidden">
+    <div class="help-header">
+      <h2>Help Menu</h2>
+      <span id="close-help" class="close-btn">&times;</span>
     </div>
 
+    <!-- Help topics (expand/collapse on click) -->
+    <ul class="help-list">
+      <!-- Why this game exists -->
+      <li class="help-item" data-id="problem">Why This Matters</li>
+      <div id="problem" class="help-dropdown hidden">
+        <p>Many people struggle with budgeting, saving, and planning for the future...</p>
+        <p>Head$tart simulates these financial decisions so you can understand how choices affect your financial health.</p>
+        <ol>
+          <li>How to balance income, expenses, and savings.</li>
+          <li>The impact of emergencies or opportunities on your stability.</li>
+          <li>Planning ahead and making informed choices.</li>
+        </ol>
+      </div>
+
+      <!-- Game instructions -->
+      <li class="help-item" data-id="how-to-play">How to Play</li>
+      <div id="how-to-play" class="help-dropdown hidden">
+        <p>Stats update at the top as you progress.</p>
+        <p>When options appear, type the letter or number and press Submit or Enter.</p>
+        <p>Messages explain your outcomes and stats update accordingly.</p>
+      </div>
+
+      <!-- Financial overview -->
+      <li class="help-item" data-id="budget">Progress & Income</li>
+      <div id="budget" class="help-dropdown hidden">
+        The progress bar shows your aging timeline. Your income and net worth update based on choices.
+      </div>
+
+      <!-- Events that happen over time -->
+      <li class="help-item" data-id="life-events">Life Events</li>
+      <div id="life-events" class="help-dropdown hidden">
+        Expect emergencies, bills, windfalls, and chances to grow your wealth.
+      </div>
+
+      <!-- Strategy advice -->
+      <li class="help-item" data-id="tips">Strategy Tips</li>
+      <div id="tips" class="help-dropdown hidden">
+        Save early, avoid unnecessary debt, invest wisely, and enjoy the ride. Balance is key!
+      </div>
+    </ul>
   </div>
 
+  <!-- ====================== SCRIPTS ====================== -->
+  <!-- Game logic -->
   <script src="./script.js"></script>
+  <!-- Q&A interaction logic -->
   <script src="./q&a.js"></script>
+  <!-- Chart.js for net worth graph -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
