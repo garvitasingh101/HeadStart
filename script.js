@@ -1108,31 +1108,28 @@ function randomEvents() {
         addMessage(`\nAt age ${age}: ${event.message} (Net worth: $${netWorth.toLocaleString()})`);
 
         saveGame(); // Persist change
-        setTimeout(updateUI, 900); // Slight delay for realism
+        updateUI(); 
     }
 }
 
 // End game function
 function endGame() {
-    saveGame();
+  saveGame();
 
-    // Announce retirement
-    addMessage("\n🎉 Congratulations! You've reached your golden years. Let's see how you've done.");
-    setTimeout(() => {
-        // Show final net worth with formatting
-        addMessage(`YOUR FINAL NET WORTH: $${netWorth.toLocaleString()}!!!`, "#5F9632");
+  // Announce retirement
+  addMessage("\n🎉 Congratulations! You've reached your golden years. Let's see how you've done.");
 
-        setTimeout(() => {
-            // Introduce personality reflection phase
-            addMessage("\nLet's pave your story and reflect on how your decisions/personality would have played out in the real world!");
-            setTimeout(() => {
-                reflectOnPersonality(); // Analyzes player choices
-                addMessage("\nThank you for playing Head $tart!");
-                gameOver(); // Offers replay option
-            }, 1200);
-        }, 900);
-    }, 900);
+  // Show final net worth with formatting
+  addMessage(`YOUR FINAL NET WORTH: $${netWorth.toLocaleString()}!!!`, "#5F9632");
+
+  // Introduce personality reflection phase
+  addMessage("\nLet's pave your story and reflect on how your decisions/personality would have played out in the real world!");
+
+  reflectOnPersonality(); // Analyzes player choices
+  addMessage("\nThank you for playing Head $tart!");
+  gameOver(); // Offers replay option
 }
+
 
 // Reviews personality traits and assigns a title based on game decisions
 function reflectOnPersonality() {
