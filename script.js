@@ -1134,28 +1134,28 @@ function reflectOnPersonality() {
     // Risk tolerance analysis
     if (personalityTraits.risk_taker > personalityTraits.cautious) {
         addMessage("You are mostly a risk-taker! Your adventurous choices often led to exciting outcomes.", '#5F9632');
-        addMessage("This bold approach to finance is admired! However, make sure to prioritize financial stability as well, and balancing high-risk investments with stable assets (like bonds or index funds) might help secure this.", black);
+        addMessage("This bold approach to finance is admired! However, make sure to prioritize financial stability as well, and balancing high-risk investments with stable assets (like bonds or index funds) might help secure this.", '#000000');
     } else {
         addMessage("You are quite financially cautious! You preferred steady and secure paths.", '#5F9632');
-        addMessage("You were secure, but taking calculated risks—such as small investments or side businesses—might have helped you grow your wealth without jeopardizing security.", black);
+        addMessage("You were secure, but taking calculated risks—such as small investments or side businesses—might have helped you grow your wealth without jeopardizing security.", '#000000');
     }
 
     // Spending habits analysis
     if (personalityTraits.luxury_spender > personalityTraits.frugal) {
         addMessage("You tend to enjoy the finer things in life! You value comfort and luxury.", '#5F9632');
-        addMessage("While happiness is important, balancing spending with savings could improve financial security.", black);
+        addMessage("While happiness is important, balancing spending with savings could improve financial security.", '#000000');
     } else {
         addMessage("You are a bit frugal and financially disciplined. You carefully manage your resources.", '#5F9632');
-        addMessage("Your careful budgeting and disciplined saving have put you in a strong financial position! However, life isn’t just about accumulating wealth - spending on experiences, personal growth, or even calculated investments are necessary to make your life more fulfilling!", black);
+        addMessage("Your careful budgeting and disciplined saving have put you in a strong financial position! However, life isn’t just about accumulating wealth - spending on experiences, personal growth, or even calculated investments are necessary to make your life more fulfilling!", '#000000');
     }
 
     // Career vs life experience analysis
     if (personalityTraits.career_focused > personalityTraits.experience_seeker) {
         addMessage("You are quite career-driven! Climbing the ladder was your focus.", '#5F9632');
-        addMessage("You worked hard to climb the career ladder, and it paid off! While income is key to financial success, making your money work for you through smart investments and passive income sources could have helped even more, and it is important to note that taking a break is also necessary!", black);
+        addMessage("You worked hard to climb the career ladder, and it paid off! While income is key to financial success, making your money work for you through smart investments and passive income sources could have helped even more, and it is important to note that taking a break is also necessary!", '#000000');
     } else {
         addMessage("You love to value life experiences! You prioritized adventure and exploration.", '#5F9632');
-        addMessage("While your memories are invaluable and great for your mental health, a bit more financial planning—like setting aside funds for the future or investing could have ensured long-term security while still allowing for adventure.", black);
+        addMessage("While your memories are invaluable and great for your mental health, a bit more financial planning—like setting aside funds for the future or investing could have ensured long-term security while still allowing for adventure.", '#000000');
     }
 
     // Assign a personality-based title for fun
