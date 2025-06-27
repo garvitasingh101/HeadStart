@@ -1,15 +1,15 @@
 /* == BASE STYLES FOR OVERALL PAGE == */
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;  /* Main font stack */
-  background-color: #101E3E; /* Dark blue background */
-  color: #223;              /* Text color */
-  margin: 0;                /* Remove default margin */
-  padding: 0;               /* Remove default padding */
-  min-height: 100vh;        /* Full viewport height */
-  display: flex;            /* Layout using flexbox */
-  justify-content: center;  /* Center items horizontally */
-  align-items: flex-start;  /* Align items to top */
-  flex-wrap: wrap;          /* Allow wrapping in flexbox */
+  font-family: 'Segoe UI', Arial, sans-serif;  
+  background-color: #101E3E; 
+  color: #223;              
+  margin: 0;                
+  padding: 0;               
+  min-height: 100vh;        
+  display: flex;            
+  justify-content: center;  
+  align-items: flex-start;  
+  flex-wrap: wrap;          
 }
 
 /* Makes fade-in animation effect used throughout the site */
@@ -33,686 +33,640 @@ body {
   display: block !important;
 }
 
-/* == CONTAINER STYLES == */
 
 /* Shared container styles for welcome, game, and question sections */
 .welcome-container,
 .game-container,
 .question-container {
-  border-radius: 18px;                /* Rounds the corners */
-  box-shadow: 0 6px 24px rgba(16, 30, 62, 0.18);  /* A bit of shadow */
-  transition: box-shadow 0.2s;        /* Makes shadow transitions smooth */
+  border-radius: 18px;                
+  box-shadow: 0 6px 24px rgba(16, 30, 62, 0.18);  
+  transition: box-shadow 0.2s;        
 }
 
 /* Welcome screen container */
 .welcome-container {
-  background-color: #FEFDF7;          /* An off-white background */
-  text-align: center;                 /* Centers all text */
-  min-height: 260px;                  /* Minimum height */
-  padding: 50px 30px;                 /* Inner spacing in element */
-  margin-top: 60px;                   /* Space on top */
-  color: #427AA1;                     /* Blue text color */
-  max-width: 1100px;                  /* Maximum width */
-  width: 90%;                         /* 90% of width covered */
-  display: flex;                       /* Layout using flexbox */
-  flex-direction: column;              /* Stacking elements vertically */
+  background-color: #FEFDF7;          
+  text-align: center;                 
+  min-height: 260px;                  
+  padding: 50px 30px;                 
+  margin-top: 60px;                   
+  color: #427AA1;                     
+  max-width: 1100px;                  
+  width: 90%;                         
+  display: flex;                       
+  flex-direction: column;              
   align-items: center;                 
-  animation: fadeIn 1s ease-out;       /* Adds a fade-in animation */
+  animation: fadeIn 1s ease-out;       
 }
 
 /* Game and question containers */
 .game-container,
 .question-container {
-  background-color: #427AA1;          /* Lighter Blue background */
-  width: 90%;                         /* 90% of width covered */
-  color: #223;                        /* The text color */
-  margin-top: 24px;                   /* Space on top */
-  padding: 28px 24px;                 /* Inner spacing in element */
+  background-color: #427AA1;          
+  width: 90%;                         
+  color: #223;                       
+  margin-top: 24px;                   
+  padding: 28px 24px;                 
 }
-
-/* == WELCOME SECTION PAGE == */
 
 /* Heading on welcome page */
 .welcome-content h1 {
-  font-size: 54px;                    /* Font-size for heading */
-  margin-bottom: 12px;                /* Space on bottom */
+  font-size: 54px;                    
+  margin-bottom: 12px;               
   color: #427AA1;                   
-  font-weight: 700;                   /* Bold weight */
-  letter-spacing: 1px;                /* Slightly spaced letters */
+  font-weight: 700;                 
+  letter-spacing: 1px;                
 }
 
 /* Welcome subtitle */
 .subtitle {
-  font-weight: 600;                   /* Semi-bold weight for font */
+  font-weight: 600;                  
   font-size: 1.4rem;                  
-  margin-bottom: 20px;                /* Space on bottom */
-  color: #2d3e50;                   /* Dark blue/gray text color */
+  margin-bottom: 20px;                
+  color: #2d3e50;                   
 }
 
 /* Game description paragraph */
 .game-description p {
-  max-width: 900px;                   /* Limits the width */
-  margin: 0 auto;                     /* Aligns description to center */
+  max-width: 900px;                   
+  margin: 0 auto;                   
   font-size: 18px;                    
-  line-height: 1.7;                   /* Spaced lines */
+  line-height: 1.7;                 
   color: #3a4d63;                  
   padding: 0 10px;                    
 }
 
-/* == ELEMENTS ON FORM == */
 
 /* Player info section */
 .player-info {
   display: flex;                      
-  flex-direction: column;             /* Vertical stacking */
-  align-items: center;                /* Center children */
-  gap: 18px;                          /* Space between elements */
-  margin-top: 30px;                   /* Space on top */
+  flex-direction: column;             
+  align-items: center;               
+  gap: 18px;                          
+  margin-top: 30px;                
 }
 
 /* Player name input field */
 #player-name {
-  padding: 13px 18px;                 /* Inner spacing */
-  border-radius: 6px;                 /* Rounded corners */
-  border: 1.5px solid #427AA1;        /* A blue border */
+  padding: 13px 18px;                 
+  border-radius: 6px;                 
+  border: 1.5px solid #427AA1;       
   font-size: 19px;                    
   max-width: 320px;                   
-  width: 100%;                        /* Full width covered */
+  width: 100%;                       
   background: #f7fafc;               
   color: #223;                      
-  transition: border 0.2s, box-shadow 0.2s;  /* Smooth transitions */
-  box-shadow: 0 2px 6px rgba(66, 122, 161, 0.12);  /* Subtle shadow */
+  transition: border 0.2s, box-shadow 0.2s;  
+  box-shadow: 0 2px 6px rgba(66, 122, 161, 0.12);  
 }
 
 /* Player name input focus state */
 #player-name:focus {
-  border-color: #5F9632;              /* Green border on focus */
-  outline: none;                      /* Removes the default outline */
-  box-shadow: 0 0 6px rgba(95, 150, 50, 0.3);  /* Adds a glow effect */
+  border-color: #5F9632;              
+  outline: none;                    
+  box-shadow: 0 0 6px rgba(95, 150, 50, 0.3); 
 }
 
 /* Play button */
 .play-button {
-  background-color: #5F9632;          /* Green background */
-  color: #fff;                        /* White text */
-  border: none;                       /* No border */
-  border-radius: 6px;                 /* Rounded corners */
-  padding: 13px 36px;                 /* Comfortable padding */
-  font-size: 19px;                    /* Large font */
-  font-weight: 600;                   /* Semi-bold */
-  cursor: pointer;                    /* Pointer cursor */
-  box-shadow: 0 2px 8px rgba(95, 150, 50, 0.08);  /* Subtle shadow */
-  transition: all 0.2s ease-in-out;   /* Smooth transitions */
+  background-color: #5F9632;          
+  color: #fff;                     
+  border: none;                      
+  border-radius: 6px;               
+  padding: 13px 36px;             
+  font-size: 19px;                 
+  font-weight: 600;                 
+  cursor: pointer;                
+  box-shadow: 0 2px 8px rgba(95, 150, 50, 0.08);
+  transition: all 0.2s ease-in-out;
 }
 
 /* Play button hover state */
 .play-button:hover {
-  background-color: #4a7a2a;          /* Darker green */
-  transform: translateY(-2px) scale(1.05);  /* Lift effect */
+  background-color: #4a7a2a;          
+  transform: translateY(-2px) scale(1.05);  
 }
 
 /* Special text colors for header */
 .head {
-  color: #101E3E;                     /* Dark blue */
+  color: #101E3E;                     
 }
 
 .dollar {
-  color: #5F9632;                     /* Green */
+  color: #5F9632;                
 }
-
-/* ======================== */
-/* === HEADER & NAV === */
-/* ======================== */
 
 /* Main header styles */
 header {
-  background-color: #FEFDF7;          /* Off-white background */
-  border-radius: 12px;                /* Rounded corners */
-  padding: 18px;                      /* Spacious padding */
-  margin-bottom: 22px;                /* Bottom margin */
-  text-align: center;                 /* Center content */
-  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06);  /* Subtle shadow */
+  background-color: #FEFDF7;          
+  border-radius: 12px;                
+  padding: 18px;                      
+  margin-bottom: 22px;                
+  text-align: center;                 
+  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06);  
 }
 
 /* Main heading style */
 h1 {
-  margin: 0;                          /* Remove default margin */
-  font-size: 56px;                    /* Very large font */
-  color: #427AA1;                     /* Blue color */
-  font-weight: 700;                   /* Bold weight */
-  letter-spacing: 1px;                /* Slightly spaced letters */
+  margin: 0;    
+  font-size: 56px;                    
+  color: #427AA1;                   
+  font-weight: 700;                 
+  letter-spacing: 1px;           
 }
 
 /* Stats display bar */
 .stats {
-  display: flex;                      /* Flex layout */
-  justify-content: space-around;      /* Even spacing */
-  margin-top: 18px;                   /* Top margin */
-  font-weight: 600;                   /* Semi-bold */
-  font-size: 19px;                    /* Large font */
-  color: #325a7a;                     /* Blue-gray */
+  display: flex;                  
+  justify-content: space-around;  
+  margin-top: 18px;                   
+  font-weight: 600;              
+  font-size: 19px;                  
+  color: #325a7a;                   
 }
-
-/* ======================== */
-/* === MAIN GAME LAYOUT === */
-/* ======================== */
 
 /* Main game content area */
 .game-content {
-  display: flex;                      /* Flex layout */
-  gap: 28px;                          /* Space between columns */
+  display: flex;                      
+  gap: 28px;                          
 }
 
-/* ======================== */
-/* === PANEL STYLES === */
-/* ======================== */
 
 /* Options and message panels */
 .options-panel,
 .message-panel {
-  background-color: #FEFDF7;          /* Off-white background */
-  border-radius: 12px;                /* Rounded corners */
-  padding: 24px;                      /* Spacious padding */
-  min-width: 320px;                   /* Minimum width */
-  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06);  /* Subtle shadow */
+  background-color: #FEFDF7;          
+  border-radius: 12px;                
+  padding: 24px;                      
+  min-width: 320px;                   
+  box-shadow: 0 2px 8px rgba(66, 122, 161, 0.06); 
 }
 
 .options-panel {
-  flex: 1;                            /* Take available space */
+  flex: 1;                            
 }
 
 .message-panel {
-  flex: 1;                            /* Take available space */
-  overflow-y: auto;                   /* Scrollable if needed */
-  max-height: 70vh;                   /* Maximum height */
+  flex: 1;                            
+  overflow-y: auto;                   
+  max-height: 70vh;                   
 }
 
 /* Options list container */
 .options {
-  display: flex;                      /* Flex layout */
-  flex-direction: column;             /* Vertical stacking */
-  gap: 18px;                          /* Space between options */
+  display: flex;                      
+  flex-direction: column;             
+  gap: 18px;                          
 }
-
-/* ======================== */
-/* === OPTION BUTTONS === */
-/* ======================== */
 
 /* Game option button */
 .option {
-  background-color: #5F9632;          /* Green background */
-  color: white;                       /* White text */
-  border: none;                       /* No border */
-  border-radius: 5px;                 /* Slightly rounded */
-  padding: 12px;                      /* Comfortable padding */
-  font-size: 15px;                    /* Readable size */
-  font-weight: 600;                   /* Semi-bold */
-  width: 500px;                       /* Fixed width */
-  text-align: left;                   /* Left-aligned text */
-  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.12);  /* Subtle shadow */
-  transition: all 0.25s ease;         /* Smooth transitions */
-  display: flex;                      /* Flex layout */
-  align-items: center;                /* Center vertically */
-  gap: 14px;                          /* Space between elements */
+  background-color: #5F9632;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  width: 500px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.12);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 /* Submit option button */
 .submit-option {
-  background-color: #5F9632;          /* Green background */
-  color: white;                       /* White text */
-  border: solid black 1px;            /* Black border */
-  border-radius: 5px;                 /* Slightly rounded */
-  padding: 7px;                       /* Comfortable padding */
-  font-size: 15px;                    /* Readable size */
-  font-weight: 600;                   /* Semi-bold */
-  width: 100px;                       /* Fixed width */
-  text-align: center;                 /* Centered text */
-  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.12);  /* Subtle shadow */
-  cursor: pointer;                    /* Pointer cursor */
+  background-color: #5F9632;
+  color: white;
+  border: solid black 1px;
+  border-radius: 5px;
+  padding: 7px;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.12);
+  cursor: pointer;
 }
 
 /* Submit option hover state */
 .submit-option:hover {
-  background-color: #4a7a2a;          /* Darker green */
-  transform: translateY(-2px) scale(1.03);  /* Lift effect */
+  background-color: #4a7a2a;          
+  transform: translateY(-2px) scale(1.03);  
 }
 
 /* Option active state */
 .option:active {
-  background-color: #4a7a2a;          /* Darker green */
-  transform: translateY(-2px);        /* Lift effect */
+  background-color: #4a7a2a;        
+  transform: translateY(-2px);        
 }
-
-/* ======================== */
-/* === MESSAGE LOG === */
-/* ======================== */
 
 /* Message log container */
 .message-log {
-  max-height: 500px;                  /* Maximum height */
-  overflow-y: auto;                   /* Scrollable if needed */
-  padding: 12px;                      /* Inner spacing */
-  background-color: rgba(255, 255, 255, 0.92);  /* Semi-transparent white */
-  border-radius: 7px;                 /* Slightly rounded */
-  box-shadow: 0 1px 4px rgba(66, 122, 161, 0.06);  /* Subtle shadow */
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 7px;
+  box-shadow: 0 1px 4px rgba(66, 122, 161, 0.06);
 }
 
 /* Individual message style */
 .message {
-  margin-bottom: 12px;                /* Space between messages */
-  padding: 10px 8px;                  /* Inner spacing */
-  border-bottom: 1px solid #e5e7eb;   /* Light separator */
-  animation: fadeIn 0.3s ease-in;     /* Fade-in animation */
-  color: #223;                        /* Dark text */
+  margin-bottom: 12px;
+  padding: 10px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  animation: fadeIn 0.3s ease-in;
+  color: #223;
 }
-
-/* ======================== */
-/* === PROGRESS BAR === */
-/* ======================== */
 
 /* Progress container */
 .progress-container {
-  width: 100%;                        /* Full width */
-  background-color: #FEFDF7;          /* Off-white background */
-  border-radius: 7px;                 /* Slightly rounded */
-  margin-top: 22px;                   /* Top margin */
-  box-shadow: 0 1px 4px rgba(66, 122, 161, 0.06);  /* Subtle shadow */
+  width: 100%;
+  background-color: #FEFDF7;
+  border-radius: 7px;
+  margin-top: 22px;
+  box-shadow: 0 1px 4px rgba(66, 122, 161, 0.06);
 }
 
 /* Progress bar itself */
 .progress-bar {
-  height: 22px;                       /* Tall enough */
-  background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);  /* Gradient */
-  border-radius: 7px;                 /* Match container */
-  width: 0%;                          /* Start empty */
-  transition: width 0.5s ease;        /* Smooth width changes */
+  height: 22px;
+  background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);
+  border-radius: 7px;
+  width: 0%;
+  transition: width 0.5s ease;
 }
 
 /* Progress element */
 #progress {
-  transition: width 0.5s ease;        /* Smooth width changes */
+  transition: width 0.5s ease;       
 }
-
-/* ======================== */
-/* === HELP SYSTEM === */
-/* ======================== */
 
 /* Floating help button */
 .help-button {
-  position: fixed;                    /* Fixed position */
-  bottom: 24px;                       /* From bottom */
-  right: 24px;                        /* From right */
-  background: linear-gradient(135deg, #5F9632 75%, #427AA1 100%);  /* Gradient */
-  color: #fff;                        /* White text */
-  border: none;                       /* No border */
-  border-radius: 50%;                 /* Circular */
-  width: 56px;                       /* Fixed width */
-  height: 56px;                      /* Fixed height */
-  font-size: 28px;                   /* Large icon */
-  cursor: pointer;                   /* Pointer cursor */
-  z-index: 1000;                     /* Above other content */
-  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.25);  /* Shadow */
-  transition: background 0.3s ease, transform 0.2s ease;  /* Smooth transitions */
-  display: flex;                     /* Flex layout */
-  justify-content: center;           /* Center horizontally */
-  align-items: center;               /* Center vertically */
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: linear-gradient(135deg, #5F9632 75%, #427AA1 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(66, 122, 161, 0.25);
+  transition: background 0.3s ease, transform 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Help button hover state */
 .help-button:hover {
-  background: linear-gradient(135deg, #4a7a2a 75%, #325a7a 100%);  /* Darker gradient */
-  transform: scale(1.1);             /* Slightly larger */
-  box-shadow: 0 6px 18px rgba(50, 90, 122, 0.4);  /* Stronger shadow */
+  background: linear-gradient(135deg, #4a7a2a 75%, #325a7a 100%); 
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(50, 90, 122, 0.4);  
 }
 
 /* Help sidebar container */
 .help-sidebar {
-  position: fixed;                    /* Fixed position */
-  top: 0;                            /* From top */
-  right: 0;                          /* From right */
-  height: 100vh;                     /* Full viewport height */
-  width: 320px;                      /* Fixed width */
-  max-width: 90vw;                   /* Maximum width */
-  background-color: #0f213e;         /* Dark navy background */
-  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.35);  /* Shadow */
-  padding: 30px 25px;                /* Inner spacing */
-  z-index: 2000;                     /* Above other content */
-  overflow-y: auto;                  /* Scrollable if needed */
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);  /* Smooth slide */
-  transform: translateX(100%);       /* Start off-screen */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Font stack */
-  color: #e0e6f1;                   /* Light text color */
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 320px;
+  max-width: 90vw;
+  background-color: #0f213e;
+  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.35);
+  padding: 30px 25px;
+  z-index: 2000;
+  overflow-y: auto;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e0e6f1;
 }
 
 /* Help sidebar when visible */
 .help-sidebar:not(.hidden) {
-  transform: translateX(0%);         /* Slide in */
+  transform: translateX(0%);         
 }
 
 /* Help header section */
 .help-header {
-  display: flex;                     /* Flex layout */
-  justify-content: space-between;    /* Space between items */
-  align-items: center;               /* Center vertically */
-  color: #d9e3f0;                   /* Light blue text */
-  font-weight: 700;                 /* Bold */
-  font-size: 1.4rem;                /* Large text */
-  letter-spacing: 0.03em;           /* Slightly spaced letters */
-  margin-bottom: 20px;              /* Bottom margin */
-  border-bottom: 1.5px solid #3f5a90;  /* Bottom border */
-  padding-bottom: 10px;             /* Bottom padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #d9e3f0;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 20px;
+  border-bottom: 1.5px solid #3f5a90;
+  padding-bottom: 10px;
 }
 
 /* Close button in help sidebar */
 .close-btn {
-  font-size: 28px;                  /* Large size */
-  cursor: pointer;                  /* Pointer cursor */
-  color: #a0b8dc;                  /* Light blue */
-  background: transparent;         /* Transparent background */
-  border: none;                    /* No border */
-  padding: 4px;                    /* Small padding */
-  border-radius: 50%;              /* Circular */
-  transition: background-color 0.2s ease, color 0.2s ease;  /* Smooth transitions */
+  font-size: 28px;
+  cursor: pointer;
+  color: #a0b8dc;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Close button hover state */
 .close-btn:hover {
-  color: #5F9632;                  /* Green color */
-  background-color: rgba(95, 150, 50, 0.15);  /* Light green background */
+  color: #5F9632;                  
+  background-color: rgba(95, 150, 50, 0.15);  
 }
 
 /* Help item list */
 .help-list {
-  list-style: none;                 /* No bullets */
-  padding: 0;                       /* No padding */
-  margin: 24px 0 0 0;              /* Top margin */
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0 0;
 }
 
 /* Individual help items */
 .help-item {
-  background: linear-gradient(90deg, #36539f 0%, #2a4178 100%);  /* Gradient */
-  padding: 14px 20px;              /* Comfortable padding */
-  margin: 12px 0;                 /* Vertical spacing */
-  border-radius: 12px;            /* Rounded corners */
-  font-weight: 600;               /* Semi-bold */
-  cursor: pointer;               /* Pointer cursor */
-  display: flex;                 /* Flex layout */
-  justify-content: space-between;  /* Space between items */
-  align-items: center;           /* Center vertically */
-  transition: background 0.25s ease, box-shadow 0.2s ease;  /* Smooth transitions */
-  color: #f0f4ff;               /* Light text */
-  box-shadow: 0 1px 5px rgba(33, 67, 140, 0.3);  /* Subtle shadow */
+  background: linear-gradient(90deg, #36539f 0%, #2a4178 100%);
+  padding: 14px 20px;
+  margin: 12px 0;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.25s ease, box-shadow 0.2s ease;
+  color: #f0f4ff;
+  box-shadow: 0 1px 5px rgba(33, 67, 140, 0.3);
 }
 
 /* Help item hover state */
 .help-item:hover {
-  background: linear-gradient(90deg, #22305a 0%, #1b2749 100%);  /* Darker gradient */
-  box-shadow: 0 4px 12px rgba(33, 67, 140, 0.6);  /* Stronger shadow */
+  background: linear-gradient(90deg, #22305a 0%, #1b2749 100%);  
+  box-shadow: 0 4px 12px rgba(33, 67, 140, 0.6);  
 }
 
 /* Arrow indicator for help items */
 .help-item::after {
-  content: '▶';                   /* Right arrow */
-  font-size: 14px;                /* Small size */
-  color: #a0c37e;                /* Light green */
-  margin-left: 12px;             /* Left margin */
-  transition: transform 0.25s ease;  /* Smooth rotation */
+  content: '▶';
+  font-size: 14px;
+  color: #a0c37e;
+  margin-left: 12px;
+  transition: transform 0.25s ease;
 }
 
 /* Expanded help item arrow */
 .help-item.expanded::after {
-  transform: rotate(90deg);       /* Rotate to point down */
+  transform: rotate(90deg);       
 }
 
 /* Help dropdown content */
 .help-dropdown {
-  background-color: #1c2e58;     /* Dark blue background */
-  padding: 14px 18px;           /* Comfortable padding */
-  font-size: 0.95rem;          /* Slightly smaller text */
-  color: #b8c6db;             /* Light blue-gray text */
-  border-left: 5px solid #4caf50;  /* Green accent border */
-  margin: 8px 0 16px 0;       /* Vertical spacing */
-  border-radius: 0 8px 8px 0;  /* Rounded right corners */
-  line-height: 1.45;          /* Comfortable line spacing */
-  user-select: text;         /* Allow text selection */
+  background-color: #1c2e58;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  color: #b8c6db;
+  border-left: 5px solid #4caf50;
+  margin: 8px 0 16px 0;
+  border-radius: 0 8px 8px 0;
+  line-height: 1.45;
+  user-select: text;
 }
 
 /* Scrollbar styling for help sidebar */
 .help-sidebar::-webkit-scrollbar {
-  width: 8px;               /* Narrow scrollbar */
+  width: 8px;               
 }
 
 .help-sidebar::-webkit-scrollbar-track {
-  background: #0a1530;      /* Dark track */
+  background: #0a1530;      
 }
 
 .help-sidebar::-webkit-scrollbar-thumb {
-  background: #4caf50;      /* Green thumb */
-  border-radius: 4px;       /* Slightly rounded */
+  background: #4caf50;    
+  border-radius: 4px;       
 }
 
 .help-sidebar::-webkit-scrollbar-thumb:hover {
-  background: #3a8c32;      /* Darker green on hover */
+  background: #3a8c32;     
 }
 
-/* ======================== */
-/* === FORM CONTROLS === */
-/* ======================== */
 
 /* Investment input field */
 .investment-input {
-  padding: 12px 16px;              /* Comfortable padding */
-  border-radius: 6px;              /* Rounded corners */
-  border: 1.5px solid #427AA1;     /* Blue border */
-  font-size: 17px;                 /* Readable size */
-  width: 100%;                     /* Full width */
-  max-width: 320px;                /* Maximum width */
-  background: #f7fafc;             /* Light background */
-  color: #223;                     /* Dark text */
-  transition: border 0.2s;         /* Smooth border transition */
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1.5px solid #427AA1;
+  font-size: 17px;
+  width: 100%;
+  max-width: 320px;
+  background: #f7fafc;
+  color: #223;
+  transition: border 0.2s;
 }
 
 /* Investment input focus state */
 .investment-input:focus {
-  border-color: #5F9632;           /* Green border */
-  outline: none;                   /* Remove default outline */
+  border-color: #5F9632;           
+  outline: none;                   
 }
 
 /* Generic button style */
 .button {
-  padding: 6px 16px;              /* Comfortable padding */
-  font-size: 15px;                /* Readable size */
-  border-radius: 5px;             /* Slightly rounded */
-  font-weight: 500;               /* Medium weight */
-  background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);  /* Gradient */
-  color: #fff;                    /* White text */
-  border: none;                   /* No border */
-  cursor: pointer;                /* Pointer cursor */
-  transition: background 0.2s, transform 0.15s;  /* Smooth transitions */
+  padding: 6px 16px;
+  font-size: 15px;
+  border-radius: 5px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #5F9632 80%, #427AA1 100%);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
 }
 
 /* Button hover state */
 .button:hover {
-  background: linear-gradient(90deg, #4a7a2a 80%, #325a7a 100%);  /* Darker gradient */
-  transform: scale(1.03);        /* Slightly larger */
+  background: linear-gradient(90deg, #4a7a2a 80%, #325a7a 100%);  
+  transform: scale(1.03);        
 }
 
 /* Option key label */
 .option-key {
-  font-weight: bold;             /* Bold text */
-  margin-right: 8px;            /* Right spacing */
+  font-weight: bold;           
+  margin-right: 8px;         
 }
 
 /* Option text container */
 .option-text {
-  flex: 1;                      /* Take remaining space */
+  flex: 1;                      
 }
 
 /* Generic text input */
 input[type="text"] {
-  padding: 12px;                /* Comfortable padding */
-  border: 2px solid #5F9632;    /* Green border */
-  border-radius: 5px;           /* Slightly rounded */
-  font-size: 16px;              /* Readable size */
-  margin-right: 10px;           /* Right spacing */
-  width: 200px;                 /* Fixed width */
+  padding: 12px;
+  border: 2px solid #5F9632;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+  width: 200px;
 }
-
-/* ======================== */
-/* === Q&A SECTION === */
-/* ======================== */
 
 /* Question description container */
 .question-description {
-  background: #fdfcf7;          /* Off-white background */
-  border-radius: 16px;          /* Rounded corners */
-  padding: 24px;               /* Spacious padding */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* Subtle shadow */
-  border: 3px solid #5F9632;   /* Green border */
-  max-width: 1000px;          /* Maximum width */
-  margin: auto;               /* Center horizontally */
-  text-align: center;        /* Center content */
+  background: #fdfcf7;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 3px solid #5F9632;
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
 }
 
 /* Question heading */
 .question-description h1 {
-  color: #5F9632;           /* Green color */
-  font-size: 32px;         /* Large size */
-  margin-bottom: 8px;     /* Bottom spacing */
+  color: #5F9632;
+  font-size: 32px;
+  margin-bottom: 8px;
 }
 
-/* Question subtitle */
 .question-description .q-sub {
-  font-style: italic;     /* Italic text */
-  color: #3d3d3d;       /* Dark gray */
-  font-size: 17px;     /* Medium size */
-  margin-bottom: 25px; /* Bottom spacing */
+  font-style: italic;
+  color: #3d3d3d;
+  font-size: 17px;
+  margin-bottom: 25px;
 }
 
 /* Input group container */
 .input-group {
-  display: flex;              /* Flex layout */
-  align-items: stretch;      /* Stretch children */
-  border: 2px solid #5F9632; /* Green border */
-  border-radius: 6px;       /* Slightly rounded */
-  overflow: hidden;        /* Hide overflow */
-  background: #fff;       /* White background */
-  margin-bottom: 25px;   /* Bottom spacing */
+  display: flex;
+  align-items: stretch;
+  border: 2px solid #5F9632;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  margin-bottom: 25px;
 }
 
 /* User question input */
 #user-question {
-  flex-grow: 1;          /* Take available space */
-  padding: 14px;        /* Comfortable padding */
-  font-size: 16px;     /* Readable size */
-  border: none;       /* No border */
-  outline: none;     /* Remove outline */
+  flex-grow: 1;          
+  padding: 14px;        
+  font-size: 16px;     
+  border: none;       
+  outline: none;     
 }
 
 /* Ask button */
 #ask-button {
-  background-color: #5F9632;  /* Green background */
-  color: #fff;               /* White text */
-  border: none;             /* No border */
-  padding: 14px 24px;      /* Comfortable padding */
-  font-size: 16px;        /* Readable size */
-  font-weight: bold;     /* Bold text */
-  cursor: pointer;      /* Pointer cursor */
-  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth transitions */
+  background-color: #5F9632;
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* Ask button hover state */
 #ask-button:hover {
-  background-color: #18781b;  /* Darker green */
-  transform: scale(1.03);    /* Slightly larger */
+  background-color: #18781b;  
+  transform: scale(1.03);    
 }
 
 /* Answer box container */
 .answer-box {
-  background-color: #f8f9fa;  /* Light gray background */
-  border-radius: 8px;        /* Slightly rounded */
-  padding: 20px;           /* Comfortable padding */
-  text-align: left;       /* Left-aligned text */
-  border-left: 5px solid #101E3E;  /* Left dark blue border */
-  border-right: 5px solid #101E3E;  /* Right dark blue border */
-  font-size: 16px;       /* Readable size */
-  color: #333;          /* Dark text */
-  min-height: 100px;   /* Minimum height */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: left;
+  border-left: 5px solid #101E3E;
+  border-right: 5px solid #101E3E;
+  font-size: 16px;
+  color: #333;
+  min-height: 100px;
 }
 
 /* Answer paragraph */
 .answer-box p {
-  margin: 0 0 12px;  /* Bottom margin */
+  margin: 0 0 12px;  
 }
 
 /* Answer box animation */
 .answer-box {
-  animation: fadeIn 0.3s ease;  /* Fade-in effect */
+  animation: fadeIn 0.3s ease;  
 }
 
-/* ======================== */
-/* === CHART STYLES === */
-/* ======================== */
 
 /* Message panel heading layout */
 .message-panel h2 {
-  display: inline-block;      /* Inline block */
-  margin-right: 20px;        /* Right spacing */
-  vertical-align: top;      /* Align to top */
+  display: inline-block;    
+  margin-right: 20px;       
+  vertical-align: top;      
 }
 
 /* Net worth chart container */
 #net-worth-chart {
-  display: inline-block;    /* Inline block */
-  width: 300px !important;  /* Fixed width */
-  height: 120px !important;  /* Fixed height */
-  margin: 0;              /* No margin */
-  vertical-align: top;   /* Align to top */
-  width: 100% !important;  /* Full width */
-  height: 100% !important;  /* Full height */
-  background: transparent !important;  /* Transparent background */
+  display: inline-block;    
+  width: 300px !important; 
+  height: 120px !important;  
+  margin: 0;              
+  vertical-align: top;   
+  width: 100% !important;  
+  height: 100% !important;  
+  background: transparent !important;  
 }
 
 /* Clear message log */
 .message-log {
-  clear: both;       /* Clear floats */
-  margin-top: 20px;  /* Top spacing */
+  clear: both;       
+  margin-top: 20px;  
 }
 
 /* Journey header layout */
 .journey-header {
-  display: flex;            /* Flex layout */
-  align-items: center;     /* Center vertically */
-  gap: 20px;              /* Space between items */
-  margin-bottom: 20px;   /* Bottom spacing */
+  display: flex;            
+  align-items: center;    
+  gap: 20px;              
+  margin-bottom: 20px; 
 }
 
 /* Chart container */
 .chart-container {
-  width: 250px;          /* Fixed width */
-  height: 100px;        /* Fixed height */
-  flex-shrink: 0;      /* Don't shrink */
+  width: 250px;          
+  height: 100px;        
+  flex-shrink: 0;      
 }
-
-/* ======================== */
-/* === RESPONSIVE STYLES === */
-/* ======================== */
 
 /* Medium screens (tablets) */
 @media (max-width: 768px) {
   .welcome-content h1 {
-    font-size: 40px;  /* Smaller heading */
+    font-size: 40px; 
   }
 
   .subtitle {
-    font-size: 1.2rem;  /* Smaller subtitle */
+    font-size: 1.2rem;  
   }
 
   /* Smaller form elements */
   #player-name,
   .play-button {
-    font-size: 17px;       /* Smaller font */
-    padding: 11px 20px;   /* Smaller padding */
+    font-size: 17px;       
+    padding: 11px 20px;   
   }
 }
 
@@ -720,20 +674,19 @@ input[type="text"] {
 @media (max-width: 900px) {
   .welcome-container,
   .game-container {
-    width: 96%;          /* Wider relative width */
-    padding: 18px 8px;  /* Smaller padding */
+    width: 96%;          
+    padding: 18px 8px;  
   }
   
-  /* Stack panels vertically */
   .game-content {
-    flex-direction: column;  /* Vertical layout */
-    gap: 18px;             /* Smaller gap */
+    flex-direction: column;  
+    gap: 18px;             
   }
   
   .options-panel,
   .message-panel {
-    min-width: unset;    /* No minimum width */
-    padding: 16px;      /* Smaller padding */
+    min-width: unset;    
+    padding: 16px;      
   }
   
   /* Smaller headings */
@@ -746,13 +699,13 @@ input[type="text"] {
 @media (max-width: 600px) {
   .welcome-container,
   .game-container {
-    margin-top: 18px;  /* Smaller top margin */
-    padding: 10px 2px;  /* Minimal padding */
+    margin-top: 18px;  
+    padding: 10px 2px;  
   }
 }
 
 /* Remove list bullets globally */
 ul {
-  list-style-type: none;  /* No bullets */
-  padding-left: 0;       /* No left padding */
+  list-style-type: none; 
+  padding-left: 0;      
 }
