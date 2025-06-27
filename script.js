@@ -1,17 +1,24 @@
-// Main variables for the game
+// Main game variables
 let playerName = "";
-let netWorth = 1000;
-let income = 0;
-let age = 18;
-let career = "";
-let currentStage = "18-27";
-let netWorthHistory = [1000]; // Starting chart with initial net worth
-let ageHistory = [18]; // Starting chart with initial age
-let netWorthChart;
 
-// Save system
+// Financial and career tracking
+let netWorth = 1000;       // Starting net worth
+let income = 0;            // Current income
+let age = 18;              // Starting age
+let career = "";           // Selected career
+
+// Tracks game stage based on age ranges
+let currentStage = "18-27";
+
+// Used to draw the net worth progress chart over time
+let netWorthHistory = [1000];
+let ageHistory = [18];
+let netWorthChart;         // Will store Chart.js chart object
+
+// Array to store snapshots of game states (if needed)
 const saveStates = [];
 
+// Object to define the entire game state, used for saving/loading
 let gameState = {
   age: 18,
   netWorth: 1000,
@@ -29,7 +36,7 @@ let gameState = {
   timestamp: new Date().toISOString()
 };
 
-// Personality traits
+// Personality Trait Tracking
 const personalityTraits = {
   risk_taker: 0,
   cautious: 0,
@@ -39,21 +46,25 @@ const personalityTraits = {
   experience_seeker: 0
 };
 
-// DOM elements
+
+// DOM Element References
 const welcomeScreen = document.getElementById('welcome-screen');
 const gameContainer = document.getElementById('game-container');
 const questionContainer = document.getElementById('question-container');
+
 const playerNameInput = document.getElementById('player-name');
 const startGameButton = document.getElementById('start-game');
+
 const currentAgeDisplay = document.getElementById('current-age');
 const currentIncomeDisplay = document.getElementById('current-income');
 const currentNetWorthDisplay = document.getElementById('current-net-worth');
+
 const progressBar = document.getElementById('progress');
 const optionsPanel = document.getElementById('options-panel');
 const messageLog = document.getElementById('message-log');
 const startGameBtn = document.getElementById("start-game");
 
-
+// Allow pressing Enter to trigger the game start
 playerNameInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -61,7 +72,11 @@ playerNameInput.addEventListener("keydown", (event) => {
   }
 });
 
-// Save current game state
+// ========================
+// 💾 Save and Load Functions
+// ========================
+
+// Saves current progress to localStorage
 function saveGame() {
   const gameData = {
     playerName,
@@ -77,36 +92,47 @@ function saveGame() {
   localStorage.setItem("headstartGameData", JSON.stringify(gameData));
   console.log("Game auto-saved!");
 }
-// Load saved game state
+
+// Loads saved progress from localStorage
 function loadGame() {
   const savedGame = localStorage.getItem("headstartGameData");
+
   if (savedGame) {
     const data = JSON.parse(savedGame);
+
+    // Load key game variables from saved data
     playerName = data.playerName || "";
     netWorth = data.netWorth || 1000;
     income = data.income || 0;
     age = data.age || 18;
     career = data.career || "";
     currentStage = data.currentStage || "18-27";
+
+    // Load traits safely using optional chaining
     personalityTraits.risk_taker = data.personalityTraits?.risk_taker || 0;
     personalityTraits.cautious = data.personalityTraits?.cautious || 0;
     personalityTraits.luxury_spender = data.personalityTraits?.luxury_spender || 0;
     personalityTraits.frugal = data.personalityTraits?.frugal || 0;
     personalityTraits.career_focused = data.personalityTraits?.career_focused || 0;
     personalityTraits.experience_seeker = data.personalityTraits?.experience_seeker || 0;
+
+    // Restore chart histories
     netWorthHistory = data.netWorthHistory || [netWorth];
     ageHistory = data.ageHistory || [age];
 
-    // Prefill player name input only — do NOT show game UI here
+    // Prefill UI with saved name
     playerNameInput.value = playerName;
-    startGameBtn.disabled = false; // enable play button if disabled
+    startGameBtn.disabled = false;
 
     addMessage(`\nSaved game found for ${playerName}. Enter your name and click Play to resume.`, "#5F9632");
   }
 }
 
+// ========================
+// 🚀 Game Initialization & Start
+// ========================
 
-// Initialize game event listeners
+// Attach listeners to start the game
 function initGame() {
   startGameBtn.addEventListener('click', startGame);
   playerNameInput.addEventListener('keypress', function (e) {
@@ -114,7 +140,7 @@ function initGame() {
   });
 }
 
-// Start the game
+// Main function to start or resume a game
 function startGame() {
   const inputName = playerNameInput.value.trim();
 
@@ -125,10 +151,10 @@ function startGame() {
 
   const savedGameJSON = localStorage.getItem("headstartGameData");
 
+  // Try to resume saved game if name matches
   if (savedGameJSON) {
     const savedGame = JSON.parse(savedGameJSON);
     if (savedGame.playerName === inputName) {
-      // Resume saved game
       playerName = savedGame.playerName;
       netWorth = savedGame.netWorth || 1000;
       income = savedGame.income || 0;
@@ -136,7 +162,7 @@ function startGame() {
       career = savedGame.career || "";
       currentStage = savedGame.currentStage || "18-27";
 
-      // Load personality traits safely
+      // Load traits
       if (savedGame.personalityTraits) {
         Object.keys(personalityTraits).forEach(trait => {
           personalityTraits[trait] = savedGame.personalityTraits[trait] || 0;
@@ -150,7 +176,7 @@ function startGame() {
       netWorthHistory = savedGame.netWorthHistory || [netWorth];
       ageHistory = savedGame.ageHistory || [age];
 
-      // Show game UI
+      // Show game screen
       welcomeScreen.classList.add('hidden');
       gameContainer.classList.remove('hidden');
       questionContainer.classList.remove('hidden');
@@ -160,32 +186,20 @@ function startGame() {
 
       addMessage(`👋 Welcome back, ${playerName}! Resuming your game at age ${age} with a net worth of $${netWorth}.`, '#5F9632');
 
-      // Resume appropriate stage function
+      // Resume correct age stage
       switch (currentStage) {
-        case "18-27":
-          age18_27();
-          break;
-        case "28-37":
-          age28_37();
-          break;
-        case "38-47":
-          age38_47();
-          break;
-        case "48-57":
-          age48_57();
-          break;
-        case "58-67":
-          age58_67();
-          break;
-        default:
-          age18_27();
-          break;
+        case "18-27": age18_27(); break;
+        case "28-37": age28_37(); break;
+        case "38-47": age38_47(); break;
+        case "48-57": age48_57(); break;
+        case "58-67": age58_67(); break;
+        default: age18_27(); break;
       }
       return;
     }
   }
 
-  // No saved game or name mismatch — start new game
+  // Start a brand new game
   playerName = inputName;
   age = 18;
   netWorth = 1000;
@@ -199,7 +213,6 @@ function startGame() {
     personalityTraits[trait] = 0;
   });
 
-  // Show game UI
   welcomeScreen.classList.add('hidden');
   gameContainer.classList.remove('hidden');
   questionContainer.classList.remove('hidden');
@@ -215,6 +228,7 @@ function startGame() {
   saveGame();
 }
 
+// Refreshes all values on screen
 function updateUI() {
   currentAgeDisplay.textContent = age;
   currentIncomeDisplay.textContent = income;
@@ -223,12 +237,14 @@ function updateUI() {
   netWorthHistory.push(netWorth);
   ageHistory.push(age);
 
+  // Update Chart.js graph if loaded
   if (netWorthChart) {
     netWorthChart.data.labels = ageHistory;
     netWorthChart.data.datasets[0].data = netWorthHistory;
     netWorthChart.update();
   }
 
+  // Update progress bar based on age stage
   let progressPercentage = 0;
   if (age >= 63) {
     progressPercentage = 100;
@@ -245,6 +261,8 @@ function updateUI() {
   progressBar.style.width = `${progressPercentage}%`;
 }
 
+
+// Adds a message to the in-game log
 function addMessage(message, color) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
@@ -254,10 +272,12 @@ function addMessage(message, color) {
   messageLog.scrollTop = messageLog.scrollHeight;
 }
 
+// Clears option buttons from the panel
 function clearOptions() {
   optionsPanel.innerHTML = '';
 }
 
+// Displays multiple choice options (with optional number or letter input)
 function addOptions(title, options, inputType = "letter") {
   clearOptions();
 
@@ -268,6 +288,7 @@ function addOptions(title, options, inputType = "letter") {
   const optionsContainer = document.createElement('div');
   optionsContainer.classList.add('options');
 
+  // Render each option with key and text
   options.forEach((option, index) => {
     const key = inputType === 'number' ? `${index + 1}` : String.fromCharCode(97 + index);
     const optionDiv = document.createElement('div');
@@ -281,26 +302,32 @@ function addOptions(title, options, inputType = "letter") {
 
   optionsPanel.appendChild(optionsContainer);
 
+  // Input instructions
   const instruction = document.createElement('p');
   instruction.innerHTML = `<strong>Type the ${inputType === "number" ? "number" : "letter"} of your choice below:</strong>`;
   optionsPanel.appendChild(instruction);
 
+  // Input field
   const input = document.createElement('input');
   input.type = 'text';
   input.placeholder = inputType === 'number' ? 'e.g. 1 or 2' : 'e.g. a or b';
 
+  // Submit button
   const submit = document.createElement('button');
   submit.textContent = 'Submit';
   submit.classList.add('submit-option');
 
+  // Handles option selection
   submit.addEventListener('click', () => {
     const val = input.value.trim().toLowerCase();
 
+    // Handle stop keyword
     if (val === "stop") {
       endGame("Game ended by user.");
       return;
     }
 
+    // Parse selection
     let index = -1;
     if (inputType === "letter" && /^[a-z]$/.test(val)) {
       index = val.charCodeAt(0) - 97;
@@ -315,6 +342,7 @@ function addOptions(title, options, inputType = "letter") {
     }
   });
 
+  // Submit on Enter key
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       submit.click();
@@ -326,6 +354,7 @@ function addOptions(title, options, inputType = "letter") {
   input.focus();
 }
 
+// First Game Choice
 function offerFirstPath() {
   addMessage("What's your first step?", "#c91a63");
   addOptions("Choose Your Path", [
@@ -354,27 +383,35 @@ function offerFirstPath() {
   ], "letter");
 }
 
+// Player chooses to get a job instead of college or business
 function getAJob() {
+  // Job options and corresponding annual incomes
   const jobs = {
     "Retail Worker": 20000, "Fast Food Worker": 15000, "Office Assistant": 40000, "Factory Worker": 38000,
     "Service Worker": 28000, "Chef": 45000, "Waiter": 30000, "Dancer": 33000,
     "Police Officer": 52000, "Mechanic": 40000, "Receptionist": 35000
   };
+
+  // Randomly select a career and assign income
   const names = Object.keys(jobs);
   career = names[Math.floor(Math.random() * names.length)];
   income = jobs[career];
   netWorth += income;
 
+  // Display results and update game state
   addMessage(`\nYou land a job as a ${career} and earn $${income}/yr.`, "#c91a63");
   addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
 
   updateUI();
   saveGame();
-  age18_27();
+  age18_27(); // Continue with age 18–27 stage
 }
 
+// Player chooses to attend college
 function goToCollege() {
   addMessage("\nYou enroll in college, ready to invest in your future. But tuition isn't cheap...", "#c91a63");
+
+  // Player selects between in-state and out-of-state college
   addOptions("Choose your college!", [
     {
       text: "In-state ($100K, fewer connections)",
@@ -384,7 +421,7 @@ function goToCollege() {
         addMessage("You chose in-state, saving money but limiting your networking.");
         updateUI();
         saveGame();
-        collegeJob();
+        collegeJob(); // Proceed to job after college
       }
     },
     {
@@ -395,15 +432,17 @@ function goToCollege() {
         addMessage("You chose out-of-state and gained more experiences but with higher debt.");
         updateUI();
         saveGame();
-        collegeJob();
+        collegeJob(); // Proceed to job after college
       }
     }
   ], "number");
 }
 
+// Player chooses to start a business
 function startABusiness() {
-  clearOptions();
+  clearOptions(); // Clear any existing options
 
+  // Build UI input for investment amount
   const container = document.createElement("div");
   container.style.display = "flex";
   container.style.flexDirection = "column";
@@ -427,27 +466,29 @@ function startABusiness() {
   button.textContent = "Invest";
   button.classList.add("option");
 
+  // Handle investment input
   button.addEventListener("click", () => {
     const value = parseFloat(input.value);
     if (isNaN(value) || value < 1000 || value > 100000) {
       addMessage("Invalid amount. Enter between $1,000 and $100,000.", "red");
     } else {
-      netWorth -= value;
-      income = value * 1.5 + Math.floor(Math.random() * 10000);
+      netWorth -= value; // Deduct investment
+      income = value * 1.5 + Math.floor(Math.random() * 10000); // Simulate earnings
       addMessage(`You invested $${value} and launched your business. First-year earnings: $${income}.`, "#5F9632");
+
       updateUI();
       saveGame();
-      age18_27();
+      age18_27(); // Resume age stage
     }
   });
 
   container.appendChild(question);
   container.appendChild(input);
   container.appendChild(button);
-
   optionsPanel.appendChild(container);
 }
 
+// College leads to high-paying jobs
 function collegeJob() {
   const betterJobs = {
     "Doctor": 350000, "Lawyer": 140000, "Corporate Manager": 100000, "Actor": 80000, "Software Engineer": 130000,
@@ -455,6 +496,7 @@ function collegeJob() {
     "Professor": 180000, "Veterinarian": 130000
   };
 
+  // Randomly assign a job
   const jobNames = Object.keys(betterJobs);
   career = jobNames[Math.floor(Math.random() * jobNames.length)];
   income = betterJobs[career];
@@ -466,263 +508,272 @@ function collegeJob() {
 
   updateUI();
   saveGame();
-  age18_27();
+  age18_27(); // Resume gameplay
 }
 
-// Age 18–27 decisions
+// Game decisions during age 18–27
 function age18_27() {
-    addMessage("\nWelcome to adulthood! Your future starts here. What will you prioritize?", "#c91a63");
+  addMessage("\nWelcome to adulthood! Your future starts here. What will you prioritize?", "#c91a63");
 
-    addOptions("What will you prioritize?", [
-        {
-            text: "💰 Invest in stocks (High risk, high reward)",
-            action: () => {
-                personalityTraits.risk_taker++;
-                const stockInvestment = Math.floor(Math.random() * 9000) + 1000;
-                netWorth += stockInvestment;
+  // Present 4 initial choices
+  addOptions("What will you prioritize?", [
+    {
+      text: "💰 Invest in stocks (High risk, high reward)",
+      action: () => {
+        personalityTraits.risk_taker++;
+        const stockInvestment = Math.floor(Math.random() * 9000) + 1000;
+        netWorth += stockInvestment;
 
-                addMessage(`\nSmart move! Your stock investments earned you $${stockInvestment}.`, "#c91a63");
-                addMessage("Investing in stocks early helps your money grow over time through compounding, but you are neglecting important personal spendings such as transportation.");
-                addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
+        addMessage(`\nSmart move! Your stock investments earned you $${stockInvestment}.`, "#c91a63");
+        addMessage("Investing in stocks early helps your money grow over time through compounding, but you are neglecting important personal spendings such as transportation.");
+        addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
 
-                updateUI();
-                saveGame();
-                financialDecisions();
-            }
-        },
-        {
-            text: "🚙 Decide on your primary mode of transportation",
-            action: () => {
-                addMessage("\nGood on you for getting started on what's a necessity!");
-                presentTransportOptions();
-            }
-        },
-        {
-            text: "🎓 Further your education for career growth",
-            action: () => {
-                personalityTraits.career_focused++;
-                const educationCost = Math.floor(Math.random() * 49000) + 1000;
-                netWorth -= educationCost;
-                const salaryIncrease = Math.floor(Math.random() * 10000) + 10000;
-                income += salaryIncrease;
+        updateUI();
+        saveGame();
+        financialDecisions(); // Move to second financial decision
+      }
+    },
+    {
+      text: "🚙 Decide on your primary mode of transportation",
+      action: () => {
+        addMessage("\nGood on you for getting started on what's a necessity!");
+        presentTransportOptions(); // Move to transport options
+      }
+    },
+    {
+      text: "🎓 Further your education for career growth",
+      action: () => {
+        personalityTraits.career_focused++;
+        const educationCost = Math.floor(Math.random() * 49000) + 1000;
+        netWorth -= educationCost;
+        const salaryIncrease = Math.floor(Math.random() * 10000) + 10000;
+        income += salaryIncrease;
 
-                addMessage(`\nInvesting in education cost $${educationCost}, but your salary increased by $${salaryIncrease}.`, "#c91a63");
-                addMessage("It's great that you realize that the learning doesn't stop after 18 years old. There's always room for promotions and growth!");
-                addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
+        addMessage(`\nInvesting in education cost $${educationCost}, but your salary increased by $${salaryIncrease}.`, "#c91a63");
+        addMessage("It's great that you realize that the learning doesn't stop after 18 years old. There's always room for promotions and growth!");
+        addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
 
-                updateUI();
-                saveGame();
-                financialDecisions();
-            }
-        },
-        {
-            text: "💸 Invest in cryptocurrency (High risk, high reward)",
-            action: () => {
-                personalityTraits.risk_taker++;
-                const cryptoInvestment = Math.floor(Math.random() * 20000) - 10000;
-                netWorth += cryptoInvestment;
+        updateUI();
+        saveGame();
+        financialDecisions(); // Proceed
+      }
+    },
+    {
+      text: "💸 Invest in cryptocurrency (High risk, high reward)",
+      action: () => {
+        personalityTraits.risk_taker++;
+        const cryptoInvestment = Math.floor(Math.random() * 20000) - 10000; // Can be negative (loss)
+        netWorth += cryptoInvestment;
 
-                addMessage(`\nYour crypto investment yielded $${cryptoInvestment}.`, "#c91a63");
-                addMessage("This is a great and modern investment, and it will provide you wonders for the future! Make sure to take charge of life's necessities like transportation, however.");
-                addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
+        addMessage(`\nYour crypto investment yielded $${cryptoInvestment}.`, "#c91a63");
+        addMessage("This is a great and modern investment, and it will provide you wonders for the future! Make sure to take charge of life's necessities like transportation, however.");
+        addMessage(`Make sure to keep a watch on your net worth above!`, "#5F9632");
 
-                updateUI();
-                saveGame();
-                financialDecisions();
-            }
-        }
-    ], "letter");
+        updateUI();
+        saveGame();
+        financialDecisions(); // Proceed
+      }
+    }
+  ], "letter");
 }
 
+// Player selects transport method
 function presentTransportOptions() {
-    addOptions("Choose your transport!", [
-        {
-            text: "🚗 Buy a car (High cost, high convenience)",
-            action: () => handleTransportChoice("buycar")
-        },
-        {
-            text: "🚙 Rent a car (Moderate cost, no ownership)",
-            action: () => handleTransportChoice("rentcar")
-        },
-        {
-            text: "🚲 Buy a bike (Low cost, eco-friendly)",
-            action: () => handleTransportChoice("bike")
-        },
-        {
-            text: "🚌 Use public transport (Cheapest option)",
-            action: () => handleTransportChoice("public")
-        }
-    ], "letter");
+  addOptions("Choose your transport!", [
+    {
+      text: "🚗 Buy a car (High cost, high convenience)",
+      action: () => handleTransportChoice("buycar")
+    },
+    {
+      text: "🚙 Rent a car (Moderate cost, no ownership)",
+      action: () => handleTransportChoice("rentcar")
+    },
+    {
+      text: "🚲 Buy a bike (Low cost, eco-friendly)",
+      action: () => handleTransportChoice("bike")
+    },
+    {
+      text: "🚌 Use public transport (Cheapest option)",
+      action: () => handleTransportChoice("public")
+    }
+  ], "letter");
 }
 
+// Handles transport cost deduction and continues
 function handleTransportChoice(choice) {
-    const transportCosts = {
-        "buycar": Math.floor(Math.random() * 40000) + 10000,
-        "rentcar": Math.floor(Math.random() * 1500) + 500,
-        "bike": Math.floor(Math.random() * 1500) + 500,
-        "public": Math.floor(Math.random() * 400) + 100
-    };
+  const transportCosts = {
+    "buycar": Math.floor(Math.random() * 40000) + 10000,
+    "rentcar": Math.floor(Math.random() * 1500) + 500,
+    "bike": Math.floor(Math.random() * 1500) + 500,
+    "public": Math.floor(Math.random() * 400) + 100
+  };
 
-    netWorth -= transportCosts[choice];
-    addMessage(`\nYou spent $${transportCosts[choice]} on transportation. This will definitely pay off in the long run though!`, "#c91a63");
+  netWorth -= transportCosts[choice];
+
+  addMessage(`\nYou spent $${transportCosts[choice]} on transportation. This will definitely pay off in the long run though!`, "#c91a63");
+  updateUI();
+  saveGame();
+  financialDecisions(); // Resume decision tree
+}
+
+// Final decision step before aging up
+function financialDecisions() {
+  addMessage("\nWhat would you like to do this time?", "#c91a63");
+
+  addOptions("What would you like to do?", [
+    {
+      text: "💰 Save 50% of your income",
+      action: () => {
+        const savings = income * 0.5;
+        netWorth += savings;
+        personalityTraits.cautious++;
+        personalityTraits.frugal++;
+
+        addMessage(`\nYou saved 50% of your income ($${savings}).`, "#c91a63");
+        updateUI();
+        saveGame();
+        ageTransition(); // Move to next age group
+      }
+    },
+    {
+      text: "📈 Invest in stocks",
+      action: () => {
+        const investResult = [100, 5000, 10000, 50000, 25000, 20000][Math.floor(Math.random() * 6)];
+        netWorth += investResult;
+        personalityTraits.risk_taker++;
+
+        addMessage(`\nYour stock investment returned $${investResult}.`, "#c91a63");
+        updateUI();
+        saveGame();
+        ageTransition();
+      }
+    },
+    {
+      text: "🛍️ Spend on luxury items",
+      action: () => {
+        const luxuryResult = -[10000, 5000, 1000, 2000][Math.floor(Math.random() * 4)];
+        netWorth += luxuryResult;
+        personalityTraits.luxury_spender++;
+
+        addMessage(`\nYou spent $${Math.abs(luxuryResult)} on luxury.`, "#c91a63");
+        updateUI();
+        saveGame();
+        ageTransition();
+      }
+    },
+    {
+      text: "🏡 Save for retirement",
+      action: () => {
+        const retireSavings = [1000, 5000, 10000][Math.floor(Math.random() * 3)];
+        netWorth += retireSavings;
+        personalityTraits.cautious++;
+        personalityTraits.frugal++;
+
+        addMessage(`\nYou saved for retirement, adding $${retireSavings}.`, "#c91a63");
+        updateUI();
+        saveGame();
+        ageTransition();
+      }
+    }
+  ], "number");
+}
+
+// Advance to the next age bracket
+function ageTransition() {
+  age += 9;
+  randomEvents(); // Placeholder for unexpected events (if implemented)
+  saveGame();
+
+  if (age >= 18 && age <= 27) {
+    currentStage = "28-37";
+    age = 28;
+    addMessage(`\n📅 You are now settling into adulthood! Current net worth: $${netWorth}.`, "#5F9632");
+    age28_37();
+  } else if (age >= 28 && age <= 37) {
+    currentStage = "38-47";
+    age = 38;
+    addMessage(`\n📅 Halfway there! You're almost 40! Current net worth: $${netWorth}.`, "#5F9632");
+    age38_47();
+  } else if (age >= 38 && age <= 47) {
+    currentStage = "48-57";
+    age = 48;
+    addMessage(`\n📅 Age ${age}: You're in midlife! Current net worth: $${netWorth}.`, "#5F9632");
+    age48_57();
+  } else if (age >= 48 && age <= 57) {
+    currentStage = "58-67";
+    age = 58;
+    addMessage(`\n📅 Age ${age}: You're approaching retirement! Current net worth: $${netWorth}.`, "#5F9632");
+    age58_67();
+  } else if (age >= 58 && age <= 67) {
+    age = 68;
+    endGame(); // Trigger game ending
+  } else {
     updateUI();
     saveGame();
     financialDecisions();
+  }
 }
 
-function financialDecisions() {
-    addMessage("\nWhat would you like to do this time?", "#c91a63");
-
-    addOptions("What would you like to do?", [
-        {
-            text: "💰 Save 50% of your income",
-            action: () => {
-                const savings = income * 0.5;
-                netWorth += savings;
-                personalityTraits.cautious++;
-                personalityTraits.frugal++;
-
-                addMessage(`\nYou saved 50% of your income ($${savings}).`, "#c91a63");
-                updateUI();
-                saveGame();
-                ageTransition();
-            }
-        },
-        {
-            text: "📈 Invest in stocks",
-            action: () => {
-                const investResult = [100, 5000, 10000, 50000, 25000, 20000][Math.floor(Math.random() * 6)];
-                netWorth += investResult;
-                personalityTraits.risk_taker++;
-
-                addMessage(`\nYour stock investment returned $${investResult}.`, "#c91a63");
-                updateUI();
-                saveGame();
-                ageTransition();
-            }
-        },
-        {
-            text: "🛍️ Spend on luxury items",
-            action: () => {
-                const luxuryResult = -[10000, 5000, 1000, 2000][Math.floor(Math.random() * 4)];
-                netWorth += luxuryResult;
-                personalityTraits.luxury_spender++;
-
-                addMessage(`\nYou spent $${Math.abs(luxuryResult)} on luxury.`, "#c91a63");
-                updateUI();
-                saveGame();
-                ageTransition();
-            }
-        },
-        {
-            text: "🏡 Save for retirement",
-            action: () => {
-                const retireSavings = [1000, 5000, 10000][Math.floor(Math.random() * 3)];
-                netWorth += retireSavings;
-                personalityTraits.cautious++;
-                personalityTraits.frugal++;
-
-                addMessage(`\nYou saved for retirement, adding $${retireSavings}.`, "#c91a63");
-                updateUI();
-                saveGame();
-                ageTransition();
-            }
-        }
-    ], "number");
-}
-
-function ageTransition() {
-    age += 9;
-    randomEvents();
-    saveGame();
-
-    if (age >= 18 && age <= 27) {
-        currentStage = "28-37";
-        age = 28;
-        addMessage(`\n📅 You are now settling into adulthood! Current net worth: $${netWorth}.`, "#5F9632");
-        age28_37();
-    } else if (age >= 28 && age <= 37) {
-        currentStage = "38-47";
-        age = 38;
-        addMessage(`\n📅 Halfway there! You're almost 40! Current net worth: $${netWorth}.`, "#5F9632");
-        age38_47();
-    } else if (age >= 38 && age <= 47) {
-        currentStage = "48-57";
-        age = 48;
-        addMessage(`\n📅 Age ${age}: You're in midlife! Current net worth: $${netWorth}.`, "#5F9632");
-        age48_57();
-    } else if (age >= 48 && age <= 57) {
-        currentStage = "58-67";
-        age = 58;
-        addMessage(`\n📅 Age ${age}: You're approaching retirement! Current net worth: $${netWorth}.`, "#5F9632");
-        age58_67();
-    } else if (age >= 58 && age <= 67) {
-        age = 68;
-        endGame();
-    } else {
+// Beginning of age 28–37 decision tree
+function age28_37() {
+  addOptions("How will you continue your story?", [
+    {
+      text: "🏘 Buy a house (Requires a down payment, but could appreciate)",
+      action: () => {
+        const houseCost = Math.floor(Math.random() * 500000) + 100000;
+        netWorth -= houseCost;
+        addMessage(`\nYou bought a house for $${houseCost}. Home sweet home!`, "#c91a63");
+        addMessage("Buying a house provides stability, builds equity, and can be a valuable long-term investment!");
         updateUI();
         saveGame();
         financialDecisions();
+      }
+    },
+    {
+      text: "🏡 Rent a house (Less expensive, but no property appreciation)",
+      action: () => {
+        personalityTraits.frugal++;
+        const rentCost = Math.floor(Math.random() * 15000) + 5000;
+        netWorth -= rentCost;
+        addMessage(`\nYou rented a house for $${rentCost}. Home sweet home!`, "#c91a63");
+        addMessage("Renting a house offers flexibility, lower upfront costs, and fewer maintenance responsibilities.");
+        updateUI();
+        saveGame();
+        financialDecisions();
+      }
+    },
+    {
+      text: "👪 Start a family",
+      action: () => {
+        personalityTraits.risk_taker++;
+        personalityTraits.experience_seeker++;
+        saveGame();
+        presentFamilyOptions();
+      }
+    },
+    {
+      text: "📋 Climb the career ladder (Could lead to salary increases)",
+      action: () => {
+        personalityTraits.career_focused++;
+        const salaryIncrease = Math.floor(Math.random() * 10000) + 10000;
+        netWorth += salaryIncrease;
+        income += salaryIncrease;
+        addMessage(`\nYou focused on advancing your career and received a salary increase of $${salaryIncrease}.`, "#c91a63");
+        updateUI();
+        saveGame();
+        financialDecisions();
+      }
     }
+  ], "letter");
 }
 
-function age28_37() {
-    addOptions("How will you continue your story?", [
-        {
-            text: "🏘 Buy a house (Requires a down payment, but could appreciate)",
-            action: () => {
-                const houseCost = Math.floor(Math.random() * 500000) + 100000;
-                netWorth -= houseCost;
-                addMessage(`\nYou bought a house for $${houseCost}. Home sweet home!`, "#c91a63");
-                addMessage("Buying a house provides stability, builds equity, and can be a valuable long-term investment!");
-                updateUI();
-                saveGame();
-                financialDecisions();
-            }
-        },
-        {
-            text: "🏡 Rent a house (Less expensive, but no property appreciation)",
-            action: () => {
-                personalityTraits.frugal++;
-                const rentCost = Math.floor(Math.random() * 15000) + 5000;
-                netWorth -= rentCost;
-                addMessage(`\nYou rented a house for $${rentCost}. Home sweet home!`, "#c91a63");
-                addMessage("Renting a house offers flexibility, lower upfront costs, and fewer maintenance responsibilities.");
-                updateUI();
-                saveGame();
-                financialDecisions();
-            }
-        },
-        {
-            text: "👪 Start a family",
-            action: () => {
-                personalityTraits.risk_taker++;
-                personalityTraits.experience_seeker++;
-                saveGame();
-                presentFamilyOptions();
-            }
-        },
-        {
-            text: "📋 Climb the career ladder (Could lead to salary increases)",
-            action: () => {
-                personalityTraits.career_focused++;
-                const salaryIncrease = Math.floor(Math.random() * 10000) + 10000;
-                netWorth += salaryIncrease;
-                income += salaryIncrease;
-                addMessage(`\nYou focused on advancing your career and received a salary increase of $${salaryIncrease}.`, "#c91a63");
-                updateUI();
-                saveGame();
-                financialDecisions();
-            }
-        }
-    ], "letter");
-}
-
+// Offers options to start a family, each with a different financial cost
 function presentFamilyOptions() {
     addOptions("Choose your family option!", [
         {
             text: "Have a wedding",
             action: () => {
+                // Wedding cost: $10K–$500K
                 const cost = Math.floor(Math.random() * 490000) + 10000;
                 netWorth -= cost;
                 addMessage(`\nYou had a wedding and spent $${cost}. I heard it was fun!`, "#c91a63");
@@ -734,6 +785,7 @@ function presentFamilyOptions() {
         {
             text: "Have a child",
             action: () => {
+                // Child cost: $10K–$90K
                 const cost = Math.floor(Math.random() * 80000) + 10000;
                 netWorth -= cost;
                 addMessage(`\nYou had a child and spent $${cost}. Treasure these years!`, "#c91a63");
@@ -745,6 +797,7 @@ function presentFamilyOptions() {
         {
             text: "Get a pet",
             action: () => {
+                // Pet cost: $1K–$5K
                 const cost = Math.floor(Math.random() * 4000) + 1000;
                 netWorth -= cost;
                 addMessage(`\nYou got a pet and spent $${cost}. What will you name it?`, "#c91a63");
@@ -756,6 +809,7 @@ function presentFamilyOptions() {
     ], "letter");
 }
 
+// Life choices during age 38–47
 function age38_47() {
     addOptions("What will you choose?", [
         {
@@ -763,7 +817,7 @@ function age38_47() {
             action: () => {
                 personalityTraits.cautious++;
                 saveGame();
-                presentRetirementOptions();
+                presentRetirementOptions(); // Opens up different retirement savings paths
             }
         },
         {
@@ -807,6 +861,7 @@ function age38_47() {
     ], "letter");
 }
 
+// Provides different retirement investment options
 function presentRetirementOptions() {
     addOptions("Retirement Options", [
         {
@@ -828,6 +883,7 @@ function presentRetirementOptions() {
     ], "letter");
 }
 
+// Handles result of chosen retirement savings method
 function handleRetirementChoice(choice) {
     const retireSavings = Math.floor(Math.random() * 40000) + 10000;
     netWorth += retireSavings;
@@ -852,6 +908,7 @@ function handleRetirementChoice(choice) {
     financialDecisions();
 }
 
+// Life choices during age 48–57
 function age48_57() {
     addOptions("So, what's the next step? ", [
         {
@@ -909,6 +966,7 @@ function age48_57() {
     ], "letter");
 }
 
+// Life choices during age 58–67
 function age58_67() {
     addOptions("How will you shape your future?", [
         {
@@ -916,7 +974,7 @@ function age58_67() {
             action: () => {
                 personalityTraits.cautious++;
                 saveGame();
-                presentRetirementOptions();
+                presentRetirementOptions(); // Reuse earlier options
             }
         },
         {
@@ -961,31 +1019,33 @@ function age58_67() {
     ], "letter");
 }
 
-// Initialize the chart
+
+// Initializes the net worth line chart using Chart.js
 function initializeChart() {
     const chart = document.getElementById('net-worth-chart');
 
     netWorthChart = new Chart(chart, {
         type: 'line',
         data: {
-            labels: ageHistory,
+            labels: ageHistory, // X-axis: Player's age at each stage
             datasets: [{
                 label: 'Net Worth',
-                data: netWorthHistory,
-                borderColor: '#5F9632',
-                backgroundColor: 'rgba(95, 150, 50, 0.1)',
+                data: netWorthHistory, // Y-axis: Net worth corresponding to age
+                borderColor: '#5F9632', // Green border for line
+                backgroundColor: 'rgba(95, 150, 50, 0.1)', // Translucent fill
                 borderWidth: 2,
-                tension: 0.1,
+                tension: 0.1, // Line curve smoothing
                 fill: true
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: false, // Makes chart fit its container
             plugins: {
-                legend: { display: false },
+                legend: { display: false }, // Hides legend
                 tooltip: {
                     callbacks: {
+                        // Custom tooltip label format
                         label: function(context) {
                             return `Net Worth: $${context.raw.toLocaleString()}`;
                         }
@@ -998,12 +1058,13 @@ function initializeChart() {
                         maxRotation: 0,
                         minRotation: 0,
                         autoSkip: true,
-                        maxTicksLimit: 6
+                        maxTicksLimit: 6 // Limits clutter on x-axis
                     }
                 },
                 y: {
                     beginAtZero: false,
                     ticks: {
+                        // Formats y-axis ticks with K/M suffixes
                         callback: function(value) {
                             if (value >= 1000000) return '$' + (value / 1000000).toFixed(1) + 'M';
                             if (value >= 1000) return '$' + (value / 1000).toFixed(0) + 'K';
@@ -1016,7 +1077,7 @@ function initializeChart() {
     });
 }
 
-// Random events that can happen during the game
+// Occasionally triggers a random life event that affects net worth
 function randomEvents() {
     const events = [
         { message: "🎉 You won a lottery!", amount: 50000 },
@@ -1031,104 +1092,91 @@ function randomEvents() {
         { message: "📉 Economic recession! Your investments took a hit.", amount: -12000 }
     ];
 
+    // 30% chance of a random event occurring
     if (Math.random() < 0.3) {
         const event = events[Math.floor(Math.random() * events.length)];
         netWorth += event.amount;
+
+        // Show event result to the player
         addMessage(`\nAt age ${age}: ${event.message} (Net worth: $${netWorth})`);
-        saveGame();
-        setTimeout(updateUI, 900);
+
+        saveGame(); // Persist change
+        setTimeout(updateUI, 900); // Slight delay for realism
     }
 }
 
 // End game function
-// End game function
 function endGame() {
     saveGame();
+    // Announce retirement
     addMessage("\n🎉 Congratulations! You've reached your golden years. Let's see how you've done.");
-
     setTimeout(() => {
+        // Show final net worth
         addMessage(`YOUR FINAL NET WORTH: $${netWorth}!!!`, "#5F9632");
 
         setTimeout(() => {
+            // Introduce personality reflection phase
             addMessage("\nLet's pave your story and reflect on how your decisions/personality would have played out in the real world!");
             setTimeout(() => {
-                reflectOnPersonality();
+                reflectOnPersonality(); // Analyzes player choices
                 addMessage("\nThank you for playing Head $tart!");
-                gameOver();
+                gameOver(); // Offers replay option
             }, 1200);
         }, 900);
     }, 900);
 }
 
+// Reviews personality traits and assigns a title based on game decisions
 function reflectOnPersonality() {
+    // Risk tolerance analysis
     if (personalityTraits.risk_taker > personalityTraits.cautious) {
-        addMessage("You are mostly a risk-taker! You embraced opportunities with high rewards but also high risks.");
-        addMessage("This bold approach to finance is admired! However, make sure to prioritize financial stability as well, and balancing high-risk investments with stable assets (like bonds or index funds) might help secure this.", '#5F9632');
+        addMessage("You are mostly a risk-taker! ...", '#5F9632');
     } else {
-        addMessage("You are quite financially cautious! You prioritized stability and long-term security over risky opportunities.");
-        addMessage("You were secure, but taking calculated risks—such as small investments or side businesses—might have helped you grow your wealth without jeopardizing security.", '#5F9632');
+        addMessage("You are quite financially cautious! ...", '#5F9632');
     }
 
+    // Spending habits analysis
     if (personalityTraits.luxury_spender > personalityTraits.frugal) {
-        addMessage("You tend to enjoy the finer things in life! You prioritized luxury and experiences over savings.");
-        addMessage("While happiness is important, balancing spending with savings could improve financial security.", '#5F9632');
+        addMessage("You tend to enjoy the finer things in life! ...", '#5F9632');
     } else {
-        addMessage("You are a bit frugal and financially disciplined. You made sure to secure a stable future through careful spending.");
-        addMessage("Your careful budgeting and disciplined saving have put you in a strong financial position! However, life isn't just about accumulating wealth - spending on experiences, personal growth, or even calculated investments are necessary to make your life more fulfilling!", '#5F9632');
+        addMessage("You are a bit frugal and financially disciplined. ...", '#5F9632');
     }
 
+    // Career vs life experience analysis
     if (personalityTraits.career_focused > personalityTraits.experience_seeker) {
-        addMessage("You are quite career-driven! You prioritized financial growth and professional success.");
-        addMessage("You worked hard to climb the career ladder, and it paid off! While income is key to financial success, making your money work for you through smart investments and passive income sources could have helped even more, and it is important to note that taking a break is also necessary!", '#5F9632');
+        addMessage("You are quite career-driven! ...", '#5F9632');
     } else {
-        addMessage("You love to value life experiences! You sought joy in travel, socializing, and meaningful moments over strict financial discipline.");
-        addMessage("While your memories are invaluable and great for your mental health, a bit more financial planning—like setting aside funds for the future or investing could have ensured long-term security while still allowing for adventure.", '#5F9632');
+        addMessage("You love to value life experiences! ...", '#5F9632');
     }
 
-    // Assign Personality Title To Add An Element Of Fun
-        let title = "";
-
-        if (
-        personalityTraits.risk_taker > 5 &&
-        personalityTraits.luxury_spender > 5
-        ) {
+    // Assign a personality-based title for fun
+    let title = "";
+    if (personalityTraits.risk_taker > 5 && personalityTraits.luxury_spender > 5) {
         title = "Title Earned: The YOLO Spender";
-        } else if (
-        personalityTraits.cautious > 5 &&
-        personalityTraits.frugal > 5
-        ) {
+    } else if (personalityTraits.cautious > 5 && personalityTraits.frugal > 5) {
         title = "Title Earned: The Safe Strategist";
-        } else if (
-        personalityTraits.experience_seeker > 5 &&
-        personalityTraits.risk_taker > 4
-        ) {
+    } else if (personalityTraits.experience_seeker > 5 && personalityTraits.risk_taker > 4) {
         title = "Title Earned: The Adventurous Explorer";
-        } else if (
-        personalityTraits.career_focused > 6
-        ) {
+    } else if (personalityTraits.career_focused > 6) {
         title = "Title Earned: The Career Climber";
-        } else if (
-        personalityTraits.frugal > 3 &&
-        personalityTraits.experience_seeker > 3
-        ) {
+    } else if (personalityTraits.frugal > 3 && personalityTraits.experience_seeker > 3) {
         title = "Title Earned: The Balanced Planner";
-        } else {
+    } else {
         title = "Title Earned: The Reflective Learner";
-        }
+    }
 
-        addMessage(`\n${title}`, "#d4ab24"); // gold color
-
-        // Save game state
-        saveGame();
+    addMessage(`\n${title}`, "#d4ab24"); // Golden text
+    saveGame();
 }
 
+
+// Resets the entire game state and offers to restart
 function gameOver() {
-    // Add restart button
     addOptions("Game Over", [
         {
             text: "🔄 Play Again",
             action: () => {
-                // Reset game state
+                // Reset core variables
                 playerName = "";
                 netWorth = 1000;
                 income = 0;
@@ -1136,23 +1184,23 @@ function gameOver() {
                 career = "";
                 currentStage = "18-27";
 
-                // Reset personality traits
+                // Clear all personality traits
                 Object.keys(personalityTraits).forEach(trait => {
                     personalityTraits[trait] = 0;
                 });
-                
-                // Reset chart data
+
+                // Reset chart tracking
                 netWorthHistory = [1000];
                 ageHistory = [18];
 
-                // Remove old chart
+                // Remove old chart from DOM
                 const oldChart = document.getElementById('net-worth-chart');
                 if (oldChart) oldChart.remove();
 
-                // Clear messages
+                // Clear message log
                 messageLog.innerHTML = '';
 
-                // Show welcome screen again
+                // Return to start screen
                 welcomeScreen.classList.remove('hidden');
                 gameContainer.classList.add('hidden');
                 playerNameInput.value = '';
@@ -1161,45 +1209,42 @@ function gameOver() {
     ], "letter");
 }
 
-// Help sidebar functionality
+
+// Adds interactivity to the help menu sidebar
 document.addEventListener("DOMContentLoaded", () => {
   const helpBtn = document.getElementById("help-btn");
   const helpSidebar = document.getElementById("help-sidebar");
   const closeHelp = document.getElementById("close-help");
 
-  // Open Help Sidebar when help button clicked
+  // Open Help Sidebar
   helpBtn.addEventListener("click", () => {
     helpSidebar.classList.remove("hidden");
   });
 
-  // Close Help Sidebar when close button clicked
+  // Close Help Sidebar
   closeHelp.addEventListener("click", () => {
     helpSidebar.classList.add("hidden");
   });
 
-  // Toggle each help section dropdown and arrow rotation
+  // Enable dropdown functionality inside help menu
   const helpItems = document.querySelectorAll(".help-item");
-    helpItems.forEach((item) => {
+  helpItems.forEach((item) => {
     item.addEventListener("click", () => {
         const id = item.getAttribute("data-id");
         const dropdown = document.getElementById(id);
-
-        if (!dropdown) return; // safety check
+        if (!dropdown) return; // Safety check
 
         const isOpen = !dropdown.classList.contains("hidden");
 
-        if (isOpen) {
-        dropdown.classList.add("hidden");
-        item.classList.remove("expanded");  // toggle here on the item
-        } else {
-        dropdown.classList.remove("hidden");
-        item.classList.add("expanded");     // toggle here on the item
-        }
+        // Toggle visibility and style
+        dropdown.classList.toggle("hidden", isOpen);
+        item.classList.toggle("expanded", !isOpen);
     });
-    });
+  });
 
-  // Load saved game if it exists
+  // Automatically load saved game if it exists
   loadGame();
 
+  // Initialize UI/game setup
   initGame();
 });
