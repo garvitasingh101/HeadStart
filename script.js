@@ -1212,6 +1212,7 @@ function gameOver() {
                 // Return to start screen
                 welcomeScreen.classList.remove('hidden');
                 gameContainer.classList.add('hidden');
+                questionContainer.classList.add('hidden');
                 playerNameInput.value = '';
 
                 // Reinitialize the game/chart if needed

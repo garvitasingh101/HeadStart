@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const questionInput = document.getElementById('user-question');
     const askButton = document.getElementById('ask-button');
     const answerDisplay = document.getElementById('answer-display');
-
+    const questionContainer = document.getElementById('question-container');
+    
     function answerQuestion() {
         const question = questionInput.value.trim().toLowerCase();
         
@@ -75,4 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
             answerQuestion();
         }
     });
+
+    questionContainer.classList.add('hidden');
 });
