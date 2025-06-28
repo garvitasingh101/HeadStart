@@ -63,7 +63,7 @@ function saveGame() {
     age,
     career,
     currentStage,
-    currentCheckpoint, // ⬅️ new line
+    currentCheckpoint,
     personalityTraits: { ...personalityTraits },
     netWorthHistory: [...netWorthHistory],
     ageHistory: [...ageHistory]
@@ -94,7 +94,7 @@ function loadGame() {
   age = latestSave.age || 18;
   career = latestSave.career || "";
   currentStage = latestSave.currentStage || "18-27";
-  currentCheckpoint = latestSave.currentCheckpoint || ""; // ⬅️ new line
+  currentCheckpoint = latestSave.currentCheckpoint || "";
 
   Object.keys(personalityTraits).forEach(trait => {
     personalityTraits[trait] = latestSave.personalityTraits?.[trait] || 0;
@@ -108,7 +108,6 @@ function loadGame() {
 
   addMessage(`\nSaved game found for ${playerName}. Enter your name and click Play to resume.`, "#5F9632");
 }
-
 // == START GAME ==
 function startGame() {
   const inputName = playerNameInput.value.trim();
@@ -129,7 +128,7 @@ function startGame() {
     saves = saves.filter(save => save.playerName !== inputName);
     localStorage.setItem("headstartGameSaves", JSON.stringify(saves));
 
-    latest = null;  // DO NOT load completed save
+    latest = null;
     saveStates = [];
   }
 
@@ -141,6 +140,7 @@ function startGame() {
     age = latest.age || 18;
     career = latest.career || "";
     currentStage = latest.currentStage || "18-27";
+    currentCheckpoint = latest.currentCheckpoint || "";
 
     Object.keys(personalityTraits).forEach(trait => {
       personalityTraits[trait] = latest.personalityTraits?.[trait] || 0;
@@ -156,6 +156,7 @@ function startGame() {
     age = 18;
     career = "";
     currentStage = "18-27";
+    currentCheckpoint = "";
 
     Object.keys(personalityTraits).forEach(trait => {
       personalityTraits[trait] = 0;
@@ -170,7 +171,6 @@ function startGame() {
   gameContainer.classList.remove('hidden');
   questionContainer.classList.remove('hidden');
 
-  // messageLog.innerHTML = ''; // optional: keep messages if you want
   initializeChart();
   updateUI();
 
@@ -178,19 +178,26 @@ function startGame() {
   addMessage("To view instructions and our purpose, click on the \"?\" button! To stop at any time, type \"STOP\". Good Luck!", '#c91a63');
 
   if (latest) {
-  // Continue from saved stage
-  switch (currentStage) {
-    case "18-27": age18_27(); break;
-    case "28-37": age28_37(); break;
-    case "38-47": age38_47(); break;
-    case "48-57": age48_57(); break;
-    case "58-67": age58_67(); break;
-    default: age18_27(); break;
+    // Continue from saved stage
+    switch (currentStage) {
+      case "18-27": age18_27(); break;
+      case "28-37": age28_37(); break;
+      case "38-47": age38_47(); break;
+      case "48-57": age48_57(); break;
+      case "58-67": age58_67(); break;
+      default: age18_27(); break;
+    }
+  } else {
+    // New game: start with intro decision
+    offerFirstPath();
   }
-} else {
-  // New game: start with intro decision
-  offerFirstPath();
 }
+// == INIT GAME ==
+function initGame() {
+  startGameButton.addEventListener('click', startGame);
+  playerNameInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') startGame();
+  });
 }
 // == INIT GAME ==
 function initGame() {
