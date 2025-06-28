@@ -1,11 +1,11 @@
-// Main game variables
+// == MAIN GAME VARIABLES ==
 let playerName = "";
 
 // Financial and career tracking
-let netWorth = 1000;       // Starting net worth
-let income = 0;            // Current income
-let age = 18;              // Starting age
-let career = "";           // Selected career
+let netWorth = 1000;
+let income = 0;
+let age = 18;
+let career = "";
 
 // Tracks game stage based on age ranges
 let currentStage = "18-27";
@@ -13,30 +13,9 @@ let currentStage = "18-27";
 // Used to draw the net worth progress chart over time
 let netWorthHistory = [1000];
 let ageHistory = [18];
-let netWorthChart;         // Will store Chart.js chart object
+let netWorthChart; // Chart.js instance
 
-// Array to store snapshots of game states (if needed)
-const saveStates = [];
-
-// Object to define the entire game state, used for saving/loading
-let gameState = {
-  age: 18,
-  netWorth: 1000,
-  income: 0,
-  career: "",
-  decisions: [],
-  traits: {
-    risk_taker: 0,
-    cautious: 0,
-    luxury_spender: 0,
-    frugal: 0,
-    career_focused: 0,
-    experience_seeker: 0
-  },
-  timestamp: new Date().toISOString()
-};
-
-// Personality Trait Tracking
+// == PERSONALITY TRAIT TRACKING ==
 const personalityTraits = {
   risk_taker: 0,
   cautious: 0,
@@ -46,7 +25,10 @@ const personalityTraits = {
   experience_seeker: 0
 };
 
-// DOM Element References
+// == SAVE ARRAY SYSTEM ==
+let saveStates = JSON.parse(localStorage.getItem("headstartGameSaves")) || [];
+
+// == DOM ELEMENT REFERENCES ==
 const welcomeScreen = document.getElementById('welcome-screen');
 const gameContainer = document.getElementById('game-container');
 const questionContainer = document.getElementById('question-container');
@@ -62,7 +44,7 @@ const progressBar = document.getElementById('progress');
 const optionsPanel = document.getElementById('options-panel');
 const messageLog = document.getElementById('message-log');
 
-// Allow pressing Enter to trigger the game start
+// == TRIGGER START ON ENTER ==
 playerNameInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     event.preventDefault();
@@ -70,128 +52,110 @@ playerNameInput.addEventListener("keydown", (event) => {
   }
 });
 
-// Saves current progress to localStorage
+// == SAVE GAME ==
 function saveGame() {
-  const gameData = {
+  const snapshot = {
     playerName,
     netWorth,
     income,
     age,
     career,
     currentStage,
-    personalityTraits,
-    netWorthHistory,
-    ageHistory
+    personalityTraits: { ...personalityTraits },
+    netWorthHistory: [...netWorthHistory],
+    ageHistory: [...ageHistory],
+    timestamp: new Date().toISOString()
   };
-  localStorage.setItem("headstartGameData", JSON.stringify(gameData));
-  console.log("Game auto-saved!");
+
+    saveStates.push(snapshot);
+  if (saveStates.length > 5) saveStates.shift(); // keep last 5 saves
+  localStorage.setItem("headstartGameSaves", JSON.stringify(saveStates));
+  console.log("Game saved successfully!");
 }
 
-// Loads saved progress from localStorage
+// == LOAD GAME ==
 function loadGame() {
-  const savedGame = localStorage.getItem("headstartGameData");
+  saveStates = JSON.parse(localStorage.getItem("headstartGameSaves")) || [];
+  const latestSave = saveStates[saveStates.length - 1];
 
-  if (savedGame) {
-    const data = JSON.parse(savedGame);
+  if (!latestSave) return;
 
-    // Don't load if game is finished
-    if (data.age >= 68 || data.currentStage === "gameover") {
-      localStorage.removeItem("headstartGameData");
-      addMessage("\nYour previous game has finished. Please start a new game.", "#d9534f");
-      return;
-    }
-
-    // Load key game variables from saved data
-    playerName = data.playerName || "";
-    netWorth = data.netWorth || 1000;
-    income = data.income || 0;
-    age = data.age || 18;
-    career = data.career || "";
-    currentStage = data.currentStage || "18-27";
-
-    // Load traits safely using optional chaining
-    personalityTraits.risk_taker = data.personalityTraits?.risk_taker || 0;
-    personalityTraits.cautious = data.personalityTraits?.cautious || 0;
-    personalityTraits.luxury_spender = data.personalityTraits?.luxury_spender || 0;
-    personalityTraits.frugal = data.personalityTraits?.frugal || 0;
-    personalityTraits.career_focused = data.personalityTraits?.career_focused || 0;
-    personalityTraits.experience_seeker = data.personalityTraits?.experience_seeker || 0;
-
-    // Restore chart histories
-    netWorthHistory = data.netWorthHistory || [netWorth];
-    ageHistory = data.ageHistory || [age];
-
-    // Prefill UI with saved name
-    playerNameInput.value = playerName;
-    startGameButton.disabled = false;
-
-    addMessage(`\nSaved game found for ${playerName}. Enter your name and click Play to resume.`, "#5F9632");
+  if (latestSave.age >= 68 || latestSave.currentStage === "gameover") {
+    localStorage.removeItem("headstartGameSaves");
+    addMessage("\nYour previous game has finished. Please start a new game.", "#d9534f");
+    return;
   }
+
+  playerName = latestSave.playerName || "";
+  netWorth = latestSave.netWorth || 1000;
+  income = latestSave.income || 0;
+  age = latestSave.age || 18;
+  career = latestSave.career || "";
+  currentStage = latestSave.currentStage || "18-27";
+
+  Object.keys(personalityTraits).forEach(trait => {
+    personalityTraits[trait] = latestSave.personalityTraits?.[trait] || 0;
+  });
+
+  netWorthHistory = latestSave.netWorthHistory || [netWorth];
+  ageHistory = latestSave.ageHistory || [age];
+
+  playerNameInput.value = playerName;
+  startGameButton.disabled = false;
+
+  addMessage(`\nSaved game found for ${playerName}. Enter your name and click Play to resume.`, "#5F9632");
 }
+
+// == START GAME ==
 function startGame() {
   const inputName = playerNameInput.value.trim();
-
   if (!inputName) {
     alert("Please enter your name to start the game!");
     return;
   }
 
-  const savedGameJSON = localStorage.getItem("headstartGameData");
+  const saves = JSON.parse(localStorage.getItem("headstartGameSaves")) || [];
+  const latest = saves[saves.length - 1];
 
-  if (savedGameJSON) {
-    const savedGame = JSON.parse(savedGameJSON);
+  if (latest && (latest.age >= 68 || latest.currentStage === "gameover")) {
+    localStorage.removeItem("headstartGameSaves");
+    alert("Saved game is complete. Starting a new game.");
+  } else if (latest && latest.playerName === inputName) {
+    playerName = latest.playerName;
+    netWorth = latest.netWorth || 1000;
+    income = latest.income || 0;
+    age = latest.age || 18;
+    career = latest.career || "";
+    currentStage = latest.currentStage || "18-27";
 
-    // If saved game is finished, clear and start fresh
-    if (savedGame.age >= 68 || savedGame.currentStage === "gameover") {
-      localStorage.removeItem("headstartGameData");
-      alert("Saved game is complete. Starting a new game.");
-    } 
-    // Resume saved game if name matches and game not finished
-    else if (savedGame.playerName === inputName) {
-      playerName = savedGame.playerName;
-      netWorth = savedGame.netWorth || 1000;
-      income = savedGame.income || 0;
-      age = savedGame.age || 18;
-      career = savedGame.career || "";
-      currentStage = savedGame.currentStage || "18-27";
+    Object.keys(personalityTraits).forEach(trait => {
+      personalityTraits[trait] = latest.personalityTraits?.[trait] || 0;
+    });
 
-      if (savedGame.personalityTraits) {
-        Object.keys(personalityTraits).forEach(trait => {
-          personalityTraits[trait] = savedGame.personalityTraits[trait] || 0;
-        });
-      } else {
-        Object.keys(personalityTraits).forEach(trait => {
-          personalityTraits[trait] = 0;
-        });
-      }
+    netWorthHistory = latest.netWorthHistory || [netWorth];
+    ageHistory = latest.ageHistory || [age];
 
-      netWorthHistory = savedGame.netWorthHistory || [netWorth];
-      ageHistory = savedGame.ageHistory || [age];
+    welcomeScreen.classList.add('hidden');
+    gameContainer.classList.remove('hidden');
+    questionContainer.classList.remove('hidden');
 
-      // Show game screen
-      welcomeScreen.classList.add('hidden');
-      gameContainer.classList.remove('hidden');
-      questionContainer.classList.remove('hidden');
+    initializeChart();
+    updateUI();
 
-      initializeChart();
-      updateUI();
+    addMessage(`👋 Welcome back, ${playerName}! Resuming your game at age ${age} with a net worth of $${netWorth}.`, '#5F9632');
 
-      addMessage(`👋 Welcome back, ${playerName}! Resuming your game at age ${age} with a net worth of $${netWorth}.`, '#5F9632');
-
-      // Resume correct age stage
-      switch (currentStage) {
-        case "18-27": age18_27(); break;
-        case "28-37": age28_37(); break;
-        case "38-47": age38_47(); break;
-        case "48-57": age48_57(); break;
-        case "58-67": age58_67(); break;
-        default: age18_27(); break;
-      }
-      return;
+    switch (currentStage) {
+      case "18-27": age18_27(); break;
+      case "28-37": age28_37(); break;
+      case "38-47": age38_47(); break;
+      case "48-57": age48_57(); break;
+      case "58-67": age58_67(); break;
+      default: age18_27(); break;
     }
+    return;
   }
 
-  // Start a brand new game
+  // New game setup
   playerName = inputName;
   age = 18;
   netWorth = 1000;
@@ -219,32 +183,42 @@ function startGame() {
 
   saveGame();
 }
- 
+
+// == INIT GAME ==
 function initGame() {
-    startGameButton.addEventListener('click', startGame);
-    playerNameInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') startGame();
-    });
+  startGameButton.addEventListener('click', startGame);
+  playerNameInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') startGame();
+  });
 }
 
-// Refreshes all values on screen
+// == MESSAGE DISPLAY ==
+function addMessage(message, color) {
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+  messageElement.textContent = message;
+  if (color) messageElement.style.color = color;
+  messageLog.appendChild(messageElement);
+  messageLog.scrollTop = messageLog.scrollHeight;
+}
+
+// == UI UPDATER ==
 function updateUI() {
   currentAgeDisplay.textContent = age;
   currentIncomeDisplay.textContent = income;
   currentNetWorthDisplay.textContent = netWorth;
-  
-  ageHistory.push(age);
-  netWorthHistory.push(netWorth);
-  
 
-  // Update Chart.js graph if loaded
+  if (ageHistory[ageHistory.length - 1] !== age) {
+    ageHistory.push(age);
+    netWorthHistory.push(netWorth);
+  }
+
   if (netWorthChart) {
     netWorthChart.data.labels = ageHistory;
     netWorthChart.data.datasets[0].data = netWorthHistory;
     netWorthChart.update();
   }
 
-  // Update progress bar based on age stage
   let progressPercentage = 0;
   if (age >= 63) {
     progressPercentage = 100;
@@ -261,22 +235,11 @@ function updateUI() {
   progressBar.style.width = `${progressPercentage}%`;
 }
 
-// Adds a message to the in-game log
-function addMessage(message, color) {
-  const messageElement = document.createElement('div');
-  messageElement.classList.add('message');
-  messageElement.textContent = message;
-  if (color) messageElement.style.color = color;
-  messageLog.appendChild(messageElement);
-  messageLog.scrollTop = messageLog.scrollHeight;
-}
-
-// Clears option buttons from the panel
+// == OPTIONS UTILITIES ==
 function clearOptions() {
   optionsPanel.innerHTML = '';
 }
 
-// Displays multiple choice options (with optional number or letter input)
 function addOptions(title, options, inputType = "letter") {
   clearOptions();
 
@@ -287,7 +250,6 @@ function addOptions(title, options, inputType = "letter") {
   const optionsContainer = document.createElement('div');
   optionsContainer.classList.add('options');
 
-  // Render each option with key and text
   options.forEach((option, index) => {
     const key = inputType === 'number' ? `${index + 1}` : String.fromCharCode(97 + index);
     const optionDiv = document.createElement('div');
@@ -301,32 +263,25 @@ function addOptions(title, options, inputType = "letter") {
 
   optionsPanel.appendChild(optionsContainer);
 
-  // Input instructions
   const instruction = document.createElement('p');
   instruction.innerHTML = `<strong>Type the ${inputType === "number" ? "number" : "letter"} of your choice below:</strong>`;
   optionsPanel.appendChild(instruction);
 
-  // Input field
   const input = document.createElement('input');
   input.type = 'text';
   input.placeholder = inputType === 'number' ? 'e.g. 1 or 2' : 'e.g. a or b';
 
-  // Submit button
   const submit = document.createElement('button');
   submit.textContent = 'Submit';
   submit.classList.add('submit-option');
 
-  // Handles option selection
   submit.addEventListener('click', () => {
     const val = input.value.trim().toLowerCase();
-
-    // Handle stop keyword
     if (val === "stop") {
       endGame("Game ended by user.");
       return;
     }
 
-    // Parse selection
     let index = -1;
     if (inputType === "letter" && /^[a-z]$/.test(val)) {
       index = val.charCodeAt(0) - 97;
@@ -341,7 +296,6 @@ function addOptions(title, options, inputType = "letter") {
     }
   });
 
-  // Submit on Enter key
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       submit.click();
@@ -470,7 +424,7 @@ function startABusiness() {
     }
     netWorth -= value; // Deduct investment
 
-    // Simulate business income - use a random component + 50% return on investment as base
+    // Simulate business income - random component + 50% ROI as base
     income = Math.floor(value * 0.5) + Math.floor(Math.random() * 10000);
 
     addMessage(`You invested $${value} and launched your business. First-year earnings: $${income}.`, "#5F9632");
@@ -478,7 +432,7 @@ function startABusiness() {
     updateUI();
     saveGame();
 
-    // After investing, continue to next 18-27 stage decisions
+    // Continue to next 18-27 stage decisions
     age18_27();
   });
 
@@ -717,6 +671,7 @@ function ageTransition() {
     endGame();
   }
 }
+
 // Beginning of age 28–37 decision tree
 function age28_37() {
   addOptions("How will you continue your story?", [
@@ -817,7 +772,7 @@ function age38_47() {
       action: () => {
         personalityTraits.cautious++;
         saveGame();
-        presentRetirementOptions(); // Opens up different retirement savings paths
+        presentRetirementOptions();
       }
     },
     {
@@ -965,7 +920,6 @@ function age48_57() {
     }
   ], "letter");
 }
-
 // Life choices during age 58–67
 function age58_67() {
   addOptions("How will you shape your future?", [
@@ -1022,92 +976,92 @@ function age58_67() {
 
 // Initializes the net worth line chart using Chart.js
 function initializeChart() {
-    const chart = document.getElementById('net-worth-chart');
+  const chart = document.getElementById('net-worth-chart');
 
-    // Destroy existing chart instance if present to avoid duplicates
-    if (netWorthChart) {
-        netWorthChart.destroy();
-    }
+  // Destroy existing chart instance if present to avoid duplicates
+  if (netWorthChart) {
+    netWorthChart.destroy();
+  }
 
-    netWorthChart = new Chart(chart, {
-        type: 'line',
-        data: {
-            labels: ageHistory, // X-axis: Player's age at each stage
-            datasets: [{
-                label: 'Net Worth',
-                data: netWorthHistory, // Y-axis: Net worth corresponding to age
-                borderColor: '#5F9632', // Green border for line
-                backgroundColor: 'rgba(95, 150, 50, 0.1)', // Translucent fill
-                borderWidth: 2,
-                tension: 0.1, // Line curve smoothing
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false, // Makes chart fit its container
-            plugins: {
-                legend: { display: false }, // Hides legend
-                tooltip: {
-                    callbacks: {
-                        // Custom tooltip label format
-                        label: function(context) {
-                            return `Net Worth: $${context.raw.toLocaleString()}`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        maxRotation: 0,
-                        minRotation: 0,
-                        autoSkip: true,
-                        maxTicksLimit: 6 // Limits clutter on x-axis
-                    }
-                },
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        // Formats y-axis ticks with K/M suffixes
-                        callback: function(value) {
-                            if (value >= 1_000_000) return '$' + (value / 1_000_000).toFixed(1) + 'M';
-                            if (value >= 1_000) return '$' + (value / 1_000).toFixed(0) + 'K';
-                            return '$' + value;
-                        }
-                    }
-                }
+  netWorthChart = new Chart(chart, {
+    type: 'line',
+    data: {
+      labels: ageHistory, // X-axis: Player's age at each stage
+      datasets: [{
+        label: 'Net Worth',
+        data: netWorthHistory, // Y-axis: Net worth corresponding to age
+        borderColor: '#5F9632', // Green border for line
+        backgroundColor: 'rgba(95, 150, 50, 0.1)', // Translucent fill
+        borderWidth: 2,
+        tension: 0.1, // Line curve smoothing
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false, // Makes chart fit its container
+      plugins: {
+        legend: { display: false }, // Hides legend
+        tooltip: {
+          callbacks: {
+            // Custom tooltip label format
+            label: function(context) {
+              return `Net Worth: $${context.raw.toLocaleString()}`;
             }
+          }
         }
-    });
+      },
+      scales: {
+        x: {
+          ticks: {
+            maxRotation: 0,
+            minRotation: 0,
+            autoSkip: true,
+            maxTicksLimit: 6 // Limits clutter on x-axis
+          }
+        },
+        y: {
+          beginAtZero: false,
+          ticks: {
+            // Formats y-axis ticks with K/M suffixes
+            callback: function(value) {
+              if (value >= 1_000_000) return '$' + (value / 1_000_000).toFixed(1) + 'M';
+              if (value >= 1_000) return '$' + (value / 1_000).toFixed(0) + 'K';
+              return '$' + value;
+            }
+          }
+        }
+      }
+    }
+  });
 }
 
 // Occasionally triggers a random life event that affects net worth
 function randomEvents() {
-    const events = [
-        { message: "🎉 You won a lottery!", amount: 50000 },
-        { message: "🎊 You got a promotion!", amount: 20000 },
-        { message: "💸 You had an unexpected medical expense.", amount: -10000 },
-        { message: "🎉 You received an inheritance.", amount: 30000 },
-        { message: "📉 You faced a job loss.", amount: -20000 },
-        { message: "😞 You had a car accident.", amount: -15000 },
-        { message: "🤑 Side business took off!", amount: 10000 },
-        { message: "📉 Stock market crash! You lost some money", amount: -5000 },
-        { message: "🏠 Unexpected home repair costs.", amount: -8000 },
-        { message: "📉 Economic recession! Your investments took a hit.", amount: -12000 }
-    ];
+  const events = [
+    { message: "🎉 You won a lottery!", amount: 50000 },
+    { message: "🎊 You got a promotion!", amount: 20000 },
+    { message: "💸 You had an unexpected medical expense.", amount: -10000 },
+    { message: "🎉 You received an inheritance.", amount: 30000 },
+    { message: "📉 You faced a job loss.", amount: -20000 },
+    { message: "😞 You had a car accident.", amount: -15000 },
+    { message: "🤑 Side business took off!", amount: 10000 },
+    { message: "📉 Stock market crash! You lost some money", amount: -5000 },
+    { message: "🏠 Unexpected home repair costs.", amount: -8000 },
+    { message: "📉 Economic recession! Your investments took a hit.", amount: -12000 }
+  ];
 
-    // 30% chance of a random event occurring
-    if (Math.random() < 0.3) {
-        const event = events[Math.floor(Math.random() * events.length)];
-        netWorth += event.amount;
+  // 30% chance of a random event occurring
+  if (Math.random() < 0.3) {
+    const event = events[Math.floor(Math.random() * events.length)];
+    netWorth += event.amount;
 
-        // Show event result to the player with formatted net worth
-        addMessage(`\nAt age ${age}: ${event.message} (Net worth: $${netWorth.toLocaleString()})`);
+    // Show event result to the player with formatted net worth
+    addMessage(`\nAt age ${age}: ${event.message} (Net worth: $${netWorth.toLocaleString()})`);
 
-        saveGame(); // Persist change
-        updateUI(); 
-    }
+    saveGame(); // Persist change
+    updateUI();
+  }
 }
 
 // End game function
@@ -1128,142 +1082,141 @@ function endGame() {
   gameOver(); // Offers replay option
 }
 
-
 // Reviews personality traits and assigns a title based on game decisions
 function reflectOnPersonality() {
-    // Risk tolerance analysis
-    if (personalityTraits.risk_taker > personalityTraits.cautious) {
-        addMessage("You are mostly a risk-taker! Your adventurous choices often led to exciting outcomes.", '#5F9632');
-        addMessage("This bold approach to finance is admired! However, make sure to prioritize financial stability as well, and balancing high-risk investments with stable assets (like bonds or index funds) might help secure this.", '#000000');
-    } else {
-        addMessage("You are quite financially cautious! You preferred steady and secure paths.", '#5F9632');
-        addMessage("You were secure, but taking calculated risks—such as small investments or side businesses—might have helped you grow your wealth without jeopardizing security.", '#000000');
-    }
+  // Risk tolerance analysis
+  if (personalityTraits.risk_taker > personalityTraits.cautious) {
+    addMessage("You are mostly a risk-taker! Your adventurous choices often led to exciting outcomes.", '#5F9632');
+    addMessage("This bold approach to finance is admired! However, make sure to prioritize financial stability as well, and balancing high-risk investments with stable assets (like bonds or index funds) might help secure this.", '#000000');
+  } else {
+    addMessage("You are quite financially cautious! You preferred steady and secure paths.", '#5F9632');
+    addMessage("You were secure, but taking calculated risks—such as small investments or side businesses—might have helped you grow your wealth without jeopardizing security.", '#000000');
+  }
 
-    // Spending habits analysis
-    if (personalityTraits.luxury_spender > personalityTraits.frugal) {
-        addMessage("You tend to enjoy the finer things in life! You value comfort and luxury.", '#5F9632');
-        addMessage("While happiness is important, balancing spending with savings could improve financial security.", '#000000');
-    } else {
-        addMessage("You are a bit frugal and financially disciplined. You carefully manage your resources.", '#5F9632');
-        addMessage("Your careful budgeting and disciplined saving have put you in a strong financial position! However, life isn’t just about accumulating wealth - spending on experiences, personal growth, or even calculated investments are necessary to make your life more fulfilling!", '#000000');
-    }
+  // Spending habits analysis
+  if (personalityTraits.luxury_spender > personalityTraits.frugal) {
+    addMessage("You tend to enjoy the finer things in life! You value comfort and luxury.", '#5F9632');
+    addMessage("While happiness is important, balancing spending with savings could improve financial security.", '#000000');
+  } else {
+    addMessage("You are a bit frugal and financially disciplined. You carefully manage your resources.", '#5F9632');
+    addMessage("Your careful budgeting and disciplined saving have put you in a strong financial position! However, life isn’t just about accumulating wealth - spending on experiences, personal growth, or even calculated investments are necessary to make your life more fulfilling!", '#000000');
+  }
 
-    // Career vs life experience analysis
-    if (personalityTraits.career_focused > personalityTraits.experience_seeker) {
-        addMessage("You are quite career-driven! Climbing the ladder was your focus.", '#5F9632');
-        addMessage("You worked hard to climb the career ladder, and it paid off! While income is key to financial success, making your money work for you through smart investments and passive income sources could have helped even more, and it is important to note that taking a break is also necessary!", '#000000');
-    } else {
-        addMessage("You love to value life experiences! You prioritized adventure and exploration.", '#5F9632');
-        addMessage("While your memories are invaluable and great for your mental health, a bit more financial planning—like setting aside funds for the future or investing could have ensured long-term security while still allowing for adventure.", '#000000');
-    }
+  // Career vs life experience analysis
+  if (personalityTraits.career_focused > personalityTraits.experience_seeker) {
+    addMessage("You are quite career-driven! Climbing the ladder was your focus.", '#5F9632');
+    addMessage("You worked hard to climb the career ladder, and it paid off! While income is key to financial success, making your money work for you through smart investments and passive income sources could have helped even more, and it is important to note that taking a break is also necessary!", '#000000');
+  } else {
+    addMessage("You love to value life experiences! You prioritized adventure and exploration.", '#5F9632');
+    addMessage("While your memories are invaluable and great for your mental health, a bit more financial planning—like setting aside funds for the future or investing could have ensured long-term security while still allowing for adventure.", '#000000');
+  }
 
-    // Assign a personality-based title for fun
-    let title = "";
-    if (personalityTraits.risk_taker > 5 && personalityTraits.luxury_spender > 5) {
-        title = "Title Earned: The YOLO Spender";
-    } else if (personalityTraits.cautious > 5 && personalityTraits.frugal > 5) {
-        title = "Title Earned: The Safe Strategist";
-    } else if (personalityTraits.experience_seeker > 5 && personalityTraits.risk_taker > 4) {
-        title = "Title Earned: The Adventurous Explorer";
-    } else if (personalityTraits.career_focused > 6) {
-        title = "Title Earned: The Career Climber";
-    } else if (personalityTraits.frugal > 3 && personalityTraits.experience_seeker > 3) {
-        title = "Title Earned: The Balanced Planner";
-    } else {
-        title = "Title Earned: The Reflective Learner";
-    }
+  // Assign a personality-based title for fun
+  let title = "";
+  if (personalityTraits.risk_taker > 5 && personalityTraits.luxury_spender > 5) {
+    title = "Title Earned: The YOLO Spender";
+  } else if (personalityTraits.cautious > 5 && personalityTraits.frugal > 5) {
+    title = "Title Earned: The Safe Strategist";
+  } else if (personalityTraits.experience_seeker > 5 && personalityTraits.risk_taker > 4) {
+    title = "Title Earned: The Adventurous Explorer";
+  } else if (personalityTraits.career_focused > 6) {
+    title = "Title Earned: The Career Climber";
+  } else if (personalityTraits.frugal > 3 && personalityTraits.experience_seeker > 3) {
+    title = "Title Earned: The Balanced Planner";
+  } else {
+    title = "Title Earned: The Reflective Learner";
+  }
 
-    addMessage(`\n${title}`, "#d4ab24"); // Golden text
-    saveGame();
+  addMessage(`\n${title}`, "#d4ab24"); // Golden text
+  saveGame();
 }
 
 // Resets the entire game state and offers to restart
 function gameOver() {
-    addOptions("Game Over", [
-        {
-            text: "🔄 Play Again",
-            action: () => {
-                // Reset core variables
-                playerName = "";
-                netWorth = 1000;
-                income = 0;
-                age = 18;
-                career = "";
-                currentStage = "18-27";
+  addOptions("Game Over", [
+    {
+      text: "🔄 Play Again",
+      action: () => {
+        // Reset core variables
+        playerName = "";
+        netWorth = 1000;
+        income = 0;
+        age = 18;
+        career = "";
+        currentStage = "18-27";
 
-                // Clear all personality traits
-                Object.keys(personalityTraits).forEach(trait => {
-                    personalityTraits[trait] = 0;
-                });
+        // Clear all personality traits
+        Object.keys(personalityTraits).forEach(trait => {
+          personalityTraits[trait] = 0;
+        });
 
-                // Reset chart tracking
-                netWorthHistory = [1000];
-                ageHistory = [18];
+        // Reset chart tracking
+        netWorthHistory = [1000];
+        ageHistory = [18];
 
-                // Remove old chart canvas and recreate to reset Chart.js
-                const oldChart = document.getElementById('net-worth-chart');
-                if (oldChart) {
-                    oldChart.remove();
-                    // Create new canvas element for fresh chart
-                    const chartContainer = document.getElementById('chart-container'); // Make sure this container exists
-                    const newCanvas = document.createElement('canvas');
-                    newCanvas.id = 'net-worth-chart';
-                    chartContainer.appendChild(newCanvas);
-                }
-
-                // Clear message log
-                messageLog.innerHTML = '';
-
-                // Return to start screen
-                welcomeScreen.classList.remove('hidden');
-                gameContainer.classList.add('hidden');
-                questionContainer.classList.add('hidden');
-                playerNameInput.value = '';
-
-                // Reinitialize the game/chart if needed
-                netWorthChart = null;
-                initializeChart();
-            }
+        // Remove old chart canvas and recreate to reset Chart.js
+        const oldChart = document.getElementById('net-worth-chart');
+        if (oldChart) {
+          oldChart.remove();
+          // Create new canvas element for fresh chart
+          const chartContainer = document.getElementById('chart-container'); // Ensure container exists
+          const newCanvas = document.createElement('canvas');
+          newCanvas.id = 'net-worth-chart';
+          chartContainer.appendChild(newCanvas);
         }
-    ], "letter");
+
+        // Clear message log
+        messageLog.innerHTML = '';
+
+        // Return to start screen
+        welcomeScreen.classList.remove('hidden');
+        gameContainer.classList.add('hidden');
+        questionContainer.classList.add('hidden');
+        playerNameInput.value = '';
+
+        // Reinitialize the game/chart if needed
+        netWorthChart = null;
+        initializeChart();
+      }
+    }
+  ], "letter");
 }
 
 // Adds interactivity to the help menu sidebar
 document.addEventListener("DOMContentLoaded", () => {
-    const helpBtn = document.getElementById("help-btn");
-    const helpSidebar = document.getElementById("help-sidebar");
-    const closeHelp = document.getElementById("close-help");
+  const helpBtn = document.getElementById("help-btn");
+  const helpSidebar = document.getElementById("help-sidebar");
+  const closeHelp = document.getElementById("close-help");
 
-    // Open Help Sidebar
-    helpBtn.addEventListener("click", () => {
-        helpSidebar.classList.remove("hidden");
+  // Open Help Sidebar
+  helpBtn.addEventListener("click", () => {
+    helpSidebar.classList.remove("hidden");
+  });
+
+  // Close Help Sidebar
+  closeHelp.addEventListener("click", () => {
+    helpSidebar.classList.add("hidden");
+  });
+
+  // Enable dropdown functionality inside help menu
+  const helpItems = document.querySelectorAll(".help-item");
+  helpItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const id = item.getAttribute("data-id");
+      const dropdown = document.getElementById(id);
+      if (!dropdown) return; // Safety check
+
+      const isOpen = !dropdown.classList.contains("hidden");
+
+      // Toggle visibility and style
+      dropdown.classList.toggle("hidden", isOpen);
+      item.classList.toggle("expanded", !isOpen);
     });
+  });
 
-    // Close Help Sidebar
-    closeHelp.addEventListener("click", () => {
-        helpSidebar.classList.add("hidden");
-    });
+  // Automatically load saved game if it exists
+  loadGame();
 
-    // Enable dropdown functionality inside help menu
-    const helpItems = document.querySelectorAll(".help-item");
-    helpItems.forEach((item) => {
-        item.addEventListener("click", () => {
-            const id = item.getAttribute("data-id");
-            const dropdown = document.getElementById(id);
-            if (!dropdown) return; // Safety check
-
-            const isOpen = !dropdown.classList.contains("hidden");
-
-            // Toggle visibility and style
-            dropdown.classList.toggle("hidden", isOpen);
-            item.classList.toggle("expanded", !isOpen);
-        });
-    });
-
-    // Automatically load saved game if it exists
-    loadGame();
-
-    // Initialize UI/game setup
-    initGame();
+  // Initialize UI/game setup
+  initGame();
 });
