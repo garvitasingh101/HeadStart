@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const qaPairs = {
+        /* These are the question-answer pairs for the Q&A section.
+           The left side is the keyword to look for in the question,
+              and the right side is the answer that will be displayed. */
         //Head $tart Specific Question
         "net worth": "Your net worth is your (Total Assets - Total Debts. You can increase it by earning more, saving, and investing wisely!",
         "college": "Going to college increases your earning potential but it also requires student loans. The debt is sometimes worth it for high-paying careers, however.",
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     };
 
+    /* This is the main function that handles the Q&A section.*/
     const questionInput = document.getElementById('user-question');
     const askButton = document.getElementById('ask-button');
     const answerDisplay = document.getElementById('answer-display');
@@ -47,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function answerQuestion() {
         const question = questionInput.value.trim().toLowerCase();
         
+        /* This checks if the question is empty and displays a message if it is.*/
         if (!question) {
             answerDisplay.innerHTML = '<p>Please enter a question.</p>';
             return;
@@ -62,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        /* This displays the answer in the answer display area.*/
         answerDisplay.innerHTML = `
             <p><strong>Your question:</strong> ${questionInput.value}</p>
             <p><strong>Answer:</strong> ${answer}</p>
@@ -70,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         questionInput.value = '';
     }
 
+    /* This sets up the event listeners for the button and input field.*/
     askButton.addEventListener('click', answerQuestion);
     questionInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {

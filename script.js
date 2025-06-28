@@ -100,8 +100,8 @@ function loadGame() {
     personalityTraits[trait] = latestSave.personalityTraits?.[trait] || 0;
   });
 
-  netWorthHistory = latestSave.netWorthHistory || [netWorth];
-  ageHistory = latestSave.ageHistory || [age];
+  netWorthHistory = latestSave.netWorthHistory || [netWorth]; /* Initialize with current net worth */
+  ageHistory = latestSave.ageHistory || [age]; /* Initialize with current age */
 
   playerNameInput.value = playerName;
   startGameButton.disabled = false;
@@ -167,7 +167,7 @@ function startGame() {
   }
 
   // ==== SHOW GAME UI ====
-  welcomeScreen.classList.add('hidden');
+  welcomeScreen.classList.add('hidden'); /* Hide welcome screen */
   gameContainer.classList.remove('hidden');
   questionContainer.classList.remove('hidden');
 
@@ -219,7 +219,7 @@ function addMessage(message, color) {
 
 // == UI UPDATER ==
 function updateUI() {
-  currentAgeDisplay.textContent = age;
+  currentAgeDisplay.textContent = age; /* Update age display */
   currentIncomeDisplay.textContent = income;
   currentNetWorthDisplay.textContent = netWorth;
 
@@ -302,6 +302,7 @@ function addOptions(title, options, inputType = "letter") {
       index = parseInt(val) - 1;
     }
 
+    /* Validate the index */
     if (index >= 0 && index < options.length) {
       options[index].action();
     } else {
