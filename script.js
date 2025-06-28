@@ -54,7 +54,8 @@ playerNameInput.addEventListener("keydown", (event) => {
 
 // == SAVE GAME ==
 function saveGame() {
-  if (currentStage === "gameover") return; //Preventa saving after game ends
+  if (currentStage === "gameover") return;
+
   const snapshot = {
     playerName,
     netWorth,
@@ -62,17 +63,17 @@ function saveGame() {
     age,
     career,
     currentStage,
+    currentCheckpoint, // ⬅️ new line
     personalityTraits: { ...personalityTraits },
     netWorthHistory: [...netWorthHistory],
     ageHistory: [...ageHistory]
   };
 
   saveStates.push(snapshot);
-  if (saveStates.length > 5) saveStates.shift(); // keep last 5 saves
+  if (saveStates.length > 5) saveStates.shift();
   localStorage.setItem("headstartGameSaves", JSON.stringify(saveStates));
   console.log("Game auto-saved!");
 }
-
 
 // == LOAD GAME ==
 function loadGame() {
@@ -93,6 +94,7 @@ function loadGame() {
   age = latestSave.age || 18;
   career = latestSave.career || "";
   currentStage = latestSave.currentStage || "18-27";
+  currentCheckpoint = latestSave.currentCheckpoint || ""; // ⬅️ new line
 
   Object.keys(personalityTraits).forEach(trait => {
     personalityTraits[trait] = latestSave.personalityTraits?.[trait] || 0;
@@ -190,8 +192,6 @@ function startGame() {
 }
   addMessage("Type 'stop' at any time to end the game.", "#c91a63");
 }
-
-
 // == INIT GAME ==
 function initGame() {
   startGameButton.addEventListener('click', startGame);
