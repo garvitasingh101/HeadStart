@@ -223,10 +223,8 @@ function updateUI() {
   currentIncomeDisplay.textContent = income;
   currentNetWorthDisplay.textContent = netWorth;
 
-  if (ageHistory[ageHistory.length - 1] !== age) {
-    ageHistory.push(age);
-    netWorthHistory.push(netWorth);
-  }
+  ageHistory.push(age);
+  netWorthHistory.push(netWorth);
 
   if (netWorthChart) {
     netWorthChart.data.labels = ageHistory;
