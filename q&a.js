@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "budgeting": "Creating a budget helps you track income and expenses, ensuring you live within your means and save for future goals.",
         "saving": "Saving money is essential for emergencies, future purchases, and long-term financial security. Aim to save at least 20% of your income.",
         "investing": "Investing allows your money to grow over time. Consider stocks, bonds, mutual funds, and real estate as potential investment options.",
-        "why save early": "Money saved at 18 grows way more than money saved at 30 because of compound interest. It's your biggest advantage!",
+        "save early": "Money saved at 18 grows way more than money saved at 30 because of compound interest. It's your biggest advantage!",
         "should I go to college": "College helps for many careers, but trades can pay well too. Compare costs vs future earnings in your desired field.",
         "student loans": "Only borrow what you need. $30k in loans means $300/month payments for 10 years - could you afford that?",
         "credit score": "A good credit score (700+) helps you get loans with lower interest rates. Pay bills on time and keep debt low to improve it.",
