@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "best first choice": "College for long-term wealth, Job for quick cash, Business only if you're okay with risk.",
         "rent vs buy": "Rent is flexible and cheaper for the short-term, and buying is more expensive (costs $100-500k) but builds equity over time.",
         "random events": "These random events can be good (inheritance, promotion) or bad (accident, job loss).",
-        "how age works": "Each choice advances time. From 18-27, then 28-37, etc. until you reach retirement.",
+        "age work": "Each choice advances time. From 18-27, then 28-37, etc. until you reach retirement.",
         "winning the game": "The goal is to have the highest net worth at retirement while also enjoying life's experiences and finding balance.",
         
         // General Financial Questions

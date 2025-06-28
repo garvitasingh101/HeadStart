@@ -84,7 +84,7 @@ function loadGame() {
 
   if (latestSave.age >= 68 || latestSave.currentStage === "gameover") {
     localStorage.removeItem("headstartGameSaves");
-    addMessage("\nYour previous game has finished. Please start a new game.", "#d9534f");
+    addMessage("\nYour previous game has finished. Starting a new game!", "#d9534f");
     return;
   }
 
