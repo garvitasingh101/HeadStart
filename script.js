@@ -1005,7 +1005,7 @@ function initializeChart() {
         label: 'Net Worth',
         data: netWorthHistory, // Y-axis: Net worth corresponding to age
         borderColor: '#5F9632', // Green border for line
-        backgroundColor: 'rgba(95, 150, 50, 0.1)', // Translucent fill
+        backgroundColor: 'rgba(95, 150, 50, 0.1)',
         borderWidth: 2,
         tension: 0.1, // Line curve smoothing
         fill: true
