@@ -54,6 +54,7 @@ playerNameInput.addEventListener("keydown", (event) => {
 
 // == SAVE GAME ==
 function saveGame() {
+  if (currentStage === "gameover") return; //Preventa saving after game ends
   const snapshot = {
     playerName,
     netWorth,
@@ -61,17 +62,17 @@ function saveGame() {
     age,
     career,
     currentStage,
-    personalityTraits: { ...personalityTraits }, // use a copy
+    personalityTraits: { ...personalityTraits },
     netWorthHistory: [...netWorthHistory],
     ageHistory: [...ageHistory]
   };
 
   saveStates.push(snapshot);
-  if (saveStates.length > 5) saveStates.shift(); //keep only last 5 saves to avoid overloading
-
+  if (saveStates.length > 5) saveStates.shift(); // keep last 5 saves
   localStorage.setItem("headstartGameSaves", JSON.stringify(saveStates));
   console.log("Game auto-saved!");
 }
+
 
 // == LOAD GAME ==
 function loadGame() {
@@ -109,18 +110,29 @@ function loadGame() {
 // == START GAME ==
 function startGame() {
   const inputName = playerNameInput.value.trim();
+
   if (!inputName) {
-    alert("Please enter your name to start the game!");
+    addMessage("Please enter your name to start the game!");
     return;
   }
 
-  const saves = JSON.parse(localStorage.getItem("headstartGameSaves")) || [];
-  const latest = saves[saves.length - 1];
+  let saves = JSON.parse(localStorage.getItem("headstartGameSaves")) || [];
+  let latest = saves.find(save => save.playerName === inputName);
 
-  if (latest && (latest.age >= 68 || latest.currentStage === "gameover")) {
-    localStorage.removeItem("headstartGameSaves");
-    alert("Saved game is complete. Starting a new game.");
-  } else if (latest && latest.playerName === inputName) {
+  // If a completed save is found, clear it and force a new game
+  if (latest && (latest.age >= 63 || latest.currentStage === "gameover")) {
+    addMessage("Your previous game was completed. Starting a fresh new game.", "#5F9632");
+
+    // Remove only this player's save
+    saves = saves.filter(save => save.playerName !== inputName);
+    localStorage.setItem("headstartGameSaves", JSON.stringify(saves));
+
+    latest = null;  // DO NOT load completed save
+    saveStates = [];
+  }
+
+  // ==== LOAD FROM SAVE ====
+  if (latest) {
     playerName = latest.playerName;
     netWorth = latest.netWorth || 1000;
     income = latest.income || 0;
@@ -134,55 +146,51 @@ function startGame() {
 
     netWorthHistory = latest.netWorthHistory || [netWorth];
     ageHistory = latest.ageHistory || [age];
+  } else {
+    // ==== START NEW GAME ====
+    playerName = inputName;
+    netWorth = 1000;
+    income = 0;
+    age = 18;
+    career = "";
+    currentStage = "18-27";
 
-    welcomeScreen.classList.add('hidden');
-    gameContainer.classList.remove('hidden');
-    questionContainer.classList.remove('hidden');
+    Object.keys(personalityTraits).forEach(trait => {
+      personalityTraits[trait] = 0;
+    });
 
-    initializeChart();
-    updateUI();
-
-    addMessage(`👋 Welcome back, ${playerName}! Resuming your game at age ${age} with a net worth of $${netWorth}.`, '#5F9632');
-
-    switch (currentStage) {
-      case "18-27": age18_27(); break;
-      case "28-37": age28_37(); break;
-      case "38-47": age38_47(); break;
-      case "48-57": age48_57(); break;
-      case "58-67": age58_67(); break;
-      default: age18_27(); break;
-    }
-    return;
+    netWorthHistory = [netWorth];
+    ageHistory = [age];
   }
 
-  // New game setup
-  playerName = inputName;
-  age = 18;
-  netWorth = 1000;
-  income = 0;
-  career = "";
-  currentStage = "18-27";
-  netWorthHistory = [netWorth];
-  ageHistory = [age];
-
-  Object.keys(personalityTraits).forEach(trait => {
-    personalityTraits[trait] = 0;
-  });
-
+  // ==== SHOW GAME UI ====
   welcomeScreen.classList.add('hidden');
   gameContainer.classList.remove('hidden');
   questionContainer.classList.remove('hidden');
 
-  initializeChart(); /* Initializes the Chart.js graph */
-
-  addMessage(`👋 Hello ${playerName}, welcome to Head $tart! You are 18 years old and have a starting net worth of $${netWorth}.`, '#c91a63');
-  addMessage("To view instructions and our purpose, click on the \"?\" button! To stop at any time, type \"STOP\". Good Luck!", '#c91a63');
-
+  // messageLog.innerHTML = ''; // optional: keep messages if you want
+  initializeChart();
   updateUI();
-  offerFirstPath();
 
-  saveGame();
+  addMessage(`👋 Welcome, ${playerName}! Starting your financial journey at age ${age} with a net worth of $${netWorth}.`, '#5F9632');
+
+  if (latest) {
+  // Continue from saved stage
+  switch (currentStage) {
+    case "18-27": age18_27(); break;
+    case "28-37": age28_37(); break;
+    case "38-47": age38_47(); break;
+    case "48-57": age48_57(); break;
+    case "58-67": age58_67(); break;
+    default: age18_27(); break;
+  }
+} else {
+  // New game: start with intro decision
+  offerFirstPath();
 }
+  addMessage("Type 'stop' at any time to end the game.", "#c91a63");
+}
+
 
 // == INIT GAME ==
 function initGame() {
@@ -1067,6 +1075,7 @@ function randomEvents() {
 
 // End game function
 function endGame() {
+  currentStage = "gameover";
   saveGame();
 
   // Announce retirement
@@ -1138,7 +1147,7 @@ function gameOver() {
     {
       text: "🔄 Play Again",
       action: () => {
-        // Reset core variables
+        // Reset core variables for a fresh new game
         playerName = "";
         netWorth = 1000;
         income = 0;
@@ -1146,37 +1155,46 @@ function gameOver() {
         career = "";
         currentStage = "18-27";
 
-        // Clear all personality traits
+        // Reset personality traits
         Object.keys(personalityTraits).forEach(trait => {
           personalityTraits[trait] = 0;
         });
 
-        // Reset chart tracking
-        netWorthHistory = [1000];
-        ageHistory = [18];
+        // Reset tracking arrays
+        netWorthHistory = [netWorth];
+        ageHistory = [age];
 
-        // Remove old chart canvas and recreate to reset Chart.js
-        const oldChart = document.getElementById('net-worth-chart');
-        if (oldChart) {
-          oldChart.remove();
-          // Create new canvas element for fresh chart
-          const chartContainer = document.getElementById('chart-container'); // Ensure container exists
+        // Destroy old chart instance if exists
+        if (netWorthChart) {
+          netWorthChart.destroy();
+          netWorthChart = null;
+        }
+
+        // Remove old canvas and create a new one
+        const chartContainer = document.getElementById('chart-container');
+        if (chartContainer) {
+          const oldChart = document.getElementById('net-worth-chart');
+          if (oldChart) oldChart.remove();
+
           const newCanvas = document.createElement('canvas');
           newCanvas.id = 'net-worth-chart';
           chartContainer.appendChild(newCanvas);
+        } else {
+          console.error("Error: chart-container element not found in the DOM!");
         }
 
         // Clear message log
         messageLog.innerHTML = '';
 
-        // Return to start screen
+        // Show welcome screen and hide game UI containers to force name input
         welcomeScreen.classList.remove('hidden');
         gameContainer.classList.add('hidden');
         questionContainer.classList.add('hidden');
+
+        // Clear player name input field
         playerNameInput.value = '';
 
-        // Reinitialize the game/chart if needed
-        netWorthChart = null;
+        // Initialize chart on new canvas 
         initializeChart();
       }
     }
