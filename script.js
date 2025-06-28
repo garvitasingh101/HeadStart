@@ -647,7 +647,7 @@ function financialDecisions() {
         updateUI();
         saveGame();
 
-        ageTransition();
+        ageTransition(); /* Transition to next age stage */
       }
     }
   ], "number");
