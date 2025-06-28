@@ -174,7 +174,8 @@ function startGame() {
   initializeChart();
   updateUI();
 
-  addMessage(`👋 Welcome, ${playerName}! Starting your financial journey at age ${age} with a net worth of $${netWorth}.`, '#5F9632');
+  addMessage(`👋 Hello ${playerName}, welcome to Head $tart! You are 18 years old and have a starting net worth of $${netWorth}.`, '#c91a63');
+  addMessage("To view instructions and our purpose, click on the \"?\" button! To stop at any time, type \"STOP\". Good Luck!", '#c91a63');
 
   if (latest) {
   // Continue from saved stage
@@ -190,7 +191,6 @@ function startGame() {
   // New game: start with intro decision
   offerFirstPath();
 }
-  addMessage("Type 'stop' at any time to end the game.", "#c91a63");
 }
 // == INIT GAME ==
 function initGame() {
