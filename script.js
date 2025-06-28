@@ -61,11 +61,15 @@ function saveGame() {
     age,
     career,
     currentStage,
-    personalityTraits,
-    netWorthHistory,
-    ageHistory
+    personalityTraits: { ...personalityTraits }, // use a copy
+    netWorthHistory: [...netWorthHistory],
+    ageHistory: [...ageHistory]
   };
-  localStorage.setItem("headstartGameData", JSON.stringify(gameData));
+
+  saveStates.push(snapshot);
+  if (saveStates.length > 5) saveStates.shift(); //keep only last 5 saves to avoid overloading
+
+  localStorage.setItem("headstartGameSaves", JSON.stringify(saveStates));
   console.log("Game auto-saved!");
 }
 
