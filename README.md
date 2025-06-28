@@ -16,7 +16,9 @@
 8. [Key Functions](#key-functions)
 9. [Progression](#progression)
 10. [Contributors](#contributors)
-11. [License](#license)
+11. [Libraries Used](#libraries-used)
+12. [Dependencies](#dependencies)
+13. [License](#license)
 
 ## Introduction
 
@@ -88,6 +90,13 @@ This project welcomes contributions. Please:
 2. Create your feature branch
 3. Submit a pull request
 
+## Libraries Used  
+- [Chart.js](https://www.chartjs.org/) (MIT License)
+
+## Dependencies  
+This project uses no external libraries or copyrighted material.  
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
