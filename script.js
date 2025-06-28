@@ -85,7 +85,7 @@ function saveGame() {
   };
   localStorage.setItem("headstartGameData", JSON.stringify(gameData));
   console.log("Game auto-saved!");
-}
+}   
 
 // Loads saved progress from localStorage
 function loadGame() {
@@ -209,7 +209,7 @@ function startGame() {
   gameContainer.classList.remove('hidden');
   questionContainer.classList.remove('hidden');
 
-  initializeChart();
+  initializeChart(); /* Initializes the Chart.js graph */
 
   addMessage(`👋 Hello ${playerName}, welcome to Head $tart! You are 18 years old and have a starting net worth of $${netWorth}.`, '#c91a63');
   addMessage("To view instructions and our purpose, click on the \"?\" button! To stop at any time, type \"STOP\". Good Luck!", '#c91a63');
@@ -356,6 +356,7 @@ function addOptions(title, options, inputType = "letter") {
 // First Game Choice
 function offerFirstPath() {
   addMessage("What's your first step?", "#c91a63");
+  /* Possible options */
   addOptions("Choose Your Path", [
     {
       text: "🧺 Get a Job (Earn now, but limited growth)",
